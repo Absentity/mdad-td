@@ -49,7 +49,7 @@ public class Game implements ApplicationListener {
 		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		Gdx.gl.glClearColor(0, .2f, 0, 0);
+		Gdx.gl.glClearColor(1, .2f, 1, 0);
 		
 	}
 
