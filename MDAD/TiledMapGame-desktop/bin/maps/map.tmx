@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="green_background" tilewidth="16" tileheight="16">
+  <image source="green_background.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="257" name="blue_background" tilewidth="16" tileheight="16">
+  <image source="blue_background.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztllEOgjAMhuEOeAThBhouoAkHIJzAhPtfwJFscTaDtdtYG+3D9yKV/F/WlS5N0yyKoigV6Qxr+00nIBcFmH8K+PSGQUDWmMMEgG43U3sXkDcEzAtdfKeHqX8KyHzk4PJ23rPQ2XBnDjlAj+13eK9DPcad/eg8Yr5+7SjUJTZbocuY4PJqP3C5unm7Ao9LggOnj5u30OOamJ/Lxc1bSl9hHGr7UO851aGEC3ZeYeduqkOOj59vsPT22RCYt5hvRwkPikso494+4sDuiRwucBfcY6un7IkSXVwtdU+sfVf2dtyJ+B5ujzP5FY8cl+2/s4XbIdVFogPVhZKfqxcx+TEOEu7VHKHU2XJ5nNGjNc+ldH9KndupDuqhHv/oQXHhzpnrwp2thA93HkVRFEVRlFzeOf9p+g==
+  </data>
+ </layer>
+</map>
