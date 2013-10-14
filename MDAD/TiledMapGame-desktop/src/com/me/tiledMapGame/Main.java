@@ -9,8 +9,8 @@ public class Main {
 		
 		cfg.title = "TiledMapGame";
 		cfg.useGL20 = true;
-		cfg.width = 672;
-		cfg.height = 672;
+		cfg.width = 16*10;
+		cfg.height = 16*10;
 		
 		new LwjglApplication(new TiledMapGame(), cfg);
 	}
