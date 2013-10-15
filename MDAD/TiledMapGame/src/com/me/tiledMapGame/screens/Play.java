@@ -60,7 +60,7 @@ public class Play implements Screen {
 	@Override
 	public void show() {
 		
-		map = new TmxMapLoader().load("maps/map2.tmx");
+		map = new TmxMapLoader().load("maps/mapOther.tmx");
 
 		renderer = new OrthogonalTiledMapRenderer(map);
 
@@ -73,10 +73,10 @@ public class Play implements Screen {
 		// remember to invert y: last cell - cell you want(starting at the top)
 		
 		p = new Player(new Sprite(new Texture("img/small_blmm.png")), layer);
-		p.setPosition(2*layer.getTileWidth(), 2*layer.getTileHeight());
+//		p.setPosition(2*layer.getTileWidth(), 2*layer.getTileHeight());
 
 		for(a=0 ; a<enemies.length ; a++){
-			enemies[a] = new Enemy(new Sprite(new Texture("img/small_blmme.png")), layer);
+			enemies[a] = new Enemy(new Sprite(new Texture("img/Wyvern2.png")), layer);
 			enemies[a].setPosition(0*layer.getTileWidth(), (a+1)*layer.getTileHeight());
 		}
 		

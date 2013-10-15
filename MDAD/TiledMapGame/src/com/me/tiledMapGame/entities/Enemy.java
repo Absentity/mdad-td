@@ -12,9 +12,7 @@ import com.me.tiledMapGame.pathing.PathFinder;
 
 
 public class Enemy extends Sprite {
-	
-	public static final int UP = -1, DOWN = 1, RIGHT = 1, LEFT = -1, NEUTRAL = 0;
-	
+		
 //	private Vector2 velocity = new Vector2();
 //	private float speed = 16*2;
 	
@@ -47,12 +45,13 @@ public class Enemy extends Sprite {
 		
 		kingdomX /= collisionLayer.getTileWidth();
 		kingdomY /= collisionLayer.getTileHeight();
-
 		
-		for(int j=0 ; j < objG.getLength() ; j++){
-        	for(int i = 0; i < objG.getWidth(); ++i){
-        		if(collisionLayer.getCell(j, i).getTile().getProperties().containsKey("blocked")){
-        			objG.grid[i][j].is_passable = false;
+		System.out.println(kingdomX + " " + kingdomY);
+		
+		for(int x = 0; x < objG.getWidth(); x++){
+			for(int y=0 ; y < objG.getLength() ; y++){
+        		if(collisionLayer.getCell(x, y).getTile().getProperties().containsKey("blocked")){
+        			objG.grid[x][y].is_passable = false;
         		}
 //        		if(collisionLayer.getCell(i, j).getTile().getProperties().containsKey("kingdom")){
 //        			objG.grid[i][j].is_passable = false;
@@ -62,41 +61,46 @@ public class Enemy extends Sprite {
 		
 		PathFinder.find_path(objG, (int)kingdomX, (int)kingdomY);
 		
-		for(int j=0 ; j < objG.getLength() ; j++){
-        	for(int i = 0; i < objG.getWidth(); ++i){
-        		System.out.println(j + "," + i + ": " + objG.grid[j][i].dir);
+        for(int x = 0; x < objG.getWidth(); x++){
+        	for(int y=0 ; y < objG.getLength() ; y++){
+        		System.out.print(x + "," + y + ": " + objG.grid[x][y].dir + " | ");
         	}
+        	System.out.println();
         }
 		
 	}
 	
 	public void draw(SpriteBatch spriteBatch){
 		update(Gdx.graphics.getDeltaTime());
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		super.draw(spriteBatch);
 	}
 	
 	public void update(float delta){
 		
-		int currX = (int)(getX()/tileWidth);
-		int currY = (int)(getY()/tileHeight);
+		int currX = Math.round(getX()/tileWidth);
+		int currY = Math.round(getY()/tileHeight);
 		
 		System.out.println(currY + "," + currX + ": " + objG.grid[currY][currX].dir);
 		
-		if(objG.grid[currY][currX].dir == Direction.RIGHT){
-			setX(currX + tileWidth);
-//			System.out.println("going " + objG.grid[currY][currX].dir);
+		if(currY == 7 && currX == 7){
+			//stop moving, coordinates for testing
 		}
-		if(objG.grid[currY][currX].dir == Direction.LEFT){
-			setX(currX - tileWidth);
-//			System.out.println("going " + objG.grid[currY][currX].dir);
+		else if(objG.grid[currY][currX].dir == Direction.RIGHT){
+			setX(getX() + tileWidth);
 		}
-		if(objG.grid[currY][currX].dir == Direction.UP){
-			setY(currY - tileHeight);
-//			System.out.println("going " + objG.grid[currY][currX].dir);
+		else if(objG.grid[currY][currX].dir == Direction.LEFT){
+			setX(getX() - tileWidth);
 		}
-		if(objG.grid[currY][currX].dir == Direction.DOWN){
-			setY(currY + tileHeight);
-//			System.out.println("going " + objG.grid[currY][currX].dir);
+		else if(objG.grid[currY][currX].dir == Direction.UP){
+			setY(getY() + tileHeight);
+		}
+		else if(objG.grid[currY][currX].dir == Direction.DOWN){
+			setY(getY() - tileHeight);
 		}
 		
 	}
