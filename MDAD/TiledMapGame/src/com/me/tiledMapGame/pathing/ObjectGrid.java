@@ -36,6 +36,20 @@ public class ObjectGrid {
     }
     
     /******************************************************************************
+     * update()				Return: void
+     * ---------------------------------
+     * Description: Call clearVisited for each GridLayer in GridLayers; call
+     * 	"update()" for all Towers, Units, and Enemies.
+     ******************************************************************************/
+    public void update(){
+    	for(int i = 0; i < GridLayers.size(); ++i){
+    		this.clearVisited(i);
+    	}
+    	//Call other update() functions
+    	//... TODO
+    }
+    
+    /******************************************************************************
      * addGridLayer()		Return: void
      * ---------------------------------
      * Description: Creates a new initialized (but empty) GridLayer and adds it
@@ -131,19 +145,18 @@ public class ObjectGrid {
      * ---------------------------------
      * 
      ****************************************************************************/
-    public void removeEnemy(int x, int y){
-    	//Find the enemy at (x,y), check that its health is <= 0 (in case multiple
-    	//	enemies are on the same Node).
+    public void removeTower(int li, int x, int y){
+    	//Find the Tower at (x,y) and remove it from towerList
     	
     	
-    	//Remove the Enemy from the enemyList
+    	//Mark "is_passable" = true for (x,y) in GridLayers[li]
     	//... TODO
     }
+    
+    /*****************************************************************************
+     * remove
+     *****************************************************************************/
 }
-/***********************************************************************
- * Additional Classes and Enums related to ObjectGrid class
- */
-
 
 
 class Tower{		//Place holder class
