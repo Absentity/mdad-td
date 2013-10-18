@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2013 by some group of people
  */
 package com.me.tiledMapGame.pathing;
 
@@ -83,6 +82,7 @@ public class ObjectGrid {
      * 	if "allLayers" is true, then "is_passable" will be marked for all layers
      * 	in GridLayers.
      * GridLayers[0] is always marked (it is the main layer)
+     * @return true for successfully built, and false for not
      *****************************************************************************/
     public boolean createTower(int ti,int li, int x, int y, boolean allLayers){
     	//check if the main grid (GridLayers[0] is empty)
