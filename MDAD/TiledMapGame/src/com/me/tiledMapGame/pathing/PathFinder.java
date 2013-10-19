@@ -1,27 +1,23 @@
-package com.me.tiledMapGame.pathing;
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package com.me.tiledMapGame.pathing;
 
 import java.util.LinkedList;
-
-import com.me.tiledMapGame.entities.Enemy;
 
 
 /**
  *
- * @author brandon
+ * @author Brandon Jones
  */
 public class PathFinder {
-    private boolean isBatman;
+    private static boolean isBatman;
     private PathFinder(){
         isBatman = true;
     }
 /******************************************************************************
- * find_path()      Return: ObjectGrid
+ * find_path()      Return: Void
  * -----------------------------------
  * Description:
  * Marks every Node on the grid with the direction that should be moved to
@@ -42,9 +38,12 @@ public class PathFinder {
  *  marked "dir = Direction.NONE"
  * .
  *****************************************************************************/ 
-    public static ObjectGrid find_path(ObjectGrid aGrid, int destX, int destY){
-        LinkedList<Node> queue = new LinkedList<>();
-        queue.add(aGrid.grid[destY][destX]);
+    public static void find_path(Node[][] aGrid, int destX, int destY){
+        LinkedList<Node> queue = new LinkedList<Node>();
+        aGrid[destY][destX].visited = true;
+        aGrid[destY][destX].dist_to_src = 0;
+        queue.add(aGrid[destY][destX]);
+        int count = 0;
         int in_queue = 1;               //For keeping track of distance from
                                         //the destination...DFD
         
@@ -52,37 +51,33 @@ public class PathFinder {
             for(int i = 0; i < in_queue; ++i){
                 //The element(s) already in the queue are already marked, except destination
                 Node cur_Node = queue.poll();
+                
                 //Mark and enqueue all of cur_Node's neighbors (if not already visited)
                 for(Node n: cur_Node.neighbors){
                     if(n.is_passable && !n.visited){
-                        if(n.x > cur_Node.x){
+                        if(n.x > cur_Node.x)
                             n.dir = Direction.LEFT;
-                            n.dirValue = -1;
-                        }
-                        if(n.x < cur_Node.x){
+                        if(n.x < cur_Node.x)
                             n.dir = Direction.RIGHT;
-                            n.dirValue = 1;
-                        }
-                        if(n.y > cur_Node.y){
+                        if(n.y > cur_Node.y)
                             n.dir = Direction.DOWN;
-                            n.dirValue = -1;
-                        }
-                        if(n.y < cur_Node.y){
+                        if(n.y < cur_Node.y)
                             n.dir = Direction.UP;
-                            n.dirValue = 1;
-                        }
+
                         n.visited = true;   //Mark the node as visited
+                        n.dist_to_src = count;
                         queue.add(n);
                     }
                 }
             }
             in_queue = queue.size();        //For DFD
-        }        
-        return null;
+            count++;
+        }
     }
     
     public static void getBatman(){
-        System.out.println("...aren't you afraid of the big, black bat?");
+    	if(isBatman == false)
+    		System.out.println("...aren't you afraid of the big, black bat?");
     }
     
 }
