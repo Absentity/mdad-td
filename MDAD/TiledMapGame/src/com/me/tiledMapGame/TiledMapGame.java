@@ -2,13 +2,19 @@ package com.me.tiledMapGame;
 
 
 import com.badlogic.gdx.Game;
+import com.me.tiledMapGame.screens.MainMenuScreen;
 import com.me.tiledMapGame.screens.Play;
 
 public class TiledMapGame extends Game {
+	boolean mainScreen = true;
+	MainMenuScreen M;
 	
 	@Override
-	public void create() {		
-		setScreen(new Play());
+	public void create() {	
+		M = new MainMenuScreen();
+		setScreen(M);
+		
+		
 	}
 
 	@Override
@@ -19,6 +25,12 @@ public class TiledMapGame extends Game {
 	@Override
 	public void render() {		
 		super.render();
+		if(M.listener.isPressed()){
+			for(int i = 0; i < 100000; ++i)
+				i++;
+			this.getScreen().dispose();
+			this.setScreen(new Play());
+		}
 	}
 
 	@Override
