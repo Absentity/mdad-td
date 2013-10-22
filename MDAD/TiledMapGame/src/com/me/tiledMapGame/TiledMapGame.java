@@ -26,8 +26,6 @@ public class TiledMapGame extends Game {
 	public void render() {		
 		super.render();
 		if(M.listener.isPressed()){
-			for(int i = 0; i < 100000; ++i)
-				i++;
 			this.getScreen().dispose();
 			this.setScreen(new Play());
 		}
