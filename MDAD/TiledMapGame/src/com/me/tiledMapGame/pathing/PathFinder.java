@@ -16,7 +16,7 @@ public class PathFinder {
     private PathFinder(){
         isBatman = true;
     }
-/******************************************************************************
+/*
  * find_path()      Return: Void
  * -----------------------------------
  * Description:
@@ -37,7 +37,7 @@ public class PathFinder {
  * If a Node is not part of any path to the specified destination, it will be
  *  marked "dir = Direction.NONE"
  * .
- *****************************************************************************/ 
+ */ 
     public static void find_path(Node[][] aGrid, int destX, int destY){
         LinkedList<Node> queue = new LinkedList<Node>();
         aGrid[destY][destX].visited = true;
@@ -64,13 +64,13 @@ public class PathFinder {
                         if(n.y < cur_Node.y)
                             n.dir = Direction.UP;
 
-                        n.visited = true;   //Mark the node as visited
-                        n.dist_to_src = count;
+                        n.visited = true;  		 //Mark the node as visited
+                        n.dist_to_src = count;	 //Mark dist_to_src
                         queue.add(n);
                     }
                 }
             }
-            in_queue = queue.size();        //For DFD
+            in_queue = queue.size();       		 //For DFD
             count++;
         }
     }
