@@ -247,8 +247,11 @@ public class Player extends Sprite implements InputProcessor {
 		else if(touchY > 320)
 			touchY = 320-32;
 		
-		Play.down = true; // for transparency
-		Play.touched = true; // register touch for drawing
+		if( !collisionLayer.getCell((int)(touchX/collisionLayer.getTileWidth()), (int)(touchY/collisionLayer.getTileHeight())).
+				getTile().getProperties().containsKey("blocked") ){
+			Play.down = true; // for transparency
+			Play.touched = true; // register touch for drawing
+		}
 		Play.alpha = .65f; // set transparency
 		
 		return true;
@@ -283,20 +286,30 @@ public class Player extends Sprite implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
 		touchX = (int) (((int)(screenX/collisionLayer.getTileWidth())) * collisionLayer.getTileWidth()); 
-
+		
 		if(touchX < 0)
 			touchX = 0;
-		else if(touchX > 320)
-			touchX = 320-32;
+		if(touchX >= 320)
+			touchX = 320 - 32;
 		
 		touchY = (int)((collisionLayer.getHeight()*collisionLayer.getTileHeight()) -
 				((screenY/32) * collisionLayer.getTileHeight()) - collisionLayer.getTileHeight());
 		
 		if(touchY < 0)
 			touchY = 0;
-		else if(touchY > 320)
+		else if(touchY >= 320)
 			touchY = 320-32;
-
+		
+		if( collisionLayer.getCell((int)(touchX/collisionLayer.getTileWidth()), (int)(touchY/collisionLayer.getTileHeight())).
+				getTile().getProperties().containsKey("blocked") ){
+			Play.down = false; // for transparency
+			Play.touched = false; // register touch for drawing
+		}
+		else{
+			Play.down = true;
+			Play.touched = true;
+		}
+		
 		return true;
 	}
 
