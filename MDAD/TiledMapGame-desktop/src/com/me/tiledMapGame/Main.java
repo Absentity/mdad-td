@@ -9,8 +9,10 @@ public class Main {
 		
 		cfg.title = "TiledMapGame";
 		cfg.useGL20 = true;
-		cfg.width = 64*10;
-		cfg.height = 64*10;
+		cfg.width = 32*10;
+		cfg.height = 32*10;
+		
+		cfg.resizable = false; // Disables JFrame resizing
 		
 		new LwjglApplication(new TiledMapGame(), cfg);
 	}
