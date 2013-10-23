@@ -23,8 +23,12 @@ public class Player extends Sprite implements InputProcessor {
 	
 	private float speed = 16*4;
 	
+	// zoom
 	boolean in = false;
 	boolean out = false;
+	
+	// touch
+	public static int touchX, touchY;
 	
 	public Player(Sprite sprite, TiledMapTileLayer collisionLayer){
 		super(sprite);
@@ -199,6 +203,16 @@ public class Player extends Sprite implements InputProcessor {
 			case Keys.O:
 				out = false;
 				break;
+			case Keys.Z:
+				if(Play.music.getVolume() < 1)
+					Play.music.setVolume((float) (Play.music.getVolume()+.1));
+				System.out.println("Volume: " + Play.music.getVolume());
+				break;
+			case Keys.X:
+				if(Play.music.getVolume() > 0)
+					Play.music.setVolume((float) (Play.music.getVolume()-.1));
+				System.out.println("Volume: " + Play.music.getVolume());
+				break;
 			default:
 				break;
 		}
@@ -213,28 +227,77 @@ public class Player extends Sprite implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//		if(!kingdomSelected){
-//			if(screenX >= (38*16) && screenX <= (40*16)
-//					&& screenY >= (2*16) && screenY <= (4*16)) {
-//						System.out.println("Kingdom Selected. Press 'x'.");
-//						kingdomSelected = true;
-//			}
-//			else {
-//				System.out.println("You must place the kingdom on the map first.");
-//			}
-//		}
-			
+		
+		// click position / tile width or height = tile. tile * total pixels in a tile = pixel that starts the tile of the position clicked
+		
+		touchX = (int) (((int)(screenX/collisionLayer.getTileWidth())) * collisionLayer.getTileWidth());  // set the x coordinate
+
+		// bound the x coordinate to the map
+		if(touchX < 0)
+			touchX = 0;
+		else if(touchX > 320)
+			touchX = 320-32;
+		 
+		touchY = (int)((collisionLayer.getHeight()*collisionLayer.getTileHeight()) - // height of map - actual position: inverts the y-coordinate
+				((screenY/collisionLayer.getTileHeight()) * collisionLayer.getTileHeight()) - collisionLayer.getTileHeight());
+		
+		// bound the y coordinate to the map
+		if(touchY < 0)
+			touchY = 0;
+		else if(touchY > 320)
+			touchY = 320-32;
+		
+		Play.down = true; // for transparency
+		Play.touched = true; // register touch for drawing
+		Play.alpha = .65f; // set transparency
+		
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		
+		touchX = (int) (((int)(screenX/collisionLayer.getTileWidth())) * collisionLayer.getTileWidth());  
+
+		if(touchX < 0)
+			touchX = 0;
+		else if(touchX > 320)
+			touchX = 320-32;
+		
+		touchY = (int)((collisionLayer.getHeight()*collisionLayer.getTileHeight()) - 
+				((screenY/32) * collisionLayer.getTileHeight()) - collisionLayer.getTileHeight());
+		
+		if(touchY < 0)
+			touchY = 0;
+		else if(touchY > 320)
+			touchY = 320-32;
+		
+		Play.down = false; // for transparency
+		Play.up = true; // for transparency
+		Play.alpha = 1f; // set transparency
+		
 		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
+		
+		touchX = (int) (((int)(screenX/collisionLayer.getTileWidth())) * collisionLayer.getTileWidth()); 
+
+		if(touchX < 0)
+			touchX = 0;
+		else if(touchX > 320)
+			touchX = 320-32;
+		
+		touchY = (int)((collisionLayer.getHeight()*collisionLayer.getTileHeight()) -
+				((screenY/32) * collisionLayer.getTileHeight()) - collisionLayer.getTileHeight());
+		
+		if(touchY < 0)
+			touchY = 0;
+		else if(touchY > 320)
+			touchY = 320-32;
+
+		return true;
 	}
 
 	@Override
@@ -244,7 +307,12 @@ public class Player extends Sprite implements InputProcessor {
 
 	@Override
 	public boolean scrolled(int amount) {
-		return false;
+		if(amount == 1)
+			Play.camera.zoom *= 1.1f;
+		else if(amount == -1)
+			Play.camera.zoom *= .9f;
+		
+		return true;
 	}
 	
 }

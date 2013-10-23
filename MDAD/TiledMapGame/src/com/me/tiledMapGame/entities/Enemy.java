@@ -73,11 +73,11 @@ public class Enemy extends Sprite {
 	
 	public void draw(SpriteBatch spriteBatch){
 		update(Gdx.graphics.getDeltaTime());
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(300);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		super.draw(spriteBatch);
 	}
 	
@@ -86,7 +86,7 @@ public class Enemy extends Sprite {
 		int currX = Math.round(getX()/tileWidth);
 		int currY = Math.round(getY()/tileHeight);
 		
-		System.out.println(currY + "," + currX + ": " + objG.GridLayers.get(0).grid[currY][currX].dir);
+//		System.out.println(currY + "," + currX + ": " + objG.GridLayers.get(0).grid[currY][currX].dir);
 		
 		if(currY == 7 && currX == 7){
 			//stop moving, coordinates for testing
