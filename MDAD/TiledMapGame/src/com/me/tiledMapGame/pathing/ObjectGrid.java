@@ -5,7 +5,9 @@ package com.me.tiledMapGame.pathing;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.utils.Timer;
 import com.me.tiledMapGame.entities.Enemy;
+import com.me.tiledMapGame.entities.TowerAttackTask;
 
 /**
  *
@@ -26,26 +28,31 @@ public class ObjectGrid {
     public ArrayList<Enemy> EnemyList;
     public ArrayList<Unit> UnitList;
     public ArrayList<Tower> TowerList;
+    public Timer ActionTimer;
+    public Timer.Task task;
     
     public ObjectGrid(int length, int width){
     	this.length = length;
     	this.width = width;
     	GridLayers = new ArrayList<GridLayer>();
     	GridLayers.add(new GridLayer(length, width));
+    	ActionTimer = new Timer();
+    	task = new TowerAttackTask("Abba"); // TODO Testing
     }
     
-    /******************************************************************************
+    /*
      * update()				Return: void
      * ---------------------------------
      * Description: Call clearVisited for each GridLayer in GridLayers; call
      * 	"update()" for all Towers, Units, and Enemies.
-     ******************************************************************************/
+     */
     public void update(){
     	for(int i = 0; i < GridLayers.size(); ++i){
     		this.clearVisited(i);
     	}
     	//Call other update() functions
     	//... TODO
+    	ActionTimer.scheduleTask(task, .5f, 3.0f);
     }
     
     /******************************************************************************
@@ -103,6 +110,10 @@ public class ObjectGrid {
 	    			g.grid[y][x].is_passable = false;
 	    		}
 	    	}
+	    	
+	    	//Begin the Tower's attack timer
+	    	ActionTimer.scheduleTask(task, .5f, 3f);
+	    	
 	    	return true;
     	}
     	return false;
