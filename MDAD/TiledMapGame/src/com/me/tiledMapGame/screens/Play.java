@@ -38,13 +38,16 @@ public class Play implements Screen {
 	public static float alpha;
 	
 	// Sprite animation
-	SpriteBatch spriteAnimator;
+	SpriteBatch spriteArtist;
 	Animation cresAnima;
     Texture cresSheet;
     TextureRegion[] cresFrames;
     public static TextureRegion currentFrame;
 	float stateTime;
 	public static boolean down, up;
+	
+	// projectile
+	Sprite fireball;
 	
 	@Override
 	public void render(float delta) {
@@ -61,21 +64,43 @@ public class Play implements Screen {
 		currentFrame = cresAnima.getKeyFrame(stateTime, true);
 		
 		renderer.getSpriteBatch().begin();
-		spriteAnimator.begin();
-		p.draw(spriteAnimator);
-		for(a=0 ; a<enemies.length ; a++)
-			enemies[0].draw(spriteAnimator);
+		spriteArtist.begin();
+		p.draw(spriteArtist);
+		for(a=0 ; a<enemies.length ; a++){
+			if(enemies[a].getHealth() > 0)
+					enemies[a].draw(spriteArtist);
+		}
 		if(touched){
-			
 			if(down){
-				spriteAnimator.setColor(spriteAnimator.getColor().r, spriteAnimator.getColor().g, spriteAnimator.getColor().b, alpha);
+				spriteArtist.setColor(spriteArtist.getColor().r, spriteArtist.getColor().g, spriteArtist.getColor().b, alpha);
+				fireball.setPosition(Player.touchX+10, Player.touchY+10);
 			}
 			else if(up){
-				spriteAnimator.setColor(spriteAnimator.getColor().r, spriteAnimator.getColor().g, spriteAnimator.getColor().b, alpha);
+				spriteArtist.setColor(spriteArtist.getColor().r, spriteArtist.getColor().g, spriteArtist.getColor().b, alpha);
 			}
-			spriteAnimator.draw(currentFrame, Player.touchX, Player.touchY, 32, 32);
-			
-		}spriteAnimator.end();
+			spriteArtist.draw(currentFrame, Player.touchX, Player.touchY, 32, 32);
+			fireball.draw(spriteArtist);
+		}
+		
+		//////////////////////
+		if(touched && up){
+		fireball.rotate(15);
+		if(enemies[0].getX() > fireball.getX())
+			fireball.setPosition(fireball.getX()+1, fireball.getY());
+		else if(enemies[0].getX() < fireball.getX())
+			fireball.setPosition(fireball.getX()-1, fireball.getY());
+		if(enemies[0].getY() > fireball.getY())
+			fireball.setPosition(fireball.getX(), fireball.getY()+1);
+		else if(enemies[0].getY() < fireball.getY())
+			fireball.setPosition(fireball.getX(), fireball.getY()-1);
+//		fireball.draw(spriteArtist);
+		
+		if( (fireball.getX()-enemies[0].getX()) <= 4 && (fireball.getX()-enemies[0].getX()) >= 0 && (fireball.getY()-enemies[0].getY()) <= 4 && (fireball.getY()-enemies[0].getY()) >= 0 )
+			enemies[0].setHealth(enemies[0].getHealth()/2);
+		}
+		//////////////////////
+		
+		spriteArtist.end();
 		renderer.getSpriteBatch().end();
 		
 	}
@@ -130,8 +155,10 @@ public class Play implements Screen {
         cresAnima = new Animation(.05f, cresFrames);
         stateTime = 0f;
         
-        spriteAnimator = new SpriteBatch();
+        spriteArtist = new SpriteBatch();
         
+        fireball = new Sprite(new Texture("img/fireball.png"));
+        fireball.setPosition(160, 160);
 	}
 
 	@Override
@@ -153,11 +180,11 @@ public class Play implements Screen {
 	public void dispose() {
 		map.dispose();
 		renderer.getSpriteBatch().dispose();
-		renderer.dispose();
+//		renderer.dispose(); Leave out until there is another screen to switch to
 		p.getTexture().dispose();
 		for(a=0 ; a<enemies.length ; a++)
 			enemies[a].getTexture().dispose();
-		spriteAnimator.dispose();
+		spriteArtist.dispose();
 		cresSheet.dispose();
 		
 	}

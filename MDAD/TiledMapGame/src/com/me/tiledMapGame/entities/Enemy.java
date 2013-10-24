@@ -17,6 +17,8 @@ public class Enemy extends Sprite {
 //	private Vector2 velocity = new Vector2();
 //	private float speed = 16*2;
 	
+	private int health = 100;
+	
 	float tileWidth;
 	float tileHeight;
 	
@@ -106,5 +108,12 @@ public class Enemy extends Sprite {
 		
 	}
 	
+	public int getHealth(){
+		return health;
+	}
+	
+	public void setHealth(int health){
+		this.health = health;
+	}
 	
 }
