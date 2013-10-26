@@ -5,9 +5,7 @@ package com.me.tiledMapGame.pathing;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.utils.Timer;
-import com.me.tiledMapGame.entities.Enemy;
-import com.me.tiledMapGame.entities.TowerAttackTask;
+import com.me.tiledMapGame.entities.Entity;
 
 /**
  *
@@ -20,9 +18,10 @@ public class ObjectGrid {
     public int length;
     public int width;
     public ArrayList<GridLayer> GridLayers;
-    public ArrayList<Enemy> EnemyList;
-    public ArrayList<Unit> UnitList;
-    public ArrayList<Tower> TowerList;
+//    public ArrayList<Enemy> EnemyList;
+//    public ArrayList<Unit> UnitList;
+//    public ArrayList<Tower> TowerList;
+    public ArrayList<Entity> entities;
     
     public ObjectGrid(int length, int width){
     	this.length = length;
@@ -40,6 +39,13 @@ public class ObjectGrid {
     	//Call other update() functions
     	//... TODO
 
+    }
+    
+    /**
+     * Calls the draw method for all drawables in this class
+     */
+    public void draw() {
+    	// TODO
     }
     
     /**

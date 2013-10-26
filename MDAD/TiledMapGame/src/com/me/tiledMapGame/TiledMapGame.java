@@ -8,6 +8,7 @@ import com.me.tiledMapGame.screens.Play;
 public class TiledMapGame extends Game {
 	boolean mainScreen = true;
 	MainMenuScreen M;
+	Play P;
 	
 	@Override
 	public void create() {	
@@ -27,7 +28,9 @@ public class TiledMapGame extends Game {
 		super.render();
 		if(M.listener.isPressed()){
 			this.getScreen().dispose();
-			this.setScreen(new Play());
+//			this.setScreen(new Play());
+			P = new Play();
+			this.setScreen(P);
 		}
 	}
 

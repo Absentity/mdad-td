@@ -12,7 +12,7 @@ import com.me.tiledMapGame.pathing.PathFinder;
 import com.me.tiledMapGame.pathing.GridLayer;
 
 
-public class Enemy extends Sprite {
+public class Enemy extends MobileEntity {
 		
 //	private Vector2 velocity = new Vector2();
 //	private float speed = 16*2;
