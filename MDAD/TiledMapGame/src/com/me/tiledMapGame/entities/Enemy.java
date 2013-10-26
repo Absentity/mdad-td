@@ -54,7 +54,7 @@ public class Enemy extends Sprite {
 		for(int x = 0; x < objG.width; x++){
 			for(int y=0 ; y < objG.length ; y++){
         		if(collisionLayer.getCell(x, y).getTile().getProperties().containsKey("blocked")){
-        			objG.GridLayers.get(0).grid[x][y].is_passable = false;
+        			objG.GridLayers.get(0).getNodeInGrid(x, y).is_passable = false;
         		}
 //        		if(collisionLayer.getCell(i, j).getTile().getProperties().containsKey("kingdom")){
 //        			objG.grid[i][j].is_passable = false;
@@ -62,11 +62,11 @@ public class Enemy extends Sprite {
         	}
         }
 		
-		PathFinder.find_path(objG.GridLayers.get(0).grid, (int)kingdomX, (int)kingdomY);
+		PathFinder.find_path(objG.GridLayers.get(0).getGrid(), (int)kingdomX, (int)kingdomY);
 		
         for(int x = 0; x < objG.width; x++){
         	for(int y=0 ; y < objG.length ; y++){
-        		System.out.print(x + "," + y + ": " + objG.GridLayers.get(0).grid[x][y].dir + " | ");
+        		System.out.print(x + "," + y + ": " + objG.GridLayers.get(0).getNodeInGrid(x, y).dir + " | ");
         	}
         	System.out.println();
         }
@@ -93,16 +93,16 @@ public class Enemy extends Sprite {
 		if(currY == 7 && currX == 7){
 			//stop moving, coordinates for testing
 		}
-		else if(objG.GridLayers.get(0).grid[currY][currX].dir == Direction.RIGHT){
+		else if(objG.GridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.RIGHT){
 			setX(getX() + tileWidth);
 		}
-		else if(objG.GridLayers.get(0).grid[currY][currX].dir == Direction.LEFT){
+		else if(objG.GridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.LEFT){
 			setX(getX() - tileWidth);
 		}
-		else if(objG.GridLayers.get(0).grid[currY][currX].dir == Direction.UP){
+		else if(objG.GridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.UP){
 			setY(getY() + tileHeight);
 		}
-		else if(objG.GridLayers.get(0).grid[currY][currX].dir == Direction.DOWN){
+		else if(objG.GridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.DOWN){
 			setY(getY() - tileHeight);
 		}
 		

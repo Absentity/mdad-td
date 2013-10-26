@@ -1,16 +1,20 @@
 package com.me.tiledMapGame.pathing;
 
-/******************************************************************************
- * (Inner Class) GridLayer
- * ------------------------
- * Description: Holds a 2D array of Nodes, which represents squares on a 
- * 	Tiled Map.
- * 
- * *Note: 0,0 marks bottom left.
- *****************************************************************************/
+/**
+ * Holds a 2D array of Nodes, which represents squares on a Tiled Map.
+ * <p>
+ * *Note: (0,0) marks the bottom left.
+ */
 public class GridLayer{
-    public Node[][] grid;
+    private Node[][] grid;
     
+    /**
+     * Initializes a 2 Dimensional Array of Nodes, known as "grid", for use by
+     * PathFinder.
+     * 
+     * @param length
+     * @param width
+     */
     public GridLayer(int length, int width){
         grid = new Node[length][width];
         
@@ -34,5 +38,25 @@ public class GridLayer{
                     grid[r][c].neighbors.add(grid[r][c-1]);
             }
         }
+    }
+    
+    /**
+     * Getter method for this GridLayer's 2 Dimensional array of Nodes.
+     * 
+     * @return returns the 2 Dimensional array of Nodes for this GridLayer.
+     */
+    public Node[][] getGrid(){
+		return grid;
+    }
+    
+    /**
+     * Quickly access the node specified by x and y in grid.
+     * 
+     * @param x
+     * @param y
+     * @return the node specified by grid[y][x].
+     */
+    public Node getNodeInGrid(int x, int y){
+    	return grid[y][x];
     }
 }
