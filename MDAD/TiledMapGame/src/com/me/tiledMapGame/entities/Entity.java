@@ -14,6 +14,7 @@ import com.me.tiledMapGame.pathing.Node;
 public abstract class Entity extends Sprite {
 
 	protected int health;
+	protected double statetime;
 	
 	public Entity(Sprite sprite) {
 		super(sprite);

@@ -44,4 +44,11 @@ public class Level {
 	public void save() {
 		// TODO
 	}
+	
+	/**
+	 * Draw the map
+	 */
+	public void render() {
+		
+	}
 }

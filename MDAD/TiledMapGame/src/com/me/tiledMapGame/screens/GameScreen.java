@@ -20,6 +20,8 @@ public class GameScreen implements Screen {
 	
 	protected Level level;
 	
+	// UI stuff here
+	
 //	private Player p; 
 //	boolean keyPressed = false;
 //	boolean kBuilt = false;
@@ -51,6 +53,9 @@ public class GameScreen implements Screen {
 		this.level = level;
 	}
 	
+	/**
+	 * Render level.render() and all sprites. Use one SpriteBatch
+	 */
 	@Override
 	public void render(float delta) {
 		

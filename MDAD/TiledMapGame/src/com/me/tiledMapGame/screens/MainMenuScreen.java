@@ -46,8 +46,22 @@ public class MainMenuScreen implements Screen {
 		startGameButton.addListener(listener);
 		stage.addActor( startGameButton );  
 		b.setSize(640, 640);
-		Gdx.input.setInputProcessor(stage);	
+		Gdx.input.setInputProcessor(stage);
 	}
+	
+	/**
+	 * Load level select screen 
+	 */
+	private void startNewLevel() {
+	}
+	
+	/**
+	 * Load level from saved game
+	 */
+	private void loadSavedGame() {
+		// new GameScreen(Level.load());
+	}
+	
 
 	@Override
 	public void render(float delta) {
