@@ -15,8 +15,16 @@ public abstract class Entity extends Sprite {
 
 	protected int health;
 	
+	public Entity(Sprite sprite) {
+		super(sprite);
+	}
+
 	public Node getTile() {
 		// TODO: Implement me! D:
 		return null;
+	}
+	
+	public void dispose() {
+		// TODO: Subclasses such as Tower could create some explosion effects on dispose!
 	}
 }
