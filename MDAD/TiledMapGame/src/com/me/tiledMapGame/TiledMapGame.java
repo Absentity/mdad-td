@@ -2,19 +2,30 @@ package com.me.tiledMapGame;
 
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.me.tiledMapGame.screens.GameScreen;
+import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
-import com.me.tiledMapGame.screens.Play;
 
 public class TiledMapGame extends Game {
 	boolean mainScreen = true;
 	MainMenuScreen M;
+	LevelSelectScreen L;
+	GameScreen P;
+	public static Music music;
 	
 	@Override
 	public void create() {	
 		M = new MainMenuScreen();
-		setScreen(M);
+		this.setScreen(M);
 		
 		
+		// music code - change directory to sounds/song name.mp3 to change song
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Facade.mp3"));
+		music.setLooping(true);
+		music.setVolume(.5f);
+		music.play();
 	}
 
 	@Override
@@ -22,12 +33,18 @@ public class TiledMapGame extends Game {
 		super.dispose();
 	}
 
+	/**
+	 * This is called every time!!
+	 */
 	@Override
 	public void render() {		
 		super.render();
+		// TODO: Remove this in favor of an event.
 		if(M.listener.isPressed()){
 			this.getScreen().dispose();
-			this.setScreen(new Play());
+//			this.setScreen(new Play());
+			P = new GameScreen(null);
+			this.setScreen(P);
 		}
 	}
 

@@ -15,12 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class MainMenuScreen implements Screen{
+public class MainMenuScreen implements Screen {
 
+	// TODO: Extend this to launch Play screen instead of setting it every time in TiledMapGame.java 
 	public ClickListener listener = new ClickListener();
 	private Stage stage = new Stage();
 	private TextButton startGameButton;
 	private TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+	// TODO: unify assets, get from central location
 	private Texture background = new Texture("..\\TiledMapGame-android\\assets\\img\\MDAD-TITLE-v3.png");
 	private Sprite b = new Sprite(background);
 	private SpriteBatch batch = new SpriteBatch();
@@ -44,8 +46,22 @@ public class MainMenuScreen implements Screen{
 		startGameButton.addListener(listener);
 		stage.addActor( startGameButton );  
 		b.setSize(640, 640);
-		Gdx.input.setInputProcessor(stage);	
+		Gdx.input.setInputProcessor(stage);
 	}
+	
+	/**
+	 * Load level select screen 
+	 */
+	private void startNewLevel() {
+	}
+	
+	/**
+	 * Load level from saved game
+	 */
+	private void loadSavedGame() {
+		// new GameScreen(Level.load());
+	}
+	
 
 	@Override
 	public void render(float delta) {

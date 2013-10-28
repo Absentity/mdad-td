@@ -53,6 +53,7 @@ public class PathFinder {
                 Node cur_Node = queue.poll();
                 
                 //Mark and enqueue all of cur_Node's neighbors (if not already visited)
+                // TODO: change from Direction enum to unit vector direction
                 for(Node n: cur_Node.neighbors){
                     if(n.is_passable && !n.visited){
                         if(n.x > cur_Node.x)
