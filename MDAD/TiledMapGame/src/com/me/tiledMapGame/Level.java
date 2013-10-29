@@ -51,4 +51,8 @@ public class Level {
 	public void render() {
 		
 	}
+	
+	public TiledMap getMap(){
+		return map;
+	}
 }
