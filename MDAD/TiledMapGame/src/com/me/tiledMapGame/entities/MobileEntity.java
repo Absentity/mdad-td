@@ -4,7 +4,7 @@
 package com.me.tiledMapGame.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.pathing.GridLayer;
@@ -15,11 +15,13 @@ import com.me.tiledMapGame.pathing.GridLayer;
  */
 public abstract class MobileEntity extends Entity {
 
+	float maxVelocity;
 	protected Vector2 velocity;
 	protected GridLayer pathLayer;
 	
-	public MobileEntity(Sprite sprite) {
-		super(sprite);
+	public MobileEntity(Texture texture, int health, float maxVelocity) {
+		super(texture, health);
+		this.maxVelocity = maxVelocity;
 	}
 	
 	public void draw(SpriteBatch spriteBatch) {

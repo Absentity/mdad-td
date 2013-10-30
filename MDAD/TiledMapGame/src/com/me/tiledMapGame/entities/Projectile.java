@@ -3,7 +3,7 @@
  */
 package com.me.tiledMapGame.entities;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -14,8 +14,8 @@ public class Projectile extends MobileEntity {
 	
 	private Vector2 direction;
 
-	public Projectile(Sprite sprite, Vector2 direction) {
-		super(sprite);
+	public Projectile(Texture texture, Vector2 direction) {
+		super(texture, 0, direction.len());
 		this.direction = direction;
 		// TODO Auto-generated constructor stub
 	}

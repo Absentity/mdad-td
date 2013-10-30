@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Unit extends MobileEntity {
 
-	public Unit(Sprite sprite) {
-		super(sprite);
-		// TODO Auto-generated constructor stub
+	private UnitType unit;
+	
+	public Unit(UnitType unit) {
+		super(unit.texture, unit.health, unit.maxVelocity);
+		this.unit = unit;
 	}
 
 }

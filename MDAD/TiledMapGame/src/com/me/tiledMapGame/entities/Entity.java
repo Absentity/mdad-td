@@ -3,8 +3,8 @@
  */
 package com.me.tiledMapGame.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.pathing.Node;
 
 /**
@@ -16,8 +16,9 @@ public abstract class Entity extends Sprite {
 	protected int health;
 	protected double statetime;
 	
-	public Entity(Sprite sprite) {
-		super(sprite);
+	public Entity(Texture texture, int health) {
+		super(texture);
+		this.health = health;
 	}
 
 	public Node getTile() {
