@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * @author Bret
- *
+ * This is an instance of a Tower object. When the player places a tower
+ * on the map, the game creates a new instance on that cell.
  */
 public class Tower extends Entity {
 	
@@ -20,10 +20,14 @@ public class Tower extends Entity {
     private static TextureRegion currentFrame;
 	private int index = 0;
 	private float stateTime;
+	private TowerType tower;
 	
-	public Tower(Sprite sprite) {
-		super(sprite);
-		sheet = sprite.getTexture();
+	public Tower(TowerType tower) {
+		super(tower.texture, tower.health);
+		this.tower = tower;
+//		super(sprite);
+//		sheet = sprite.getTexture();
+		// TODO Move Animation generating code into Entity
 		TextureRegion[][] tempTexReg = TextureRegion.split(sheet, sheet.getWidth()/4, sheet.getHeight()/3);
 		frames = new TextureRegion[12];
 		index = 0;

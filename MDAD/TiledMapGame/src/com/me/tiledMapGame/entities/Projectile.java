@@ -3,6 +3,7 @@
  */
 package com.me.tiledMapGame.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,24 +13,26 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Projectile extends MobileEntity {
 	
-//	private Vector2 direction; not needed. see directional code in update().
+	private Vector2 direction; // TODO not needed. see directional code in update
+	                           // Bret: Unless the target is a point and not following a target, right?
 	private Sprite target = new Sprite();
 	private float speed = 1.5f; // TODO: adjust this to make animation look right
 	private float distance = 0;
 	private float delX = 0, delY = 0, angle = 0;
 
-	public Projectile(Sprite sprite, /*Sprite target,*/ int x, int y) {
-		super(sprite);
-		target.setX(200); // FOR TESTING
-		target.setY(200); // FOR TESTING
+	public Projectile(Texture texture, /*Sprite target,*/ Vector2 direction) {
+	/* public Projectile(Texture texture, /*Sprite target, int x, int y) {*/
+		super(texture, 0, direction.len());
+		this.direction = direction;
+//		target.setX(200); // FOR TESTING
+//		target.setY(200); // FOR TESTING
 //		this.target = target;
 //		this.direction = direction;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void update(float delta) {
 		// Ignore path layer and follow direct projectile vector
-		rotate(-15);
+		rotate(-15); // TODO Investigate: possibly more costly than sprite animation frames
 		
 		delX = getX() - target.getX();
 		delY = getY() - target.getY();

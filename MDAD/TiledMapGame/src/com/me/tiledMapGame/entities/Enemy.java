@@ -18,7 +18,7 @@ public class Enemy extends MobileEntity {
 //	private float speed = 16*2;
 	
 //	private int health = 100;
-	private int attackStrength;
+	private EnemyType enemy;
 	
 //	float tileWidth;
 //	float tileHeight;
@@ -29,8 +29,9 @@ public class Enemy extends MobileEntity {
 	
 //	TiledMapTileLayer collisionLayer;
 //	ObjectGrid objG = new ObjectGrid(10, 10);
-	public Enemy(Sprite sprite) {
-		super(sprite);
+	public Enemy(EnemyType enemy) {
+		super(enemy.texture, enemy.health, enemy.maxVelocity);
+		this.enemy = enemy;
 	}
 	
 //	public Enemy(Sprite sprite, TiledMapTileLayer collisionLayer){
