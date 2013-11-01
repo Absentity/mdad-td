@@ -26,7 +26,7 @@ public class Tower extends Entity {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 //		super(sprite);
-//		sheet = sprite.getTexture();
+		sheet = tower.texture;
 		// TODO Move Animation generating code into Entity
 		TextureRegion[][] tempTexReg = TextureRegion.split(sheet, sheet.getWidth()/4, sheet.getHeight()/3);
 		frames = new TextureRegion[12];

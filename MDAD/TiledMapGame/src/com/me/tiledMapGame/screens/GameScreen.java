@@ -12,10 +12,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
+import com.me.tiledMapGame.entities.TowerType;
 
 public class GameScreen implements Screen {
 	
@@ -127,8 +129,8 @@ public class GameScreen implements Screen {
 		i = new Input();
 		Gdx.input.setInputProcessor(i);
 		
-		t = new Tower(new Sprite(new Texture("img/CresTowTest.png"))); // FOR TESTING
-		p = new Projectile(new Sprite(new Texture("img/fireball.png")), 200, 200); // FOR TESTING
+		t = new Tower(new TowerType(new Texture("img/CresTowTest.png"), 100, 10)); // FOR TESTING
+		p = new Projectile(new Texture("img/fireball.png"), new Vector2(200,200)); // FOR TESTING
 		p.setPosition(120, 32); // FOR TESTING
 
 	}
