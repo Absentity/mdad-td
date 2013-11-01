@@ -23,9 +23,11 @@ public class MainMenuScreen implements Screen {
 	private TextButton startGameButton;
 	private TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 	// TODO: unify assets, get from central location
-	private Texture background = new Texture("..\\TiledMapGame-android\\assets\\img\\MDAD-TITLE-v3.png");
+	private Texture background = new Texture("img/MDAD-TITLE-v3.png");
 	private Sprite b = new Sprite(background);
 	private SpriteBatch batch = new SpriteBatch();
+
+	public static boolean done = false; // FOR TESTING
 	
 	public MainMenuScreen(){
 		style.font = new BitmapFont();
@@ -39,7 +41,7 @@ public class MainMenuScreen implements Screen {
 //		welcomeLabel.setY(( currentY + 100 ));      
 //		stage.addActor( welcomeLabel );        
 		// button "start game"        
-
+				
 		startGameButton.setWidth(32f);
 		startGameButton.setHeight(12f);
 		startGameButton.setBounds(stage.getWidth() - startGameButton.getWidth() / 2, 280, 32, 12);

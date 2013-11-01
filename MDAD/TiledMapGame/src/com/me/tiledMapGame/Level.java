@@ -1,7 +1,10 @@
 package com.me.tiledMapGame;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -16,6 +19,7 @@ public class Level {
 	protected ObjectGrid objectGrid;
 	private int gold; // Example resource
 	
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	/**
 	 * 
 	 * @param name Name of a map, not a path
@@ -54,5 +58,13 @@ public class Level {
 	
 	public TiledMap getMap(){
 		return map;
+	}
+	
+	/**
+	 * Removes the enemy from the enemies ArrayList. To be called upon enemy death.
+	 * @param position The place in the ArrayList.
+	 */
+	public void removeEnemy(int position){
+		enemies.remove(position);
 	}
 }
