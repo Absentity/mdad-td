@@ -57,13 +57,13 @@ public class PathFinder {
                 for(Node n: cur_Node.neighbors){
                     if(n.is_passable && !n.visited){
                         if(n.x > cur_Node.x)
-                            n.dir = Direction.LEFT;
+                            n.dir.set(-1, 0);
                         if(n.x < cur_Node.x)
-                            n.dir = Direction.RIGHT;
+                            n.dir.set(1,0);
                         if(n.y > cur_Node.y)
-                            n.dir = Direction.DOWN;
+                            n.dir.set(0,-1);
                         if(n.y < cur_Node.y)
-                            n.dir = Direction.UP;
+                            n.dir.set(0, 1);
 
                         n.visited = true;  		 //Mark the node as visited
                         n.dist_to_src = count;	 //Mark dist_to_src
