@@ -26,7 +26,5 @@ public abstract class Entity extends Sprite {
 		return null;
 	}
 	
-	public void dispose() {
-		// TODO: Subclasses such as Tower could create some explosion effects on dispose!
-	}
+	public abstract void dispose();
 }
