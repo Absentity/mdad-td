@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.pathing.GridLayer;
+import com.me.tiledMapGame.pathing.Node;
 
 /**
  * @author Bret
@@ -29,10 +30,16 @@ public abstract class MobileEntity extends Entity {
 		super.draw(spriteBatch);
 	}
 
+	/**
+	 * Update the position of the mobile entity, letting them curve
+	 * around corners.
+	 * @param delta time in milliseconds since last update
+	 */
 	protected void update(float delta) {
+		Node tile = this.getTile();
 		// Update position based on velocity
-		float x = this.getX();
-		float y = this.getY();
+		float dX = tile.dir;
+		float dY = this.getY();
 //		Vector2 dir = getTile().dir;
 //		this.setX()
 	}

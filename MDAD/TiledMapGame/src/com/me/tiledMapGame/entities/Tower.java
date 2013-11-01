@@ -61,5 +61,11 @@ public class Tower extends Entity {
 	public TextureRegion getCurrentFrame(){
 		return currentFrame;
 	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
