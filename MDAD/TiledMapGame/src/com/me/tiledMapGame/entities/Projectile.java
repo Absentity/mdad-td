@@ -15,6 +15,7 @@ public class Projectile extends MobileEntity {
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * For Multidirectional attacks, each projectile fired can be given a target
 	 * that is at the edge of the max range if whatever direction. For example,
@@ -46,11 +47,16 @@ public class Projectile extends MobileEntity {
 	private Vector2 direction; // TODO not needed. see directional code in update
 	                           // Bret: Unless the target is a point and not following a target, right?
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
+	private Vector2 direction; // TODO not needed. see directional code in update
+	                           // Bret: Unless the target is a point and not following a target, right?
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 	private Sprite target = new Sprite();
 	private float speed = 1.5f; // TODO: adjust for balance
 	private float distanceToTarget = 9000;
 	private float delX = 0, delY = 0, angle = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	public Projectile(Sprite sprite, Sprite target) {
@@ -67,6 +73,8 @@ public class Projectile extends MobileEntity {
 =======
 =======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 	public Projectile(Texture texture, /*Sprite target,*/ Vector2 direction) {
 	/* public Projectile(Texture texture, /*Sprite target, int x, int y) {*/
 		super(texture, 0, direction.len());
@@ -74,6 +82,9 @@ public class Projectile extends MobileEntity {
 //		target.setX(200); // FOR TESTING
 //		target.setY(200); // FOR TESTING
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 =======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
@@ -85,8 +96,11 @@ public class Projectile extends MobileEntity {
 		// Ignore path layer and follow direct projectile vector
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rotate(-15); // rotation for visual effect
 =======
+=======
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 =======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 		rotate(-15); // TODO Investigate: possibly more costly than sprite animation frames

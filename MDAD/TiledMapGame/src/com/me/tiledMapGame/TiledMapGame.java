@@ -6,8 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 =======
+=======
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 =======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 import com.badlogic.gdx.audio.Sound;
@@ -16,6 +19,9 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Tower;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 =======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
@@ -39,6 +45,7 @@ public class TiledMapGame extends Game {
 	GameScreen P;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public static Music music;
 	public static Splash S;
 	public ClickListener listener = new ClickListener();
@@ -49,6 +56,8 @@ public class TiledMapGame extends Game {
 		M = new MainMenuScreen();
 		this.setScreen(S);
 =======
+=======
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 	
 	public static ObjectMap<String, Enemy> enemyLibrary;
 	public static ObjectMap<String, Tower> towerLibrary;
@@ -82,6 +91,7 @@ public class TiledMapGame extends Game {
 	 */
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
+<<<<<<< HEAD
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 		
 =======
@@ -118,6 +128,9 @@ public class TiledMapGame extends Game {
 	 */
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
+		
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
 		
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 		// textureLibrary.put(key, value);
