@@ -11,10 +11,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /** NOTE: Tower sprites MUST have 12 frames in the sprite sheet.
  *
  * @author Bret
  *
+=======
+/**
+ * This is an instance of a Tower object. When the player places a tower
+ * on the map, the game creates a new instance on that cell.
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 =======
 /**
  * This is an instance of a Tower object. When the player places a tower
@@ -30,6 +36,7 @@ public class Tower extends Entity {
 	private int index = 0;
 	private float stateTime;
 	private TowerType tower;
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
 	private boolean placed = false;
@@ -41,12 +48,18 @@ public class Tower extends Entity {
 		super(sprite);
 		sheet = sprite.getTexture();
 =======
+=======
+	
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 //		super(sprite);
 		sheet = tower.texture;
 		// TODO Move Animation generating code into Entity
+<<<<<<< HEAD
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 		TextureRegion[][] tempTexReg = TextureRegion.split(sheet, sheet.getWidth()/4, sheet.getHeight()/3);
 		frames = new TextureRegion[12];

@@ -5,13 +5,19 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 =======
+=======
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Tower;
+<<<<<<< HEAD
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+=======
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
@@ -31,6 +37,7 @@ public class TiledMapGame extends Game {
 	public static MainMenuScreen M;
 	LevelSelectScreen L;
 	GameScreen P;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	public static Music music;
 	public static Splash S;
@@ -77,6 +84,42 @@ public class TiledMapGame extends Game {
 		textureLibrary = new ObjectMap<String, Texture>();
 >>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 		
+=======
+	
+	public static ObjectMap<String, Enemy> enemyLibrary;
+	public static ObjectMap<String, Tower> towerLibrary;
+	public static ObjectMap<String, Texture> textureLibrary;
+	public static ObjectMap<String, Music> musicLibrary;
+	public static ObjectMap<String, Sound> soundLibrary;
+	
+	@Override
+	public void create() {
+		
+		// Start up the game
+		loadEntities();
+		loadAudio();
+		loadTextures();
+		
+		M = new MainMenuScreen();
+		this.setScreen(M);
+	}
+
+	/**
+	 * Load Textures into object hashmap following this convention:
+	 * typeName -
+	 * 	type = texture type
+	 *  name = unique name to identify the texture
+	 * 
+	 * Types:
+	 *  ui
+	 *  enemy
+	 *  tower
+	 *  
+	 */
+	private void loadTextures() {
+		textureLibrary = new ObjectMap<String, Texture>();
+		
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 		// textureLibrary.put(key, value);
 	}
 
