@@ -2,10 +2,11 @@ package com.me.tiledMapGame.pathing;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Node {
 	
-	public Direction dir;
-	public int dirValue;
+	public Vector2 dir;
     public boolean is_passable;
     int dist_to_src; 
     int x, y;
@@ -16,7 +17,7 @@ public class Node {
     public Node(){
         is_passable = true;
         visited = false;
-        dir = Direction.NONE;
+        dir = new Vector2();
         neighbors = new ArrayList<>();
         terrain = "none";
     }

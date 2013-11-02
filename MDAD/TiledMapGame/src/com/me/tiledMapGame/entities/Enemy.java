@@ -18,7 +18,7 @@ public class Enemy extends MobileEntity {
 //	private float speed = 16*2;
 	
 //	private int health = 100;
-	private int attackStrength;
+	private EnemyType enemy;
 	
 //	float tileWidth;
 //	float tileHeight;
@@ -30,9 +30,15 @@ public class Enemy extends MobileEntity {
 	
 //	TiledMapTileLayer collisionLayer;
 //	ObjectGrid objG = new ObjectGrid(10, 10);
+<<<<<<< HEAD
 	public Enemy(Sprite sprite) {
 		super(sprite);
 //		destination.set(x, y); // set to location of kingdom
+=======
+	public Enemy(EnemyType enemy) {
+		super(enemy.texture, enemy.health, enemy.maxVelocity);
+		this.enemy = enemy;
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 	}
 	
 //	public Enemy(Sprite sprite, TiledMapTileLayer collisionLayer){

@@ -26,6 +26,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+<<<<<<< HEAD
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -40,11 +41,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+=======
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
+import com.me.tiledMapGame.entities.TowerType;
 
 public class GameScreen implements Screen {
 	
@@ -206,6 +210,7 @@ public class GameScreen implements Screen {
 //		bStyle = new ButtonStyle();
 		nine = MenuNinePatch.getInstance();
 		
+<<<<<<< HEAD
 		Gdx.input.setInputProcessor(stage);
 		
 		
@@ -275,6 +280,11 @@ public class GameScreen implements Screen {
 		towerTable.add(cresButton);
 		towerTable.setPosition(120/3, TiledMapGame.screenWidth-25); // 120/3 = ninePatch width divided into 3 sections. second column would start at x=80.
 		towerTable.setVisible(false);
+=======
+		t = new Tower(new TowerType(new Texture("img/CresTowTest.png"), 100, 10)); // FOR TESTING
+		p = new Projectile(new Texture("img/fireball.png"), new Vector2(200,200)); // FOR TESTING
+		p.setPosition(120, 32); // FOR TESTING
+>>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 
 		stage.addActor(closeMenu);
 		stage.addActor(towerTable);
