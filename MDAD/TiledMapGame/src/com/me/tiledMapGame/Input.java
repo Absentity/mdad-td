@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.entities.Tower;
+import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
 
@@ -50,7 +51,7 @@ public class Input implements InputProcessor {
 
 		MainMenuScreen.done = true; // FOR TESTING
 		
-		GameScreen.towers.add(new Tower(new Sprite(new Texture("img/CresTowTest.png")))); // FOR TESTING
+		GameScreen.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f))); // FOR TESTING
 		GameScreen.towers.get(GameScreen.towers.size()-1).setPosition(x, y); // FOR TESTING
 		GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(.65f); // FOR TESTING
 		

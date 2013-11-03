@@ -6,17 +6,17 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 
 public class MenuNinePatch extends NinePatch {
 	
-	private static MenuNinePatch instance;
+//	private static MenuNinePatch instance;
 	
-	private MenuNinePatch() {
+	public MenuNinePatch() {
 		super(new Texture(Gdx.files.internal("data/menuskin.png")), 8, 8, 8, 8);
 	}
 	
-	public static MenuNinePatch getInstance(){
-        if(instance == null){
-                instance = new MenuNinePatch();
-        }
-        return instance;
-	}
+//	public static MenuNinePatch getInstance(){
+//        if(instance == null){
+//                instance = new MenuNinePatch();
+//        }
+//        return instance;
+//	}
 	
 }

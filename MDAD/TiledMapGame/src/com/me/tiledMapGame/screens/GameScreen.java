@@ -26,29 +26,23 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.TiledMapGame;
@@ -74,14 +68,24 @@ public class GameScreen implements Screen {
 	// UI stuff here
 	Button twrsButton;
 	Button cresButton;
+	Button bombButton;
+	Button ampButton;
+	TextButton confirmSelection;
+	TextButton closeMenu;
 	Skin skin;
 	public static Stage stage;
-	Table table;
-	ScrollPane scrollPane;
-	MenuNinePatch nine;
+	Table buttonTable;
+//	ScrollPane scrollPane;
+	MenuNinePatch towerNinePatch;
+	MenuNinePatch towerInfoNinePatch;
 	boolean openTowerMenu = false;
 	Table towerTable;
-	TextButton closeMenu;
+	Table infoTable;
+	TextButton towerNameLabel; // Button without a listener
+	TextButton towerDamageLabel; // Button without a listener
+	TextButton towerRangeLabel; // Button without a listener
+	
+	boolean chose = false;
 	
 	
 	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS
@@ -154,13 +158,29 @@ public class GameScreen implements Screen {
 		if(openTowerMenu){
 			towerTable.setVisible(true);
 			closeMenu.setVisible(true);
+			
 			stage.getSpriteBatch().begin();
-			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f); // FOR TESTING
-			nine.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); // FOR TESTING
+			
+			if(chose){
+				confirmSelection.setVisible(true);
+				towerNameLabel.setVisible(true);
+				towerDamageLabel.setVisible(true);
+				towerRangeLabel.setVisible(true);
+				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
+				towerInfoNinePatch.draw(stage.getSpriteBatch(), 210, 240, 110, 80);
+			}
+			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
+			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); // FOR TESTING
 			stage.getSpriteBatch().end();
+			
 		} else {
+			confirmSelection.setVisible(false);
+			towerNameLabel.setVisible(false);
+			towerDamageLabel.setVisible(false);
+			towerRangeLabel.setVisible(false);
 			towerTable.setVisible(false);
 			closeMenu.setVisible(false);
+			chose = false;
 		}
 		
 		stage.draw();
@@ -204,104 +224,27 @@ public class GameScreen implements Screen {
 		camera.position.y = layer.getHeight()*(layer.getTileHeight()/2);
 		
 		i = new Input();
-//		Gdx.input.setInputProcessor(i);
 
-		skin = new Skin();
-		skin.add("up", new Sprite(new Texture("img/buttonUp.png")));
-		skin.add("down", new Sprite(new Texture("img/buttonDown.png")));
-		skin.add("cresUp", new Sprite(new Texture("img/CresTow1.png")));
-		skin.add("cresDown", new Sprite(new Texture("img/CresTow8.png")));
-		
 		stage = new Stage();
-//		bStyle = new ButtonStyle();
-		nine = MenuNinePatch.getInstance();
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 		Gdx.input.setInputProcessor(stage);
 		
+		setupSkin();
+		createTwrsButton();
+	    createInfoBox();
+	    setupTowerOptions();
+	    setupButtonTable();
+		setupTowerTable();
 		
-		TextButtonStyle twrsButtonStyle = new TextButtonStyle();
-		twrsButtonStyle.up = skin.getDrawable("up");
-		twrsButtonStyle.down = skin.getDrawable("down");
-		
-	    twrsButton = new Button(twrsButtonStyle);
-	    twrsButton.addListener(new InputListener() {
-	        public boolean touchDown(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        		changeTowerMenuState();
-	            return true;
-	        }
-
-	        public void touchUp(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        }
-	    });
-	    
-	    TextButtonStyle cresButtonStyle = new TextButtonStyle();
-	    cresButtonStyle.up = skin.getDrawable("cresUp");
-	    cresButtonStyle.down = skin.getDrawable("cresDown");
-	    
-	    cresButton = new Button(cresButtonStyle);
-	    cresButton.addListener(new InputListener() {
-	        public boolean touchDown(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        		System.out.println("Cresent Tower selected");
-	        		Gdx.input.setInputProcessor(i);
-	            return true;
-	        }
-
-	        public void touchUp(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        }
-	    });
-		
-	    TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-	    style.font = new BitmapFont();
-	    style.fontColor = new Color(0, 0, 200, .8f);
-	    style.pressedOffsetX = 2;
-	    style.pressedOffsetY = -2;
-	    closeMenu = new TextButton("Close", style);
-	    closeMenu.addListener(new ClickListener() {
-	        public boolean touchDown(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        		
-	            return true;
-	        }
-
-	        public void touchUp(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        			changeTowerMenuState();
-	        }
-	    });
-	    closeMenu.setPosition(75, 5);
-	    closeMenu.setVisible(false);
-	    
-	    table = new Table();
-	    table.add(twrsButton);
-	    table.setPosition(TiledMapGame.screenWidth-25, 25);
-	    
-		stage.addActor(table);
-		
-		towerTable = new Table();
-		towerTable.add(cresButton);
-		towerTable.setPosition(120/3, TiledMapGame.screenWidth-25); // 120/3 = ninePatch width divided into 3 sections. second column would start at x=80.
-		towerTable.setVisible(false);
-=======
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-		t = new Tower(new TowerType(new Texture("img/CresTowTest.png"), 100, 10)); // FOR TESTING
-		p = new Projectile(new Texture("img/fireball.png"), new Vector2(200,200)); // FOR TESTING
-		p.setPosition(120, 32); // FOR TESTING
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-
+		stage.addActor(buttonTable);		
 		stage.addActor(closeMenu);
+		stage.addActor(confirmSelection);
 		stage.addActor(towerTable);
+		stage.addActor(infoTable);
 		
 	}
+
+	
 
 	@Override
 	public void hide() {
@@ -338,12 +281,211 @@ public class GameScreen implements Screen {
 	/**
 	 *  Opens tower menu if it is closed and closes tower menu if it is open.
 	 */
-	private void changeTowerMenuState(){
+	private void changeTowerMenuState() {
 		if(openTowerMenu) {
 			openTowerMenu = false;
 		} else {
 			openTowerMenu = true;
 		}
 	}
+	
+	private void setupSkin() {
+		
+		skin = new Skin();
+		skin.add("up", new Sprite(new Texture("img/buttonUp.png")));
+		skin.add("down", new Sprite(new Texture("img/buttonDown.png")));
+		skin.add("cresUp", new Sprite(new Texture("img/CresTow1.png")));
+		skin.add("cresDown", new Sprite(new Texture("img/CresTow8.png")));
+		skin.add("bombUp", new Sprite(new Texture("img/bombTowerUp.png")));
+		skin.add("bombDown", new Sprite(new Texture("img/bombTowerDown.png")));
+		skin.add("ampUp", new Sprite(new Texture("img/amplifyTowerUp.png")));
+		skin.add("ampDown", new Sprite(new Texture("img/amplifyTowerDown.png")));
+	}
+	
+	private void createTwrsButton() {
+		
+		TextButtonStyle twrsButtonStyle = new TextButtonStyle();
+		twrsButtonStyle.up = skin.getDrawable("up");
+		twrsButtonStyle.down = skin.getDrawable("down");
+		
+	    twrsButton = new Button(twrsButtonStyle);
+	    twrsButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		changeTowerMenuState();
+	            return true;
+	        }
 
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        }
+	    });
+	    
+	}
+	
+	private void createInfoBox() {
+		
+		towerInfoNinePatch = new MenuNinePatch();
+		
+		infoTable = new Table();
+		infoTable.setBounds(210, 240, 110, 80);
+		infoTable.pad(5);
+		infoTable.top();
+		
+		TextButton.TextButtonStyle infoStyle = new TextButton.TextButtonStyle();
+		infoStyle.font = new BitmapFont();
+		infoStyle.fontColor = new Color(255,0,0,.7f);
+		
+		towerNameLabel = new TextButton("Tower Name", infoStyle);
+		towerDamageLabel = new TextButton("Tower Damage", infoStyle);
+		towerRangeLabel = new TextButton("Tower Range", infoStyle);
+		towerNameLabel.setVisible(false);
+		towerDamageLabel.setVisible(false);
+		towerRangeLabel.setVisible(false);
+		
+		infoTable.add(towerNameLabel);
+		infoTable.row();
+		infoTable.add(towerDamageLabel);
+		infoTable.row();
+		infoTable.add(towerRangeLabel);
+		
+	}
+	
+	private void setupTowerOptions(){
+		
+		towerNinePatch = new MenuNinePatch();
+
+		TextButtonStyle cresButtonStyle = new TextButtonStyle();
+	    cresButtonStyle.up = skin.getDrawable("cresUp");
+	    cresButtonStyle.down = skin.getDrawable("cresDown");
+		
+		cresButton = new Button(cresButtonStyle);
+	    cresButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Cresent Tower selected");
+//	        		Gdx.input.setInputProcessor(i);
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        	chose = true;
+	        	towerNameLabel.setText("Cresent Tower");
+	        	towerDamageLabel.setText("Damage: 50");
+	        	towerRangeLabel.setText("Range: 70");
+	        }
+	    });
+	    
+	    TextButtonStyle bombButtonStyle = new TextButtonStyle();
+	    bombButtonStyle.up = skin.getDrawable("bombUp");
+	    bombButtonStyle.down = skin.getDrawable("bombDown");
+	    
+	    bombButton = new Button(bombButtonStyle);
+	    bombButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Bomb Tower selected");
+//	        		Gdx.input.setInputProcessor(i);
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        	chose = true;
+	        	towerNameLabel.setText("Bomb Tower");
+	        	towerDamageLabel.setText("Damage: 80");
+	        	towerRangeLabel.setText("Range: 50");
+	        }
+	    });
+		
+	    TextButtonStyle ampButtonStyle = new TextButtonStyle();
+	    ampButtonStyle.up = skin.getDrawable("ampUp");
+	    ampButtonStyle.down = skin.getDrawable("ampDown");
+	    
+	    ampButton = new Button(ampButtonStyle);
+	    ampButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Amplifier Tower selected");
+//	        		Gdx.input.setInputProcessor(i);
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        	chose = true;
+	        	towerNameLabel.setText("Amplifier Tower");
+	        	towerDamageLabel.setText("Damage: 0");
+	        	towerRangeLabel.setText("Range: 100");
+	        }
+	    });
+	    
+	    TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+	    style.font = new BitmapFont();
+	    style.fontColor = new Color(0, 0, 200, .8f);
+	    style.pressedOffsetX = 2;
+	    style.pressedOffsetY = -2;
+	    
+	    closeMenu = new TextButton("Close", style);
+	    closeMenu.addListener(new ClickListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        			changeTowerMenuState();
+	        }
+	    });
+	    closeMenu.setPosition(75, 5);
+	    closeMenu.setVisible(false);
+	    
+	    confirmSelection = new TextButton("Confirm", style);
+	    confirmSelection.addListener(new ClickListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        			changeTowerMenuState();
+	        }
+	    });
+	    confirmSelection.setPosition(10, 5);
+	    confirmSelection.setVisible(false);
+	}
+	
+	private void setupTowerTable(){
+		
+		towerTable = new Table();
+		towerTable.setBounds(0, 0, 100, 320-10); // offset y by 10 for appearance
+		towerTable.pad(0, 20, 0, 0);
+		towerTable.top();
+		
+		towerTable.add(cresButton).spaceRight(24).spaceBottom(5);
+		towerTable.add(bombButton).spaceBottom(5);
+		towerTable.row();
+		
+		towerTable.add(ampButton).spaceRight(24);
+		
+		// Follow this pattern to add two towers per line.
+		// towerTable.add(NEW TOWER).spaceRight(24).spaceBottom(5);
+		// towerTable.add(NEXT NEW TOWER).spaceBottom(5);
+		// towerTable.row();
+		
+		towerTable.setVisible(false);
+	}
+	
+	private void setupButtonTable() {
+		
+		buttonTable = new Table();
+	    
+	    buttonTable.add(twrsButton);
+	    buttonTable.setPosition(TiledMapGame.screenWidth-25, 25);
+	}
 }

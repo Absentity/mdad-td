@@ -29,7 +29,7 @@ public abstract class MobileEntity extends Entity {
 		super.draw(spriteBatch);
 	}
 
-	protected void update(float delta) {
+	public void update(float delta) {
 		// Update position based on velocity
 		float x = this.getX();
 		float y = this.getY();

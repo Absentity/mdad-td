@@ -4,27 +4,12 @@ package com.me.tiledMapGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-=======
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Tower;
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
@@ -41,40 +26,27 @@ public class TiledMapGame extends Game {
 	
 	boolean mainScreen = true;
 	public static MainMenuScreen M;
+	public static Splash S;
 	LevelSelectScreen L;
 	GameScreen P;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	public static Music music;
-	public static Splash S;
-	public ClickListener listener = new ClickListener();
+	
+	public static ObjectMap<String, Enemy> enemyLibrary;
+	public static ObjectMap<String, Tower> towerLibrary;
+	public static ObjectMap<String, Texture> textureLibrary;
+	public static ObjectMap<String, Music> musicLibrary;
+	public static ObjectMap<String, Sound> soundLibrary;
 	
 	@Override
 	public void create() {
+		
+		// Start up the game
+		loadEntities();
+//		loadAudio();
+		loadTextures();
+
 		S = new Splash(this);
 		M = new MainMenuScreen();
 		this.setScreen(S);
-=======
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-	
-	public static ObjectMap<String, Enemy> enemyLibrary;
-	public static ObjectMap<String, Tower> towerLibrary;
-	public static ObjectMap<String, Texture> textureLibrary;
-	public static ObjectMap<String, Music> musicLibrary;
-	public static ObjectMap<String, Sound> soundLibrary;
-	
-	@Override
-	public void create() {
-		
-		// Start up the game
-		loadEntities();
-		loadAudio();
-		loadTextures();
-		
-		M = new MainMenuScreen();
-		this.setScreen(M);
 	}
 
 	/**
@@ -91,50 +63,20 @@ public class TiledMapGame extends Game {
 	 */
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
-<<<<<<< HEAD
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-		
-=======
-	
-	public static ObjectMap<String, Enemy> enemyLibrary;
-	public static ObjectMap<String, Tower> towerLibrary;
-	public static ObjectMap<String, Texture> textureLibrary;
-	public static ObjectMap<String, Music> musicLibrary;
-	public static ObjectMap<String, Sound> soundLibrary;
-	
-	@Override
-	public void create() {
-		
-		// Start up the game
-		loadEntities();
-		loadAudio();
-		loadTextures();
-		
-		M = new MainMenuScreen();
-		this.setScreen(M);
 	}
-
-	/**
-	 * Load Textures into object hashmap following this convention:
-	 * typeName -
-	 * 	type = texture type
-	 *  name = unique name to identify the texture
-	 * 
-	 * Types:
-	 *  ui
-	 *  enemy
-	 *  tower
-	 *  
-	 */
-	private void loadTextures() {
-		textureLibrary = new ObjectMap<String, Texture>();
-		
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-=======
-		
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
-		// textureLibrary.put(key, value);
-	}
+//	public static Music music;
+//	public static Splash S;
+	public ClickListener listener = new ClickListener();
+	
+//	@Override
+//	public void create() {
+//		S = new Splash(this);
+//		M = new MainMenuScreen();
+//		this.setScreen(S);
+//>>>>>>> Major: Splash Screen, TWRS button
+//		
+//		// textureLibrary.put(key, value);
+//	}
 
 	private void loadAudio() {
 		musicLibrary = new ObjectMap<String, Music>();
