@@ -58,6 +58,13 @@ public class Projectile extends MobileEntity {
 		super(sprite.getTexture(), 1000000, (float)Math.hypot(sprite.getX()-x, sprite.getY()-y));
 		target.setPosition(x, y);
 
+	/* public Projectile(Texture texture, /*Sprite target, int x, int y) {*/
+//		super(texture, 0, direction.len());
+//		this.direction = direction;
+//		target.setX(200); // FOR TESTING
+//		target.setY(200); // FOR TESTING
+//		this.target = target;
+//		this.direction = direction;
 	}
 	
 	public void update(float delta) {

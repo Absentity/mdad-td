@@ -41,12 +41,17 @@ public class TiledMapGame extends Game {
 		
 		// Start up the game
 		loadEntities();
-//		loadAudio();
+		loadAudio();
 		loadTextures();
 
 		S = new Splash(this);
 		M = new MainMenuScreen();
 		this.setScreen(S);
+//		loadAudio();
+//		loadTextures();
+//		
+//		M = new MainMenuScreen();
+//		this.setScreen(M);
 	}
 
 	/**
@@ -76,6 +81,9 @@ public class TiledMapGame extends Game {
 //>>>>>>> Major: Splash Screen, TWRS button
 //		
 //		// textureLibrary.put(key, value);
+//	}
+		
+		// textureLibrary.put(key, value);
 //	}
 
 	private void loadAudio() {
