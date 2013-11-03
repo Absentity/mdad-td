@@ -52,7 +52,6 @@ import com.me.tiledMapGame.entities.TowerType;
 
 public class GameScreen implements Screen {
 	
-	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	public static OrthographicCamera camera;
 	private TiledMapTileLayer layer;
@@ -213,7 +212,7 @@ public class GameScreen implements Screen {
 	public void show() {
 		
 		// TODO: Load level
-		level = new Level("map_32x32");
+		level = new Level("MDADMap1v1");
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 		
 		camera = new OrthographicCamera();
@@ -263,7 +262,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		map.dispose();
 		renderer.getSpriteBatch().dispose();
 //		renderer.dispose(); Leave out until there is another screen to switch to
 		for(Tower t: towers){
@@ -272,7 +270,7 @@ public class GameScreen implements Screen {
 		}
 		sr.dispose();
 		stage.getSpriteBatch().dispose();
-		stage.dispose();
+		//stage.dispose();
 		skin.dispose();
 		
 	}

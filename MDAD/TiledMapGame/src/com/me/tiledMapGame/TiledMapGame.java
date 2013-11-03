@@ -21,8 +21,8 @@ import com.me.tiledMapGame.screens.Splash;
  */
 public class TiledMapGame extends Game {
 	
-	public final static int screenWidth = 320;
-	public final static int screenHeight = 320;
+	public final static int screenWidth = 32*16;
+	public final static int screenHeight = 32*16;
 	
 	boolean mainScreen = true;
 	public static MainMenuScreen M;
