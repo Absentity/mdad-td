@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.me.tiledMapGame.TiledMapGame;
 
 public class MainMenuScreen implements Screen {
 
@@ -23,7 +24,7 @@ public class MainMenuScreen implements Screen {
 	private TextButton startGameButton;
 	private TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 	// TODO: unify assets, get from central location
-	private Texture background = new Texture("img/MDAD-TITLE-v3.png");
+	private Texture background = new Texture("img/title512x512.png");
 	private Sprite b = new Sprite(background);
 	private SpriteBatch batch = new SpriteBatch();
 
@@ -47,7 +48,7 @@ public class MainMenuScreen implements Screen {
 		startGameButton.setBounds(stage.getWidth() - startGameButton.getWidth() / 2, 280, 32, 12);
 		startGameButton.addListener(listener);
 		stage.addActor( startGameButton );  
-		b.setSize(640, 640);
+		b.setSize(TiledMapGame.screenWidth, TiledMapGame.screenHeight);
 		Gdx.input.setInputProcessor(stage);
 	}
 	
