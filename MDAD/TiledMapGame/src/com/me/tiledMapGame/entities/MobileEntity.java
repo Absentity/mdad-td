@@ -35,11 +35,11 @@ public abstract class MobileEntity extends Entity {
 	 * around corners.
 	 * @param delta time in milliseconds since last update
 	 */
-	protected void update(float delta) {
+	public void update(float delta) {
 		Node tile = this.getTile();
 		// Update position based on velocity
-		float dX = tile.dir;
-		float dY = this.getY();
+//		float dX = tile.dir;
+//		float dY = this.getY();
 //		Vector2 dir = getTile().dir;
 //		this.setX()
 	}

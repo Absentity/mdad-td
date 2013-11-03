@@ -26,9 +26,11 @@ public class Enemy extends MobileEntity {
 	// Destination
 //	private float kingdomX;
 //	private float kingdomY;
+	Vector2 destination = new Vector2();
 	
 //	TiledMapTileLayer collisionLayer;
 //	ObjectGrid objG = new ObjectGrid(10, 10);
+
 	public Enemy(EnemyType enemy) {
 		super(enemy.texture, enemy.health, enemy.maxVelocity);
 		this.enemy = enemy;
@@ -86,20 +88,24 @@ public class Enemy extends MobileEntity {
 //		
 ////		System.out.println(currY + "," + currX + ": " + objG.GridLayers.get(0).grid[currY][currX].dir);
 //		
+		if(getX() - destination.x <= 5 && getY() - destination.y <= 5){ // within 5 pixels 
+//			destination reached, begin attacking 
+		}
+			
 //		if(currY == 7 && currX == 7){
 //			//stop moving, coordinates for testing
 //		}
 //		else if(objG.gridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.RIGHT){
-//			setX(getX() + tileWidth);
+//			setX(getX() + 1);
 //		}
 //		else if(objG.gridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.LEFT){
-//			setX(getX() - tileWidth);
+//			setX(getX() - 1);
 //		}
 //		else if(objG.gridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.UP){
-//			setY(getY() + tileHeight);
+//			setY(getY() + 1);
 //		}
 //		else if(objG.gridLayers.get(0).getNodeInGrid(currX, currY).dir == Direction.DOWN){
-//			setY(getY() - tileHeight);
+//			setY(getY() - 1);
 //		}
 		
 	}

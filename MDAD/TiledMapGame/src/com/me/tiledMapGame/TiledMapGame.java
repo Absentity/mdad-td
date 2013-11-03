@@ -9,17 +9,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Tower;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
+import com.me.tiledMapGame.screens.Splash;
 
 /**
  * TiledMapGame takes care of starting the game up, loading necessary
  * assets to start, managing menus, and changing screen states.
  */
 public class TiledMapGame extends Game {
+	
+	public final static int screenWidth = 32*16;
+	public final static int screenHeight = 32*16;
+	
 	boolean mainScreen = true;
-	MainMenuScreen M;
+	public static MainMenuScreen M;
+	public static Splash S;
 	LevelSelectScreen L;
 	GameScreen P;
 	
@@ -36,9 +43,15 @@ public class TiledMapGame extends Game {
 		loadEntities();
 		loadAudio();
 		loadTextures();
-		
+
+		S = new Splash(this);
 		M = new MainMenuScreen();
-		this.setScreen(M);
+		this.setScreen(S);
+//		loadAudio();
+//		loadTextures();
+//		
+//		M = new MainMenuScreen();
+//		this.setScreen(M);
 	}
 
 	/**
@@ -55,9 +68,23 @@ public class TiledMapGame extends Game {
 	 */
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
+	}
+//	public static Music music;
+//	public static Splash S;
+	public ClickListener listener = new ClickListener();
+	
+//	@Override
+//	public void create() {
+//		S = new Splash(this);
+//		M = new MainMenuScreen();
+//		this.setScreen(S);
+//>>>>>>> Major: Splash Screen, TWRS button
+//		
+//		// textureLibrary.put(key, value);
+//	}
 		
 		// textureLibrary.put(key, value);
-	}
+//	}
 
 	private void loadAudio() {
 		musicLibrary = new ObjectMap<String, Music>();
@@ -91,7 +118,6 @@ public class TiledMapGame extends Game {
 		// TODO: Remove this in favor of an event?
 		if(M.listener.isPressed()){
 			this.getScreen().dispose();
-//			this.setScreen(new Play());
 			P = new GameScreen(null);
 			this.setScreen(P);
 		}

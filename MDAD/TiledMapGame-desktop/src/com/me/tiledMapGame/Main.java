@@ -8,10 +8,10 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		
-		cfg.title = "TiledMapGame";
+		cfg.title = "MDAD";
 		cfg.useGL20 = true;
-		cfg.width = 32*10;
-		cfg.height = 32*10;
+		cfg.width = TiledMapGame.screenWidth;
+		cfg.height = TiledMapGame.screenHeight;
 		
 		cfg.resizable = false; // Disables JFrame resizing
 		
