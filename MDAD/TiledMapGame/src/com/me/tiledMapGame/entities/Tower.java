@@ -13,13 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 /**
  * This is an instance of a Tower object. When the player places a tower
  * on the map, the game creates a new instance on that cell.
-<<<<<<< HEAD
- * NOTE: Tower sprites MUST have 12 frames in the sprite sheet.
- *
- * @author Bret
- *
-=======
->>>>>>> 4b8a1b63a9b6cebc576f2533b4b8d2a9c902d0d8
+ * 
+ * NOTE: Tower sprites MUST have 12 frames in the sprite sheet. (currently)
  */
 public class Tower extends Entity {
 	
@@ -78,7 +73,7 @@ public class Tower extends Entity {
 
 	public void createProjectiles() {
 		// TODO: create the projectile
-		Projectile p = new Projectile(new Sprite(new Texture("img/fireball.png")), (int)getX(), (int)getY());
+		Projectile p = new Projectile(new Texture("img/fireball.png"), (int)getX(), (int)getY());
 		magazine.add(p);
 	}
 	

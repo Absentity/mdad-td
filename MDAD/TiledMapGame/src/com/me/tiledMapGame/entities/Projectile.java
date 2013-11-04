@@ -54,11 +54,10 @@ public class Projectile extends MobileEntity {
 	}
 	
 	// TEST CONSTRUCTOR - REMOVE LATER
-	public Projectile(Sprite sprite, int x, int y) {
-		super(sprite.getTexture(), 1000000, (float)Math.hypot(sprite.getX()-x, sprite.getY()-y));
+	public Projectile(Texture texture, int x, int y) {
+		super(texture, 1000000, 1.0f);
 		target.setPosition(x, y);
-
-	/* public Projectile(Texture texture, /*Sprite target, int x, int y) {*/
+		
 //		super(texture, 0, direction.len());
 //		this.direction = direction;
 //		target.setX(200); // FOR TESTING
@@ -99,5 +98,11 @@ public class Projectile extends MobileEntity {
 		delX = getX() - target.getX();
 		delY = getY() - target.getY();
 		this.angle = (float)(Math.atan2(delY, delX)*(180/Math.PI));
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 }

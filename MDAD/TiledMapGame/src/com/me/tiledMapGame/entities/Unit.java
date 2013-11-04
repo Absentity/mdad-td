@@ -11,4 +11,10 @@ public class Unit extends MobileEntity {
 		this.unit = unit;
 	}
 
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
