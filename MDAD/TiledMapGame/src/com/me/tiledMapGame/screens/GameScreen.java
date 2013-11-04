@@ -125,10 +125,10 @@ public class GameScreen implements Screen {
 		tx = camera.position.x;
 		ty = camera.position.y;
 		
-		if(tx + cVel.x*Gdx.graphics.getDeltaTime()-160 > 0 && tx + cVel.x*Gdx.graphics.getDeltaTime()+160 < TiledMapGame.screenWidth){ // Bound x 
+		if(tx + cVel.x*Gdx.graphics.getDeltaTime()-(TiledMapGame.screenWidth/2) > 0 && tx + (cVel.x*Gdx.graphics.getDeltaTime()+(TiledMapGame.screenWidth/2)) < TiledMapGame.screenWidth){ // Bound x 
 			camera.position.x += cVel.x*Gdx.graphics.getDeltaTime();
 		}
-		if(ty + cVel.y*Gdx.graphics.getDeltaTime()-160 > 0 && ty + cVel.y*Gdx.graphics.getDeltaTime()+160 < TiledMapGame.screenWidth){ // Bound y
+		if(ty + cVel.y*Gdx.graphics.getDeltaTime()-(TiledMapGame.screenHeight/2) > 0 && ty + cVel.y*Gdx.graphics.getDeltaTime()+(TiledMapGame.screenHeight/2) < TiledMapGame.screenHeight){ // Bound y
 			camera.position.y += cVel.y*Gdx.graphics.getDeltaTime();
 		}
 //		camera.position.x += cVel.x*Gdx.graphics.getDeltaTime();
@@ -161,12 +161,13 @@ public class GameScreen implements Screen {
 			stage.getSpriteBatch().begin();
 			
 			if(chose){
+				Gdx.input.setInputProcessor(i);
 				confirmSelection.setVisible(true);
 				towerNameLabel.setVisible(true);
 				towerDamageLabel.setVisible(true);
 				towerRangeLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-				towerInfoNinePatch.draw(stage.getSpriteBatch(), 210, 240, 110, 80);
+				towerInfoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
 			}
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); // FOR TESTING
@@ -221,7 +222,7 @@ public class GameScreen implements Screen {
 		
 		camera.position.x = layer.getWidth()*(layer.getTileWidth()/2);
 		camera.position.y = layer.getHeight()*(layer.getTileHeight()/2);
-		camera.zoom = .75f;
+//		camera.zoom = .75f;
 		
 		i = new Input();
 
@@ -327,7 +328,7 @@ public class GameScreen implements Screen {
 		towerInfoNinePatch = new MenuNinePatch();
 		
 		infoTable = new Table();
-		infoTable.setBounds(210, 240, 110, 80);
+		infoTable.setBounds(TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
 		infoTable.pad(5);
 		infoTable.top();
 		
@@ -462,7 +463,7 @@ public class GameScreen implements Screen {
 	private void setupTowerTable(){
 		
 		towerTable = new Table();
-		towerTable.setBounds(0, 0, 100, 320-10); // offset y by 10 for appearance
+		towerTable.setBounds(0, 0, 100, TiledMapGame.screenHeight-10); // offset y by 10 for appearance
 		towerTable.pad(0, 20, 0, 0);
 		towerTable.top();
 		

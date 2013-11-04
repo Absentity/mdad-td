@@ -100,4 +100,10 @@ public class Projectile extends MobileEntity {
 		delY = getY() - target.getY();
 		this.angle = (float)(Math.atan2(delY, delX)*(180/Math.PI));
 	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

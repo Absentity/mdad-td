@@ -109,5 +109,11 @@ public class Enemy extends MobileEntity {
 //		}
 		
 	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
