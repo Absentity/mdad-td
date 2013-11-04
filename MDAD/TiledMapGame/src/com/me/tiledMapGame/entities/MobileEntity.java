@@ -16,6 +16,8 @@ import com.me.tiledMapGame.pathing.Node;
  */
 public abstract class MobileEntity extends Entity {
 
+	public static final float FRICTION = 0.7f;
+	
 	float maxVelocity;
 	protected Vector2 velocity;
 	protected GridLayer pathLayer;
@@ -38,9 +40,9 @@ public abstract class MobileEntity extends Entity {
 	public void update(float delta) {
 		Node tile = this.getTile();
 		// Update position based on velocity
-//		float dX = tile.dir;
-//		float dY = this.getY();
-//		Vector2 dir = getTile().dir;
+		float dX = (1/delta) * tile.dir.x + velocity.x - FRICTION;
+		float dY = (1/delta) * tile.dir.y + velocity.y - FRICTION;
+		Vector2 dir = new Vector2(dX,dY).limit(maxVelocity);
 //		this.setX()
 	}
 }
