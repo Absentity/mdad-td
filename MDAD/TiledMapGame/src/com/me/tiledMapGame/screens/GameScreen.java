@@ -59,9 +59,11 @@ public class GameScreen implements Screen {
 	
 	Vector2 cVel = new Vector2();
 	
-	private Input i;
+
 	
+	public static boolean chose = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
+	public static boolean openTowerMenu = false;
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
 	// UI stuff here
@@ -77,14 +79,14 @@ public class GameScreen implements Screen {
 //	ScrollPane scrollPane;
 	MenuNinePatch towerNinePatch;
 	MenuNinePatch towerInfoNinePatch;
-	boolean openTowerMenu = false;
 	Table towerTable;
 	Table infoTable;
 	TextButton towerNameLabel; // Button without a listener
 	TextButton towerDamageLabel; // Button without a listener
 	TextButton towerRangeLabel; // Button without a listener
 	
-	boolean chose = false;
+	private Input i;
+
 	
 	
 	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS

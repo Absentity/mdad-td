@@ -66,6 +66,8 @@ public class Input implements InputProcessor {
 		if(MainMenuScreen.done){ // FOR TESTING
 			GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(1);
 			GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
+			GameScreen.chose = false; //temporary fix
+			GameScreen.openTowerMenu = false;
 			Gdx.input.setInputProcessor(GameScreen.stage);
 		}
 		
