@@ -221,6 +221,7 @@ public class GameScreen implements Screen {
 		
 		camera.position.x = layer.getWidth()*(layer.getTileWidth()/2);
 		camera.position.y = layer.getHeight()*(layer.getTileHeight()/2);
+		camera.zoom = .75f;
 		
 		i = new Input();
 
