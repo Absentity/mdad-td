@@ -41,12 +41,12 @@ public class Input implements InputProcessor {
 			x = (int) (((int)(screenX/32)) * 32);
 		}
 		
-		if((int)((10*32) - ((screenY/32) * 32) - 32) > TiledMapGame.screenHeight) {
+		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
 			y = TiledMapGame.screenHeight-32;
-		} else if ((int)((10*32) - ((screenY/32) * 32) - 32) < 0) {
+		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
 			y = 0;
 		} else {
-			y = (int)((10*32) - ((screenY/32) * 32) - 32);
+			y = (int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32);
 		}
 
 		MainMenuScreen.done = true; // FOR TESTING
@@ -85,12 +85,12 @@ public class Input implements InputProcessor {
 			x = (int) (((int)(screenX/32)) * 32);
 		}
 		
-		if((int)((10*32) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
+		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
 			y = TiledMapGame.screenHeight-32;
-		} else if ((int)((10*32) - ((screenY/32) * 32) - 32) < 0) {
+		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
 			y = 0;
 		} else {
-			y = (int)((10*32) - ((screenY/32) * 32) - 32);
+			y = (int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32);
 		}
 		
 		
