@@ -8,6 +8,7 @@ public class Node {
 	
 	public Vector2 dir;
     public boolean is_passable;
+    public boolean is_buildable;
     int dist_to_src; 
     int x, y;
     boolean visited;
@@ -16,6 +17,7 @@ public class Node {
 
     public Node(){
         is_passable = true;
+        is_buildable = true;
         visited = false;
         dir = new Vector2();
         neighbors = new ArrayList<>();

@@ -226,7 +226,7 @@ public class GameScreen implements Screen {
 		camera.position.y = layer.getHeight()*(layer.getTileHeight()/2);
 //		camera.zoom = .75f;
 		
-		i = new Input();
+		i = new Input(level);
 
 		stage = new Stage();
 		
