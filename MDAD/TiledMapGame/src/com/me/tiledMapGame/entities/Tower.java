@@ -18,6 +18,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Tower extends Entity {
 	
+	public final int CRESENT = 1;
+	public final int BOMB = 2;
+	public final int AMPLIFIER = 3;
+	
+	// DEFAULT
+	public int towerType = 1;
+	
 	private Animation animation;
     private Texture sheet;
     private static TextureRegion[] frames;
@@ -50,7 +57,7 @@ public class Tower extends Entity {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 		sheet = tower.texture;
-		// TODO Move Animation generating code into Entity
+		towerType = 1;
 	}
 	
 //	public Tower(TowerType tower) {

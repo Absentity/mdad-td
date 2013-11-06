@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
 	
 	Vector2 cVel = new Vector2();
 	
-
+	private int towerChoice = 1;
 	
 	public static boolean chose = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
 			cVel.x = 2*16*4;
 		}
 		
-		if(Gdx.input.isKeyPressed(Keys.TAB) && !twrsButton.isVisible()){
+		if(Gdx.input.isKeyPressed(Keys.TAB)){
 			twrsButton.setVisible(true);
 			Gdx.input.setInputProcessor(stage);
 		}
@@ -421,6 +421,7 @@ public class GameScreen implements Screen {
 	        	towerNameLabel.setText("Cresent Tower");
 	        	towerDamageLabel.setText("Damage: 50");
 	        	towerRangeLabel.setText("Range: 70");
+	        	towers.add(new Tower(new TowerType(new Texture("img/CresTowTest.png"), 100, 70f, 1)));
 	        }
 	    });
 	    
@@ -443,6 +444,7 @@ public class GameScreen implements Screen {
 	        	towerNameLabel.setText("Bomb Tower");
 	        	towerDamageLabel.setText("Damage: 80");
 	        	towerRangeLabel.setText("Range: 50");
+	        	towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
 	        }
 	    });
 		
@@ -465,6 +467,7 @@ public class GameScreen implements Screen {
 	        	towerNameLabel.setText("Amplifier Tower");
 	        	towerDamageLabel.setText("Damage: 0");
 	        	towerRangeLabel.setText("Range: 100");
+	        	towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
 	        }
 	    });
 	    
@@ -534,5 +537,9 @@ public class GameScreen implements Screen {
 	    
 	    buttonTable.add(twrsButton);
 	    buttonTable.setPosition(TiledMapGame.screenWidth-25, 25);
+	}
+	
+	public int getTowerChoice(){
+		return towerChoice;
 	}
 }

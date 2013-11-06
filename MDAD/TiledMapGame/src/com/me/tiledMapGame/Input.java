@@ -59,7 +59,7 @@ public class Input implements InputProcessor {
 
 		MainMenuScreen.done = true; // FOR TESTING
 		
-		GameScreen.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f))); // FOR TESTING
+//		GameScreen.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3))); // FOR TESTING
 		GameScreen.towers.get(GameScreen.towers.size()-1).setPosition(x, y); // FOR TESTING
 		GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(.65f); // FOR TESTING
 		

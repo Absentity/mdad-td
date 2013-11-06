@@ -12,7 +12,7 @@ public class TowerType {
 	float sightRange;
 	//ProjectileFactory projectileFactory;
 	
-	public TowerType(Texture texture, int health, float sightRange) {
+	public TowerType(Texture texture, int health, float sightRange, int tower) {
 		this.texture = texture;
 		this.health = health;
 		this.sightRange = sightRange;
