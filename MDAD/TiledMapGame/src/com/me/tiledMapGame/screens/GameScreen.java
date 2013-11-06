@@ -355,11 +355,6 @@ public class GameScreen implements Screen {
 	    twrsButton.addListener(new InputListener() {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        			if(button == Buttons.RIGHT){
-	        				twrsButton.setVisible(false);
-	        				Gdx.input.setInputProcessor(i);
-	        				return false;
-	        			}
 	            return true;
 	        }
 
