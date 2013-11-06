@@ -44,13 +44,28 @@ public class Projectile extends MobileEntity {
 	private float distanceToTarget = 9000;
 	private float delX = 0, delY = 0, angle = 0;
 
-	public Projectile(Texture texture, /*Sprite target,*/ Vector2 direction) {
-		super(texture, 0, direction.len());
+	/**
+	 * Use this constructor to create projectiles that don't aim for targets.
+	 * For example, a frag bomb would create sub explosions in random directions
+	 * coming from the original explosion.
+	 * @param projectile Projectile type that defines this projectile
+	 * @param direction  Initial velocity
+	 */
+	public Projectile(ProjectileType projectile, Vector2 direction) {
+		super(projectile.texture, 1000000, projectile.maxVelocity);
 //		this.direction = direction;
 	}
 	
-	public Projectile(Sprite sprite, Sprite target, Vector2 direction) {
-		super(sprite.getTexture(), 1000000, direction.len());
+	// TODO Change this to public static fireAt(Texture, Entity) ? to return new Projectile
+	/**
+	 * Fire a projectile at where we expect the target to be by the time the
+	 * projectile could hit it. Lots of fancy math here.
+	 * @param projectile Projectile type that defines this projectile
+	 * @param target     Predict this entity's next location.
+	 */
+	public Projectile(ProjectileType projectile, Entity target) {
+		super(projectile.texture, 1000000, 0);
+		// Project
 	}
 	
 	// TEST CONSTRUCTOR - REMOVE LATER
@@ -66,6 +81,9 @@ public class Projectile extends MobileEntity {
 //		this.direction = direction;
 	}
 	
+	/**
+	 * Update projectile traveling path
+	 */
 	public void update(float delta) {
 		// Ignore path layer and follow direct projectile vector
 		rotate(-15); // TODO Investigate: possibly more costly than sprite animation frames

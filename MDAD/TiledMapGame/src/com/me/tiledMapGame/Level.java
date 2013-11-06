@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.me.tiledMapGame.entities.Enemy;
+import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -16,7 +17,7 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
 public class Level {
 
 	private TiledMap map;
-	protected ObjectGrid objectGrid;
+	private ObjectGrid objectGrid;
 	private int gold; // Example resource
 	
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -26,6 +27,8 @@ public class Level {
 	 */
 	public Level(String name) {
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
+		objectGrid = new ObjectGrid(16,16);
+		objectGrid.gridLayers.get(0).getNodeInGrid(0, 0).is_buildable = false;//TESTING TODO
 		// TODO: load enemy wave data file
 		// from map, generate blocked grid
 		// start off with a set amount of money
@@ -58,6 +61,21 @@ public class Level {
 	
 	public TiledMap getMap(){
 		return map;
+	}
+	
+	public ObjectGrid getObjectGrid(){
+		return objectGrid;
+	}
+	
+	/**
+	 * TODO description
+	 * 
+	 * @param x x location in pixels
+	 * @param y y location in pixels
+	 * @return a node from the first GridLayer in this.objectGrid
+	 */
+	public Node getNode(int x, int y){
+		return objectGrid.gridLayers.get(0).getNodeInGrid(x/32, y/32);
 	}
 	
 	/**

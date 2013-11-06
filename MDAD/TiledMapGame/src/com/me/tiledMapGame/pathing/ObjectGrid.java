@@ -16,9 +16,9 @@ import com.me.tiledMapGame.entities.Entity;
  * Contains multiple {@link GridLayer}s and a list of all entities.
  */
 public class ObjectGrid {
+    public List<GridLayer> gridLayers;
     private int length;
     private int width;
-    private List<GridLayer> gridLayers;
     private List<Entity> entities;
     
     public ObjectGrid(int length, int width){

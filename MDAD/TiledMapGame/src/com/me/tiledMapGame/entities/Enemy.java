@@ -36,5 +36,5 @@ public class Enemy extends MobileEntity {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

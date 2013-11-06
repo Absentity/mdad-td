@@ -62,9 +62,11 @@ public class GameScreen implements Screen {
 	
 	Vector2 cVel = new Vector2();
 	
-	private Input i;
+
 	
+	public static boolean chose = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
+	public static boolean openTowerMenu = false;
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
 	// UI stuff here
@@ -80,7 +82,6 @@ public class GameScreen implements Screen {
 //	ScrollPane scrollPane;
 	MenuNinePatch towerNinePatch;
 	MenuNinePatch towerInfoNinePatch;
-	boolean openTowerMenu = false;
 	Table towerTable;
 	Table infoTable;
 	TextButton towerNameLabel; // Button without a listener
@@ -92,7 +93,8 @@ public class GameScreen implements Screen {
 //	Enemy e;
 //	Sprite k;
 	
-	boolean chose = false;
+	private Input i;
+
 	
 	
 	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS
@@ -252,7 +254,7 @@ public class GameScreen implements Screen {
 		camera.position.y = layer.getHeight()*(layer.getTileHeight()/2);
 //		camera.zoom = .75f;
 		
-		i = new Input();
+		i = new Input(level);
 
 		stage = new Stage();
 		

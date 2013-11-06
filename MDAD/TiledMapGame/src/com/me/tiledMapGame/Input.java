@@ -14,7 +14,11 @@ import com.me.tiledMapGame.screens.MainMenuScreen;
 public class Input implements InputProcessor {
 	
 	private int x = 0, y = 0;
+	private Level level;
 	
+	public Input(Level level){
+		this.level = level;
+	}
 	@Override
 	public boolean keyDown(int keycode) {
 		return false;
@@ -41,7 +45,11 @@ public class Input implements InputProcessor {
 			x = (int) (((int)(screenX/32)) * 32);
 		}
 		
-		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) > TiledMapGame.screenHeight) {
+//<<<<<<< HEAD
+//		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) > TiledMapGame.screenHeight) {
+//=======
+		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
+//>>>>>>> 69c7688130a72c5d1583a1fa6ba1c4cb63591394
 			y = TiledMapGame.screenHeight-32;
 		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
 			y = 0;
@@ -64,8 +72,21 @@ public class Input implements InputProcessor {
 		
 		
 		if(MainMenuScreen.done){ // FOR TESTING
-			GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(1);
-			GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
+			//make sure that the tower can be placed
+			if(level.getNode(screenX, screenY).is_buildable){
+				GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(1);
+				GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
+				//mark the spot as unbuildable for now TODO
+				level.getNode(screenX,screenY).is_buildable = false;
+			}
+			else{
+				GameScreen.towers.get(GameScreen.towers.size()-1).dispose();
+				GameScreen.towers.remove(GameScreen.towers.size()-1);
+				System.out.println("Can't build here!");//testing
+			}
+
+			GameScreen.chose = false; //temporary fix
+			GameScreen.openTowerMenu = false;
 			Gdx.input.setInputProcessor(GameScreen.stage);
 		}
 		
