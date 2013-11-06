@@ -21,9 +21,12 @@ public class Tower extends Entity {
 	public final int CRESENT = 1;
 	public final int BOMB = 2;
 	public final int AMPLIFIER = 3;
+	public final int FIREBALL = 4;
 	
 	// DEFAULT
 	public int towerType = 1;
+	
+	private boolean moved = false;
 	
 	private Animation animation;
     private Texture sheet;
@@ -122,5 +125,13 @@ public class Tower extends Entity {
 	
 	public ArrayList<Projectile> getProjectiles(){
 		return magazine;
+	}
+	
+	public boolean getMoved(){
+		return moved;
+	}
+	
+	public void setMoved(boolean moved){
+		this.moved = moved;
 	}
 }

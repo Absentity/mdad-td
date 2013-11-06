@@ -29,16 +29,43 @@ public abstract class Entity extends Sprite {
 		super(texture);
 		this.health = health;
 		
-		TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/3);
-		frames = new TextureRegion[12];
-		index = 0;
-		for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                    frames[index++] = tempTexReg[i][j];
-            }
+		if(texture.getHeight() == 96){
+			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/3);
+			frames = new TextureRegion[12];
+			index = 0;
+			for (int i = 0; i < 3; i++) {
+	            for (int j = 0; j < 4; j++) {
+	                    frames[index++] = tempTexReg[i][j];
+	            }
+			}
+			animation = new Animation(.05f, frames);
+	        stateTime = 0f;
 		}
-		animation = new Animation(.05f, frames);
-        stateTime = 0f;
+		else if(texture.getHeight() == 160){
+			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/5);
+			frames = new TextureRegion[20];
+			index = 0;
+			for (int i = 0; i < 5; i++) {
+	            for (int j = 0; j < 4; j++) {
+	                    frames[index++] = tempTexReg[i][j];
+	            }
+			}
+			animation = new Animation(.05f, frames);
+	        stateTime = 0f;
+		}
+		else if(texture.getHeight() == 240){
+			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/9, texture.getHeight()/3);
+			frames = new TextureRegion[27];
+			index = 0;
+			for (int i = 0; i < 3; i++) {
+	            for (int j = 0; j < 9; j++) {
+	                    frames[index++] = tempTexReg[i][j];
+	            }
+			}
+			animation = new Animation(.05f, frames);
+	        stateTime = 0f;
+		}
+		
 	}
 
 	public void update(float stateTime) {

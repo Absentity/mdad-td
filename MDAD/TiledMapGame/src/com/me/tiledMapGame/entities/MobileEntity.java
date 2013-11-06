@@ -29,7 +29,9 @@ public abstract class MobileEntity extends Entity {
 	
 	public void draw(SpriteBatch spriteBatch) {
 		update(Gdx.graphics.getDeltaTime());
+		spriteBatch.begin();
 		super.draw(spriteBatch);
+		spriteBatch.end();
 	}
 
 	/**

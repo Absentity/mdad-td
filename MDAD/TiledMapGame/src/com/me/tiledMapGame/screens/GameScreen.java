@@ -50,6 +50,7 @@ import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.Projectile;
+import com.me.tiledMapGame.entities.ProjectileType;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
 
@@ -64,7 +65,8 @@ public class GameScreen implements Screen {
 	
 	private int towerChoice = 1;
 	
-	public static boolean chose = false;
+	public static boolean selectionConfirmed = false;
+	public static boolean thinking = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
 	public static boolean openTowerMenu = false;
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
@@ -74,6 +76,7 @@ public class GameScreen implements Screen {
 	Button cresButton;
 	Button bombButton;
 	Button ampButton;
+	Button fireballButton;
 	TextButton confirmSelection;
 	TextButton closeMenu;
 	Skin skin;
@@ -132,11 +135,6 @@ public class GameScreen implements Screen {
 			cVel.x = 2*16*4;
 		}
 		
-		if(Gdx.input.isKeyPressed(Keys.TAB)){
-			twrsButton.setVisible(true);
-			Gdx.input.setInputProcessor(stage);
-		}
-		
 		tx = camera.position.x;
 		ty = camera.position.y;
 		
@@ -164,9 +162,11 @@ public class GameScreen implements Screen {
 		
 		// Draw towers
 		for(Tower t: towers){ // FOR TESTING
-			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING 
+			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
-			renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+			if(t.getMoved()){
+				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+			}
 		} // FOR TESTING
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
@@ -178,18 +178,23 @@ public class GameScreen implements Screen {
 			closeMenu.setVisible(true);
 			
 			stage.getSpriteBatch().begin();
-			
-			if(chose){
-				Gdx.input.setInputProcessor(i);
-				confirmSelection.setVisible(true);
+			if(thinking) {
 				towerNameLabel.setVisible(true);
 				towerDamageLabel.setVisible(true);
 				towerRangeLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 				towerInfoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
 			}
+			if(selectionConfirmed){
+				selectionConfirmed = false;
+				Gdx.input.setInputProcessor(i);
+				confirmSelection.setVisible(false);
+				towerNameLabel.setVisible(false);
+				towerDamageLabel.setVisible(false);
+				towerRangeLabel.setVisible(false);
+			}
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); // FOR TESTING
+			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); 
 			stage.getSpriteBatch().end();
 			
 		} else {
@@ -199,7 +204,6 @@ public class GameScreen implements Screen {
 			towerRangeLabel.setVisible(false);
 			towerTable.setVisible(false);
 			closeMenu.setVisible(false);
-			chose = false;
 		}
 		
 		stage.draw();
@@ -221,12 +225,14 @@ public class GameScreen implements Screen {
 		 * position to draw range circles. Also, zoom messes with the animations!
 		 */
 		for(Tower t: towers){ // FOR TESTING
-			if(!t.isPlaced()){ // FOR TESTING
-			sr.begin(ShapeType.Line); // FOR TESTING
-			sr.setColor(Color.BLACK); // FOR TESTING
-			sr.circle(t.getX()+16, t.getY()+16, 70); // FOR TESTING
-			sr.end(); // FOR TESTING
-			} // FOR TESTING
+			if(t.getMoved()) {
+				if(!t.isPlaced()){ // FOR TESTING
+				sr.begin(ShapeType.Line); // FOR TESTING
+				sr.setColor(Color.BLACK); // FOR TESTING
+				sr.circle(t.getX()+16, t.getY()+16, 70); // FOR TESTING
+				sr.end(); // FOR TESTING
+				} // FOR TESTING
+			}
 		} // FOR TESTING
 				
 	}
@@ -335,6 +341,8 @@ public class GameScreen implements Screen {
 		skin.add("bombDown", new Sprite(new Texture("img/bombTowerDown.png")));
 		skin.add("ampUp", new Sprite(new Texture("img/amplifyTowerUp.png")));
 		skin.add("ampDown", new Sprite(new Texture("img/amplifyTowerDown.png")));
+		skin.add("fireballUp", new Sprite(new Texture("img/fireballTowerUp.png")));
+		skin.add("fireballDown", new Sprite(new Texture("img/fireballTowerDown.png")));
 	}
 	
 	private void createTwrsButton() {
@@ -411,17 +419,17 @@ public class GameScreen implements Screen {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        		System.out.println("Cresent Tower selected");
-//	        		Gdx.input.setInputProcessor(i);
+	        		thinking = true;
+	        		confirmSelection.setVisible(true);
 	            return true;
 	        }
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        	chose = true;
+	        	towerChoice = 1;
 	        	towerNameLabel.setText("Cresent Tower");
 	        	towerDamageLabel.setText("Damage: 50");
 	        	towerRangeLabel.setText("Range: 70");
-	        	towers.add(new Tower(new TowerType(new Texture("img/CresTowTest.png"), 100, 70f, 1)));
 	        }
 	    });
 	    
@@ -434,17 +442,17 @@ public class GameScreen implements Screen {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        		System.out.println("Bomb Tower selected");
-//	        		Gdx.input.setInputProcessor(i);
+	        		thinking = true;
+	        		confirmSelection.setVisible(true);
 	            return true;
 	        }
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        	chose = true;
+	        	towerChoice = 2;
 	        	towerNameLabel.setText("Bomb Tower");
 	        	towerDamageLabel.setText("Damage: 80");
 	        	towerRangeLabel.setText("Range: 50");
-	        	towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
 	        }
 	    });
 		
@@ -457,17 +465,40 @@ public class GameScreen implements Screen {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        		System.out.println("Amplifier Tower selected");
-//	        		Gdx.input.setInputProcessor(i);
+	        		thinking = true;
+	        		confirmSelection.setVisible(true);
 	            return true;
 	        }
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        	chose = true;
+	        	towerChoice = 3;
 	        	towerNameLabel.setText("Amplifier Tower");
 	        	towerDamageLabel.setText("Damage: 0");
 	        	towerRangeLabel.setText("Range: 100");
-	        	towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
+	        }
+	    });
+	    
+	    TextButtonStyle fireballButtonStyle = new TextButtonStyle();
+	    fireballButtonStyle.up = skin.getDrawable("fireballUp");
+	    fireballButtonStyle.down = skin.getDrawable("fireballDown");
+	    
+	    fireballButton = new Button(fireballButtonStyle);
+	    fireballButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Fireball Tower selected");
+	        		thinking = true;
+	        		confirmSelection.setVisible(true);
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        	towerChoice = 4;
+	        	towerNameLabel.setText("Fireball Tower");
+	        	towerDamageLabel.setText("Damage: 60");
+	        	towerRangeLabel.setText("Range: 90");
 	        }
 	    });
 	    
@@ -503,7 +534,24 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        			changeTowerMenuState();
+	        	selectionConfirmed = true;
+	        	
+	        	switch(towerChoice){
+	        		case 1:
+	        			towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
+	        			break;
+	        		case 2:
+	        			towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
+	        			break;
+	        		case 3:
+	        			towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
+	        			break;
+	        		case 4:
+	        			towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
+	        		default:
+	        			break;
+	        	}
+	        	
 	        }
 	    });
 	    confirmSelection.setPosition(10, 5);
@@ -522,6 +570,8 @@ public class GameScreen implements Screen {
 		towerTable.row();
 		
 		towerTable.add(ampButton).spaceRight(24);
+		towerTable.add(fireballButton).spaceBottom(5);
+		towerTable.row();
 		
 		// Follow this pattern to add two towers per line.
 		// towerTable.add(NEW TOWER).spaceRight(24).spaceBottom(5);

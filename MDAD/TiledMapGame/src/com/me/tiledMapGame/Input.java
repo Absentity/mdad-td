@@ -45,11 +45,7 @@ public class Input implements InputProcessor {
 			x = (int) (((int)(screenX/32)) * 32);
 		}
 		
-//<<<<<<< HEAD
-//		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) > TiledMapGame.screenHeight) {
-//=======
 		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
-//>>>>>>> 69c7688130a72c5d1583a1fa6ba1c4cb63591394
 			y = TiledMapGame.screenHeight-32;
 		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
 			y = 0;
@@ -59,10 +55,9 @@ public class Input implements InputProcessor {
 
 		MainMenuScreen.done = true; // FOR TESTING
 		
-//		GameScreen.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3))); // FOR TESTING
 		GameScreen.towers.get(GameScreen.towers.size()-1).setPosition(x, y); // FOR TESTING
 		GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(.65f); // FOR TESTING
-		
+		GameScreen.towers.get(GameScreen.towers.size()-1).setMoved(true);
 		
 		return true;
 	}
@@ -85,8 +80,9 @@ public class Input implements InputProcessor {
 				System.out.println("Can't build here!");//testing
 			}
 
-			GameScreen.chose = false; //temporary fix
-			GameScreen.openTowerMenu = false;
+//			GameScreen.chose = false; //temporary fix
+//			GameScreen.openTowerMenu = false;
+			
 			Gdx.input.setInputProcessor(GameScreen.stage);
 		}
 		
