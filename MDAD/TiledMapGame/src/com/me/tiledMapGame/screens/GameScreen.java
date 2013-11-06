@@ -10,6 +10,7 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -46,6 +47,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.TiledMapGame;
+import com.me.tiledMapGame.entities.Enemy;
+import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
@@ -83,6 +86,11 @@ public class GameScreen implements Screen {
 	TextButton towerNameLabel; // Button without a listener
 	TextButton towerDamageLabel; // Button without a listener
 	TextButton towerRangeLabel; // Button without a listener
+	TextButton peaceTimer; // Button without a listener
+	float current = 20;
+	
+//	Enemy e;
+//	Sprite k;
 	
 	boolean chose = false;
 	
@@ -122,6 +130,11 @@ public class GameScreen implements Screen {
 			cVel.x = 2*16*4;
 		}
 		
+		if(Gdx.input.isKeyPressed(Keys.TAB) && !twrsButton.isVisible()){
+			twrsButton.setVisible(true);
+			Gdx.input.setInputProcessor(stage);
+		}
+		
 		tx = camera.position.x;
 		ty = camera.position.y;
 		
@@ -142,6 +155,10 @@ public class GameScreen implements Screen {
 		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
+		
+		// Draw enemy and kingdom
+//		e.draw(renderer.getSpriteBatch());
+//		k.draw(renderer.getSpriteBatch());
 		
 		// Draw towers
 		for(Tower t: towers){ // FOR TESTING
@@ -184,6 +201,17 @@ public class GameScreen implements Screen {
 		}
 		
 		stage.draw();
+		
+		// Timer Stuff
+		if(current > 0) {
+			peaceTimer.setVisible(true);
+			current -= (Gdx.graphics.getDeltaTime());
+			current = (float)(Math.floor(current * 1e2) / 1e2);
+			peaceTimer.setText( Float.toString(current));
+		} else {
+			peaceTimer.setVisible(false);
+		}
+		
 		
 		/* ShapeRenderers have their own SpriteBatch and it does not seem
 		 * like they can draw using any other so the range circle moves
@@ -242,6 +270,11 @@ public class GameScreen implements Screen {
 		stage.addActor(confirmSelection);
 		stage.addActor(towerTable);
 		stage.addActor(infoTable);
+		
+//		e = new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 5));
+//		e.setPosition(100, 100);
+//		k = new Sprite(new Texture("img/tempKingdom.png"));
+//		k.setPosition(320, 320);
 		
 	}
 
@@ -312,17 +345,23 @@ public class GameScreen implements Screen {
 	    twrsButton.addListener(new InputListener() {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        		changeTowerMenuState();
+	        			if(button == Buttons.RIGHT){
+	        				twrsButton.setVisible(false);
+	        				Gdx.input.setInputProcessor(i);
+	        				return false;
+	        			}
 	            return true;
 	        }
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        			changeTowerMenuState();
 	        }
 	    });
 	    
 	}
 	
+	// Peace Timer stuff also here
 	private void createInfoBox() {
 		
 		towerInfoNinePatch = new MenuNinePatch();
@@ -348,6 +387,12 @@ public class GameScreen implements Screen {
 		infoTable.add(towerDamageLabel);
 		infoTable.row();
 		infoTable.add(towerRangeLabel);
+		
+		peaceTimer = new TextButton("20",infoStyle);
+		peaceTimer.setWidth(20f);
+		peaceTimer.setHeight(12f);
+		peaceTimer.setPosition((TiledMapGame.screenWidth/2)-10, TiledMapGame.screenHeight-20-5); // offset by 5 for visual appearance
+		stage.addActor(peaceTimer);
 		
 	}
 	

@@ -28,11 +28,6 @@ public class Enemy extends MobileEntity {
 		if(getX() - destination.x <= 5 && getY() - destination.y <= 5){ // within 5 pixels 
 //			destination reached, begin attacking 
 		}
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
 		
 	}
 
