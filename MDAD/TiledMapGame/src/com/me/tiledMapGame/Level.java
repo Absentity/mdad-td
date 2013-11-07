@@ -83,7 +83,6 @@ public class Level {
 	 * @return a node from the first GridLayer in this.objectGrid
 	 */
 	public Node getNode(int x, int y, int m){
-		System.out.println("....."+ x + " " + y);
 		return objectGrid.gridLayers.get(0).getNodeInGrid(x*m/32, y*m/32);
 	}
 	
@@ -93,5 +92,9 @@ public class Level {
 	 */
 	public void removeEnemy(int position){
 		enemies.remove(position);
+	}
+	
+	public void runPathing(int li){
+		//TODO why was PathFinder changed?
 	}
 }

@@ -72,7 +72,8 @@ public class Input implements InputProcessor {
 				GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(1);
 				GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
 				//mark the spot as unbuildable for now TODO
-				level.getNode(screenX,screenY, 1).is_buildable = false;
+				level.getNode(screenX,screenY, 1).markTower();
+				
 			}
 			else{
 				GameScreen.towers.get(GameScreen.towers.size()-1).dispose();
