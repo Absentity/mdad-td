@@ -68,6 +68,7 @@ public class GameScreen implements Screen {
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
+	public static ArrayList<Enemy> enemies = new ArrayList<>();
 	public static boolean openTowerMenu = false;
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
@@ -93,6 +94,7 @@ public class GameScreen implements Screen {
 	TextButton peaceTimer; // Button without a listener
 	float current = 20;
 	
+	boolean created;
 //	Enemy e;
 //	Sprite k;
 	
@@ -156,10 +158,6 @@ public class GameScreen implements Screen {
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
 		
-		// Draw enemy and kingdom
-//		e.draw(renderer.getSpriteBatch());
-//		k.draw(renderer.getSpriteBatch());
-		
 		// Draw towers
 		for(Tower t: towers){ // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
@@ -167,9 +165,28 @@ public class GameScreen implements Screen {
 			if(t.getMoved()){
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
+			if(t.isPlaced()){
+				for(Enemy e: enemies){
+					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 150){
+						if(!created){
+							t.createProjectiles(e);
+							created = true;
+						}
+					}
+				}
+				for(Projectile p: t.getProjectiles()){
+					p.draw(renderer.getSpriteBatch());
+				}
+			}
+			
 		} // FOR TESTING
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
+		
+		for(Enemy e: enemies){
+			e.draw(renderer.getSpriteBatch());
+		}
+		
 		renderer.getSpriteBatch().end(); // FOR TESTING
 		
 		// TESTING: Determine whether or not to draw menu and draw/don't
@@ -195,6 +212,7 @@ public class GameScreen implements Screen {
 			}
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); 
+			
 			stage.getSpriteBatch().end();
 			
 		} else {
@@ -229,7 +247,7 @@ public class GameScreen implements Screen {
 				if(!t.isPlaced()){ // FOR TESTING
 				sr.begin(ShapeType.Line); // FOR TESTING
 				sr.setColor(Color.BLACK); // FOR TESTING
-				sr.circle(t.getX()+16, t.getY()+16, 70); // FOR TESTING
+				sr.circle(t.getX()+16, t.getY()+16, 150); // FOR TESTING
 				sr.end(); // FOR TESTING
 				} // FOR TESTING
 			}
@@ -261,7 +279,7 @@ public class GameScreen implements Screen {
 //		camera.zoom = .75f;
 		
 		i = new Input(level);
-
+		
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);
@@ -279,10 +297,12 @@ public class GameScreen implements Screen {
 		stage.addActor(towerTable);
 		stage.addActor(infoTable);
 		
-//		e = new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 5));
-//		e.setPosition(100, 100);
-//		k = new Sprite(new Texture("img/tempKingdom.png"));
-//		k.setPosition(320, 320);
+		
+		// add 5 skeletons
+		for(int i=0 ; i<5 ; i++) {
+			enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1)));
+			enemies.get(i).setPosition(10, (i+8)*32);
+		}
 		
 	}
 
@@ -313,7 +333,7 @@ public class GameScreen implements Screen {
 		}
 		sr.dispose();
 		stage.getSpriteBatch().dispose();
-		//stage.dispose();
+		stage.dispose();
 		skin.dispose();
 		
 	}

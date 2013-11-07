@@ -31,5 +31,9 @@ public class Node {
     public String getTerrain(){
     	return terrain;
     }
+    
+    public String toString(){
+    	return dir.x + " " + dir.y + " | ";
+    }
 
 }

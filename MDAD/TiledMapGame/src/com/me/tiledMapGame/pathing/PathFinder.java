@@ -6,16 +6,14 @@ package com.me.tiledMapGame.pathing;
 
 import java.util.LinkedList;
 
+import com.badlogic.gdx.math.Vector2;
+
 
 /**
  *
  * @author Brandon Jones
  */
 public class PathFinder {
-    private static boolean isBatman;
-    private PathFinder(){
-        isBatman = true;
-    }
 /*
  * find_path()      Return: Void
  * -----------------------------------
@@ -38,7 +36,7 @@ public class PathFinder {
  *  marked "dir = Direction.NONE"
  * .
  */ 
-    public static void find_path(Node[][] aGrid, int destX, int destY){
+    public static Vector2[][] find_path(Node[][] aGrid, int destX, int destY){
         LinkedList<Node> queue = new LinkedList<Node>();
         aGrid[destY][destX].visited = true;
         aGrid[destY][destX].dist_to_src = 0;
@@ -46,6 +44,14 @@ public class PathFinder {
         int count = 0;
         int in_queue = 1;               //For keeping track of distance from
                                         //the destination...DFD
+        
+        Vector2[][] vectorGrid = new Vector2[aGrid.length][aGrid.length];
+        
+        for(int i=0 ; i<aGrid.length ; i++){
+        	for(int j=0 ; j<aGrid.length ; j++) {
+        		vectorGrid[i][j] = new Vector2();
+        	}
+        }
         
         while(!queue.isEmpty()){
             for(int i = 0; i < in_queue; ++i){
@@ -56,14 +62,22 @@ public class PathFinder {
                 // TODO: change from Direction enum to unit vector direction
                 for(Node n: cur_Node.neighbors){
                     if(n.is_passable && !n.visited){
-                        if(n.x > cur_Node.x)
-                            n.dir.set(-1, 0);
-                        if(n.x < cur_Node.x)
-                            n.dir.set(1,0);
-                        if(n.y > cur_Node.y)
-                            n.dir.set(0,-1);
-                        if(n.y < cur_Node.y)
-                            n.dir.set(0, 1);
+                        if(n.x > cur_Node.x) {
+//                            n.dir.set(-1, 0);
+                        	vectorGrid[n.x][n.y].set(-1,0);
+                        }
+                        if(n.x < cur_Node.x) {
+//                            n.dir.set(1,0);
+                        	vectorGrid[n.x][n.y].set(1,0);
+                        }
+                        if(n.y > cur_Node.y) {
+//                            n.dir.set(0,-1);
+                        	vectorGrid[n.x][n.y].set(0,-1);
+                        }
+                        if(n.y < cur_Node.y) {
+//                            n.dir.set(0, 1);
+                        	vectorGrid[n.x][n.y].set(0,1);
+                        }
 
                         n.visited = true;  		 //Mark the node as visited
                         n.dist_to_src = count;	 //Mark dist_to_src
@@ -74,11 +88,8 @@ public class PathFinder {
             in_queue = queue.size();       		 //For DFD
             count++;
         }
-    }
-    
-    public static void getBatman(){
-    	if(isBatman == false)
-    		System.out.println("...aren't you afraid of the big, black bat?");
+		
+        return vectorGrid;
     }
     
 }

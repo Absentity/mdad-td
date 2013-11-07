@@ -81,9 +81,11 @@ public class Tower extends Entity {
 //        stateTime = 0f;
 //	}
 
-	public void createProjectiles() {
+	public void createProjectiles(Enemy target) {
 		// TODO: create the projectile
-		Projectile p = new Projectile(new Texture("img/fireball.png"), (int)getX(), (int)getY());
+		Projectile p = new Projectile(new ProjectileType(new Texture("img/possibleCresent.png"), 5), target);
+		p.scale(-.5f);
+		p.setPosition(getX(), getY());
 		magazine.add(p);
 	}
 	

@@ -64,21 +64,9 @@ public class Projectile extends MobileEntity {
 	 * @param target     Predict this entity's next location.
 	 */
 	public Projectile(ProjectileType projectile, Entity target) {
-		super(projectile.texture, 1000000, 0);
+		super(projectile.texture, 1000000, 5);
 		// Project
-	}
-	
-	// TEST CONSTRUCTOR - REMOVE LATER
-	public Projectile(Texture texture, int x, int y) {
-		super(texture, 1000000, 1.0f);
-		target.setPosition(x, y);
-		
-//		super(texture, 0, direction.len());
-//		this.direction = direction;
-//		target.setX(200); // FOR TESTING
-//		target.setY(200); // FOR TESTING
-//		this.target = target;
-//		this.direction = direction;
+		this.target = target;
 	}
 	
 	/**

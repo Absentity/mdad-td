@@ -40,8 +40,7 @@ public abstract class Entity extends Sprite {
 			}
 			animation = new Animation(.05f, frames);
 	        stateTime = 0f;
-		}
-		else if(texture.getHeight() == 160){
+		} else if(texture.getHeight() == 160){
 			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/5);
 			frames = new TextureRegion[20];
 			index = 0;
@@ -52,8 +51,7 @@ public abstract class Entity extends Sprite {
 			}
 			animation = new Animation(.05f, frames);
 	        stateTime = 0f;
-		}
-		else if(texture.getHeight() == 240){
+		} else if(texture.getHeight() == 240){
 			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/9, texture.getHeight()/3);
 			frames = new TextureRegion[27];
 			index = 0;
