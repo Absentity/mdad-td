@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
+import com.me.tiledMapGame.pathing.PathFinder;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
 
@@ -73,6 +74,7 @@ public class Input implements InputProcessor {
 				GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
 				//mark the spot as unbuildable for now TODO
 				level.getNode(screenX,screenY, 1).markTower();
+				PathFinder.find_path(level.getGrid(0), 10, 10);
 				
 			}
 			else{

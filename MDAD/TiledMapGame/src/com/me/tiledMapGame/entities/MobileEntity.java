@@ -22,29 +22,18 @@ public abstract class MobileEntity extends Entity {
 	
 	float maxVelocity;
 	protected Vector2 velocity;
-	public GridLayer pathLayer = new ObjectGrid(16, 16).gridLayers.get(0); // TEMPORARY
-	Vector2[][] vectorGrid = new Vector2[16][16]; // TEMPORARY
+	Node[][] gridRef;
 	
-	public MobileEntity(Texture texture, int health, float maxVelocity) {
+	public MobileEntity(Texture texture, int health, float maxVelocity, Node[][] grid) {
 		super(texture, health);
 		this.maxVelocity = maxVelocity;
+		this.gridRef = grid;
 		
-		for(int i=0 ; i<pathLayer.getGrid().length ; i++){
-        	for(int j=0 ; j<pathLayer.getGrid().length ; j++) {
-        		vectorGrid[i][j] = new Vector2();
-        	}
-        }
-		
-		vectorGrid = PathFinder.find_path(pathLayer.getGrid(), 10, 10);
-		
-		for(int x=0 ; x<16 ; x++){
-			for(int y=0 ; y<16 ; y++){
-				System.out.print(vectorGrid[y][x] + " | ");
-			}
-			System.out.println();
-		}
-		
-		System.out.println("---------------------------------------------------------------------------");
+	}
+	
+	public MobileEntity(Texture texture, int health, float maxVelocity){
+		super(texture, health);
+		this.maxVelocity = maxVelocity;
 	}
 	
 	public void draw(SpriteBatch spriteBatch) {

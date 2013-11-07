@@ -74,6 +74,10 @@ public class Level {
 		return objectGrid;
 	}
 	
+	public Node[][] getGrid(int li){
+		return objectGrid.gridLayers.get(0).getGrid();
+	}
+	
 	/**
 	 * TODO description
 	 * 

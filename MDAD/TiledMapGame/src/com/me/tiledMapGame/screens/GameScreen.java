@@ -53,6 +53,7 @@ import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.ProjectileType;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
+import com.me.tiledMapGame.pathing.PathFinder;
 
 public class GameScreen implements Screen {
 	
@@ -234,6 +235,14 @@ public class GameScreen implements Screen {
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
+			PathFinder.find_path(level.getGrid(0),10, 10);
+			// add 5 skeletons
+			for(int i=0 ; i<5 ; i++) {
+				enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
+				enemies.get(i).setPosition(10, (i+8)*32);
+			}
+			current = 50;
+			
 		}
 		
 		
@@ -298,12 +307,6 @@ public class GameScreen implements Screen {
 		stage.addActor(infoTable);
 		
 		
-		// add 5 skeletons
-		for(int i=0 ; i<5 ; i++) {
-			enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1)));
-			enemies.get(i).setPosition(10, (i+8)*32);
-		}
-		
 	}
 
 	
@@ -333,7 +336,6 @@ public class GameScreen implements Screen {
 		}
 		sr.dispose();
 		stage.getSpriteBatch().dispose();
-		stage.dispose();
 		skin.dispose();
 		
 	}
