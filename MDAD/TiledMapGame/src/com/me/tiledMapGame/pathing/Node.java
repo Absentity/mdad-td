@@ -31,5 +31,13 @@ public class Node {
     public String getTerrain(){
     	return terrain;
     }
-
+    
+    public void markTower(){
+    	this.is_buildable = false;
+    	this.is_passable = false;
+    }
+    
+    public void markObstacle(){
+    	this.is_buildable = false;
+    }
 }

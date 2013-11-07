@@ -28,7 +28,14 @@ public class Level {
 	public Level(String name) {
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
 		objectGrid = new ObjectGrid(16,16);
-		objectGrid.gridLayers.get(0).getNodeInGrid(0, 0).is_buildable = false;//TESTING TODO
+		
+		/*Mark all unbuildable spots here*/
+		this.getNode(10, 2, 32).markObstacle();
+		this.getNode(10, 3, 32).markObstacle();
+		this.getNode(10, 4, 32).markObstacle();
+		this.getNode(11, 3, 32).markObstacle();
+		this.getNode(13, 7, 32).markObstacle();
+		
 		// TODO: load enemy wave data file
 		// from map, generate blocked grid
 		// start off with a set amount of money
@@ -72,10 +79,12 @@ public class Level {
 	 * 
 	 * @param x x location in pixels
 	 * @param y y location in pixels
+	 * @param m multiplier for coordinates
 	 * @return a node from the first GridLayer in this.objectGrid
 	 */
-	public Node getNode(int x, int y){
-		return objectGrid.gridLayers.get(0).getNodeInGrid(x/32, y/32);
+	public Node getNode(int x, int y, int m){
+		System.out.println("....."+ x + " " + y);
+		return objectGrid.gridLayers.get(0).getNodeInGrid(x*m/32, y*m/32);
 	}
 	
 	/**
