@@ -95,12 +95,10 @@ public class GameScreen implements Screen {
 	TextButton peaceTimer; // Button without a listener
 	float current = 10;
 	
+	int fireRate = 0;
 	boolean created;
-//	Enemy e;
-//	Sprite k;
 	
 	private Input i;
-
 	
 	
 	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS
@@ -159,6 +157,11 @@ public class GameScreen implements Screen {
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
 		
+		fireRate++;
+		if(fireRate > 1000000){
+			fireRate = 0;
+		}
+		
 		// Draw towers
 		for(Tower t: towers){ // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
@@ -168,15 +171,25 @@ public class GameScreen implements Screen {
 			}
 			if(t.isPlaced()){
 				for(Enemy e: level.enemies){
-					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 150){
-						if(!created){
+					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 90){
+						if(fireRate % 75 == 0){
 							t.createProjectiles(e);
-							created = true;
+						}
+						for(Projectile p: t.getProjectiles()){
+							if(Math.hypot(p.getX()-e.getX(), p.getY()-e.getY()) <= 7){
+								e.setHealth(e.getHealth() - 50);
+								p.setHit(true);
+							}
 						}
 					}
 				}
 				for(Projectile p: t.getProjectiles()){
-					p.draw(renderer.getSpriteBatch());
+					if(!p.isHit()) {
+						p.draw(renderer.getSpriteBatch());
+					}
+					else if(Math.hypot(p.getX()-p.getTarget().getX(), p.getY()-p.getTarget().getY()) >= 90) {
+						// don't keep redrawing it
+					}
 				}
 			}
 			
@@ -185,7 +198,8 @@ public class GameScreen implements Screen {
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
 		
 		for(Enemy e: level.enemies){
-			e.draw(renderer.getSpriteBatch());
+			if(e.getHealth() >= 0)
+				e.draw(renderer.getSpriteBatch());
 		}
 		
 		renderer.getSpriteBatch().end(); // FOR TESTING
@@ -235,26 +249,21 @@ public class GameScreen implements Screen {
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
-			enemies.clear();
+			level.enemies.clear();
 			PathFinder.find_path(level.getGrid(0),10, 10);
 			// add 5 skeletons
 			for(int j=0 ; j<5 ; j++) {
 				level.enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
 				level.enemies.get(j).setPosition(10, (j+8)*32);
-				
 			}
-			//Print out Pathing
-			for(int k = 0; k <16; ++k){
-				for(int jk = 0; jk<16; ++jk){
-					System.out.print(level.getNode(jk, k).dir.y + " ");
-				}
-				System.out.println();
-			}
-<<<<<<< HEAD
+//			//Print out Pathing
+//			for(int k = 0; k <16; ++k){
+//				for(int jk = 0; jk<16; ++jk){
+//					System.out.print(level.getNode(jk, k).dir.y + " ");
+//				}
+//				System.out.println();
+//			}
 			current = 10;
-=======
-			current = 20;
->>>>>>> 5cecfb73366dd6f516cbbf2581eab7f34bff4d1e
 			
 		}
 		
@@ -269,7 +278,7 @@ public class GameScreen implements Screen {
 				if(!t.isPlaced()){ // FOR TESTING
 				sr.begin(ShapeType.Line); // FOR TESTING
 				sr.setColor(Color.BLACK); // FOR TESTING
-				sr.circle(t.getX()+16, t.getY()+16, 150); // FOR TESTING
+				sr.circle(t.getX()+16, t.getY()+16, 90); // FOR TESTING
 				sr.end(); // FOR TESTING
 				} // FOR TESTING
 			}
@@ -459,7 +468,7 @@ public class GameScreen implements Screen {
 	        	towerChoice = 1;
 	        	towerNameLabel.setText("Cresent Tower");
 	        	towerDamageLabel.setText("Damage: 50");
-	        	towerRangeLabel.setText("Range: 70");
+	        	towerRangeLabel.setText("Range: 90");
 	        }
 	    });
 	    

@@ -43,6 +43,7 @@ public class Projectile extends MobileEntity {
 	private float speed = 1.5f; // TODO: adjust for balance
 	private float distanceToTarget = 9000;
 	private float delX = 0, delY = 0, angle = 0;
+	private boolean hit = false; // only get fired once
 
 	/**
 	 * Use this constructor to create projectiles that don't aim for targets.
@@ -82,8 +83,8 @@ public class Projectile extends MobileEntity {
 		distanceToTarget = (float)Math.hypot(getX()-target.getX(), getY()-target.getY()); // can be used later to determine if in range to deal damage
 	}
 	
-	public Sprite getTarget(){
-		return target;
+	public Enemy getTarget(){
+		return (Enemy) target;
 	}
 		
 	/**
@@ -105,7 +106,15 @@ public class Projectile extends MobileEntity {
 		delY = getY() - target.getY();
 		this.angle = (float)(Math.atan2(delY, delX)*(180/Math.PI));
 	}
-
+	
+	public boolean isHit() {
+		return hit;
+	}
+	
+	public void setHit(boolean hit) {
+		this.hit = hit;
+	}
+	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub

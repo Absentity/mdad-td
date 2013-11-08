@@ -37,7 +37,7 @@ public class Enemy extends MobileEntity {
 		toMoveX = (int)gridRef[(int)getY()/32][(int) getX()/32].dir.x;
 		toMoveY = (int)gridRef[(int)getY()/32][(int)getX()/32].dir.y;
 
-		if(getX() - destination.x <= 5 && getY() - destination.y <= 5){ // within 5 pixels 
+		if(getX() - destination.x <= 10 && getY() - destination.y <= 10){ // within 5 pixels 
 //			destination reached, begin attacking 
 		}
 		

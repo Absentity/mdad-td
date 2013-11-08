@@ -71,6 +71,14 @@ public abstract class Entity extends Sprite {
 		this.stateTime += stateTime;
 	}
 	
+	public int getHealth(){
+		return health;
+	}
+	
+	public void setHealth(int health){
+		this.health = health;
+	}
+	
 	public Node getTile() {
 		// TODO: Implement me! D:
 		return null;
