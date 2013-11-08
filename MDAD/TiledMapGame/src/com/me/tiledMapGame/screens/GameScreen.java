@@ -235,7 +235,7 @@ public class GameScreen implements Screen {
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
-			enemies.clear();
+			level.enemies.clear();
 			PathFinder.find_path(level.getGrid(0),10, 10);
 			// add 5 skeletons
 			for(int j=0 ; j<5 ; j++) {
@@ -250,11 +250,8 @@ public class GameScreen implements Screen {
 				}
 				System.out.println();
 			}
-<<<<<<< HEAD
+
 			current = 10;
-=======
-			current = 20;
->>>>>>> 5cecfb73366dd6f516cbbf2581eab7f34bff4d1e
 			
 		}
 		
