@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
 	TextButton towerDamageLabel; // Button without a listener
 	TextButton towerRangeLabel; // Button without a listener
 	TextButton peaceTimer; // Button without a listener
-	float current = 20;
+	float current = 10;
 	
 	boolean created;
 //	Enemy e;
@@ -235,13 +235,14 @@ public class GameScreen implements Screen {
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
+			enemies.clear();
 			PathFinder.find_path(level.getGrid(0),10, 10);
 			// add 5 skeletons
 			for(int i=0 ; i<5 ; i++) {
 				enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
 				enemies.get(i).setPosition(10, (i+8)*32);
 			}
-			current = 50;
+			current = 10;
 			
 		}
 		
