@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
-	public static ArrayList<Enemy> enemies = new ArrayList<>();
+	//public static ArrayList<Enemy> enemies = new ArrayList<>();
 	public static boolean openTowerMenu = false;
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
@@ -167,7 +167,7 @@ public class GameScreen implements Screen {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 			if(t.isPlaced()){
-				for(Enemy e: enemies){
+				for(Enemy e: level.enemies){
 					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 150){
 						if(!created){
 							t.createProjectiles(e);
@@ -184,7 +184,7 @@ public class GameScreen implements Screen {
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
 		
-		for(Enemy e: enemies){
+		for(Enemy e: level.enemies){
 			e.draw(renderer.getSpriteBatch());
 		}
 		
@@ -238,11 +238,23 @@ public class GameScreen implements Screen {
 			enemies.clear();
 			PathFinder.find_path(level.getGrid(0),10, 10);
 			// add 5 skeletons
-			for(int i=0 ; i<5 ; i++) {
-				enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
-				enemies.get(i).setPosition(10, (i+8)*32);
+			for(int j=0 ; j<5 ; j++) {
+				level.enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
+				level.enemies.get(j).setPosition(10, (j+8)*32);
+				
 			}
+			//Print out Pathing
+			for(int k = 0; k <16; ++k){
+				for(int jk = 0; jk<16; ++jk){
+					System.out.print(level.getNode(jk, k).dir.y + " ");
+				}
+				System.out.println();
+			}
+<<<<<<< HEAD
 			current = 10;
+=======
+			current = 20;
+>>>>>>> 5cecfb73366dd6f516cbbf2581eab7f34bff4d1e
 			
 		}
 		

@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.pathing.PathFinder;
@@ -69,12 +70,20 @@ public class Input implements InputProcessor {
 		
 		if(MainMenuScreen.done){ // FOR TESTING
 			//make sure that the tower can be placed
-			if(level.getNode(screenX, screenY, 1).is_buildable){
+			if(level.getNode(screenX/32, 15-(screenY)/32).is_buildable){
 				GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(1);
 				GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
 				//mark the spot as unbuildable for now TODO
-				level.getNode(screenX,screenY, 1).markTower();
+				level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
+				System.out.println(screenX/32 + " " + (16-(screenY/32)));
+				level.getObjectGrid().clearAllVisited();
 				PathFinder.find_path(level.getGrid(0), 10, 10);
+				
+				//Reset enemy grids
+				
+				for(Enemy e: level.enemies){
+					e.resetGrid(level.getGrid(0));
+				}
 				
 			}
 			else{

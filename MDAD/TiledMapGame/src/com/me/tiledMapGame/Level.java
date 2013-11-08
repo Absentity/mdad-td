@@ -20,7 +20,7 @@ public class Level {
 	private ObjectGrid objectGrid;
 	private int gold; // Example resource
 	
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	/**
 	 * 
 	 * @param name Name of a map, not a path
@@ -30,11 +30,13 @@ public class Level {
 		objectGrid = new ObjectGrid(16,16);
 		
 		/*Mark all unbuildable spots here*/
-		this.getNode(10, 2, 32).markObstacle();
-		this.getNode(10, 3, 32).markObstacle();
-		this.getNode(10, 4, 32).markObstacle();
-		this.getNode(11, 3, 32).markObstacle();
-		this.getNode(13, 7, 32).markObstacle();
+		this.getNode(10, 2).markObstacle();
+		this.getNode(10, 3).markObstacle();
+		this.getNode(10, 4).markObstacle();
+		this.getNode(11, 3).markObstacle();
+		this.getNode(13, 7).markObstacle();
+
+		this.getNode(9, 16-7).markTower();
 		
 		// TODO: load enemy wave data file
 		// from map, generate blocked grid
@@ -86,8 +88,8 @@ public class Level {
 	 * @param m multiplier for coordinates
 	 * @return a node from the first GridLayer in this.objectGrid
 	 */
-	public Node getNode(int x, int y, int m){
-		return objectGrid.gridLayers.get(0).getNodeInGrid(x*m/32, y*m/32);
+	public Node getNode(int x, int y){
+		return objectGrid.gridLayers.get(0).getNodeInGrid(x, y);
 	}
 	
 	/**
