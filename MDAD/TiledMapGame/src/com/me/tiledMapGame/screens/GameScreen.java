@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import javax.jws.soap.SOAPBinding.Style;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -93,7 +94,13 @@ public class GameScreen implements Screen {
 	TextButton towerDamageLabel; // Button without a listener
 	TextButton towerRangeLabel; // Button without a listener
 	TextButton peaceTimer; // Button without a listener
-	float current = 10;
+
+	Button displayButton;
+	boolean showHealth = false;
+	BitmapFont font;
+	
+	
+	float current = 5;
 	
 	int fireRate = 0;
 	boolean created;
@@ -157,11 +164,24 @@ public class GameScreen implements Screen {
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
 		
+		
+		if(showHealth) {
+			for(Enemy e: level.enemies) {
+				
+				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
+					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
+				}
+				
+				// TODO: bound lower right
+			}
+		}
+			
+		
 		fireRate++;
 		if(fireRate > 1000000){
 			fireRate = 0;
 		}
-		
+	
 		// Draw towers
 		for(Tower t: towers){ // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
@@ -169,37 +189,25 @@ public class GameScreen implements Screen {
 			if(t.getMoved()){
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
-			if(t.isPlaced()){
-				for(Enemy e: level.enemies){
-					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 90){
-						if(fireRate % 75 == 0){
-							t.createProjectiles(e);
-						}
-						for(Projectile p: t.getProjectiles()){
-							if(Math.hypot(p.getX()-e.getX(), p.getY()-e.getY()) <= 7){
-								e.setHealth(e.getHealth() - 50);
-								p.setHit(true);
-							}
-						}
-					}
-				}
-				for(Projectile p: t.getProjectiles()){
-					if(!p.isHit()) {
-						p.draw(renderer.getSpriteBatch());
-					}
-					else if(Math.hypot(p.getX()-p.getTarget().getX(), p.getY()-p.getTarget().getY()) >= 90) {
-						// don't keep redrawing it
-					}
-				}
-			}
+			
+//			if(t.isPlaced()){
+//				for(Enemy e: level.enemies){
+//					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 90){
+//						if(fireRate % 75 == 0){
+//							t.createProjectiles(e);
+//						}
+//					}
+//				}
+//			}
 			
 		} // FOR TESTING
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
 		
 		for(Enemy e: level.enemies){
-			if(e.getHealth() >= 0)
+			if(e.getHealth() >= 0){
 				e.draw(renderer.getSpriteBatch());
+			}
 		}
 		
 		renderer.getSpriteBatch().end(); // FOR TESTING
@@ -249,13 +257,15 @@ public class GameScreen implements Screen {
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
-			level.enemies.clear();
+//			level.enemies.clear();
 			PathFinder.find_path(level.getGrid(0),10, 10);
 			// add 5 skeletons
 			for(int j=0 ; j<5 ; j++) {
 				level.enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
 				level.enemies.get(j).setPosition(10, (j+8)*32);
+//				stage.addActor(level.enemies.get(j).actor);
 			}
+			
 //			//Print out Pathing
 //			for(int k = 0; k <16; ++k){
 //				for(int jk = 0; jk<16; ++jk){
@@ -263,7 +273,7 @@ public class GameScreen implements Screen {
 //				}
 //				System.out.println();
 //			}
-			current = 10;
+			current = 5;
 			
 		}
 		
@@ -307,7 +317,10 @@ public class GameScreen implements Screen {
 		
 		camera.position.x = layer.getWidth()*(layer.getTileWidth()/2);
 		camera.position.y = layer.getHeight()*(layer.getTileHeight()/2);
-//		camera.zoom = .75f;
+		
+		font = new BitmapFont();
+		font.scale(-.2f);
+		font.setColor(.1f, .1f, .1f, 1f);
 		
 		i = new Input(level);
 		
@@ -316,7 +329,7 @@ public class GameScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		
 		setupSkin();
-		createTwrsButton();
+		createUIButtons();
 	    createInfoBox();
 	    setupTowerOptions();
 	    setupButtonTable();
@@ -359,6 +372,7 @@ public class GameScreen implements Screen {
 		sr.dispose();
 		stage.getSpriteBatch().dispose();
 		skin.dispose();
+		font.dispose();
 		
 	}
 	
@@ -387,9 +401,10 @@ public class GameScreen implements Screen {
 		skin.add("ampDown", new Sprite(new Texture("img/amplifyTowerDown.png")));
 		skin.add("fireballUp", new Sprite(new Texture("img/fireballTowerUp.png")));
 		skin.add("fireballDown", new Sprite(new Texture("img/fireballTowerDown.png")));
+		skin.add("enemyDisplay", new Sprite(new Texture("img/enemyDisplay.png")));
 	}
 	
-	private void createTwrsButton() {
+	private void createUIButtons() {
 		
 		TextButtonStyle twrsButtonStyle = new TextButtonStyle();
 		twrsButtonStyle.up = skin.getDrawable("up");
@@ -405,7 +420,30 @@ public class GameScreen implements Screen {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        			changeTowerMenuState();
-	        }
+	        }	        
+	    });
+	    
+	    TextButtonStyle displayButtonStyle = new TextButtonStyle();
+		displayButtonStyle.up = skin.getDrawable("enemyDisplay");
+		displayButtonStyle.down = skin.getDrawable("enemyDisplay");
+		
+	    displayButton = new Button(displayButtonStyle);
+	    displayButton.addListener(new InputListener() {
+	    	
+	    	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	    		
+	    		if(!level.enemies.isEmpty()){
+	    			showHealth = true;
+	    		}
+	    		
+	    		return true;
+	     	}
+	     
+	     	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+	     		showHealth = false;
+	     	}
+
+	    	
 	    });
 	    
 	}
@@ -623,9 +661,12 @@ public class GameScreen implements Screen {
 	private void setupButtonTable() {
 		
 		buttonTable = new Table();
+		
+	    buttonTable.add(displayButton).pad(15);
+	    buttonTable.setPosition(TiledMapGame.screenWidth-60, 25);
 	    
 	    buttonTable.add(twrsButton);
-	    buttonTable.setPosition(TiledMapGame.screenWidth-25, 25);
+	    
 	}
 	
 	public int getTowerChoice(){

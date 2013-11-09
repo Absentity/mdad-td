@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.pathing.Node;
 
 /**
@@ -15,7 +17,7 @@ import com.me.tiledMapGame.pathing.Node;
  *
  */
 public abstract class Entity extends Sprite {
-
+	
 	protected int health;
 	protected float stateTime;
 	
@@ -93,5 +95,9 @@ public abstract class Entity extends Sprite {
 	
 	public TextureRegion getCurrentFrame() {
 		return currentFrame;
+	}
+	
+	public String showHealth(){
+		return "HP: " + Integer.toString(health);
 	}
 }
