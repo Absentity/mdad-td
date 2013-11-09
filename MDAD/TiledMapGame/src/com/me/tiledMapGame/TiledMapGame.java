@@ -91,9 +91,9 @@ public class TiledMapGame extends Game {
 		soundLibrary = new ObjectMap<String, Sound>();
 
 		// music code - change directory to sounds/song name.mp3 to change song
-		Music song = Gdx.audio.newMusic(Gdx.files.internal("sounds/Facade.mp3"));
+		Music song = Gdx.audio.newMusic(Gdx.files.internal("sounds/towersLoop.mp3"));
 		song.setLooping(true);
-		song.setVolume(.5f);
+		song.setVolume(.2f);
 		song.play();
 		musicLibrary.put("facade", song);
 	}
