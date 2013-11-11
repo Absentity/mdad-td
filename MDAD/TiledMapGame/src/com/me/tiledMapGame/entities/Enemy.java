@@ -54,4 +54,12 @@ public class Enemy extends MobileEntity {
 		
 	}
 
+	public int getHealth() {
+		return health;
+	}
+
+	public String showHealth() {
+		return "HP: " + Integer.toString(health);
+	}
+
 }
