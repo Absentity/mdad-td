@@ -8,7 +8,7 @@ public class UnitType {
 	int health;
 	float maxVelocity;
 	
-	public UnitType(Texture texture, int health, float maxVelocity) {
+	public UnitType(Texture texture, int health, float maxVelocity, int unit) {
 		this.texture = texture;
 		this.health = health;
 		this.maxVelocity = maxVelocity;

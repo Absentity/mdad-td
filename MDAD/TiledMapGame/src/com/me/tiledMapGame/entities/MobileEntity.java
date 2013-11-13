@@ -6,6 +6,7 @@ package com.me.tiledMapGame.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.pathing.GridLayer;
 import com.me.tiledMapGame.pathing.Node;
@@ -40,13 +41,28 @@ public abstract class MobileEntity extends Entity {
 		update(Gdx.graphics.getDeltaTime());
 		super.draw(spriteBatch);
 	}
-
+	
+//	public void update(float stateTime){
+//		super.update(stateTime);
+//		currentFrame = animation.getKeyFrame(this.stateTime, true);
+//		this.stateTime += stateTime;
+//	}
+	
+//	public float getStateTime(){
+//		return super.getStatetime();
+//	}
+//	
+//	public TextureRegion getCurrentFrame(){
+//		return super.getCurrentFrame();
+//	}
+	
 	/**
 	 * Update the position of the mobile entity, letting them curve
 	 * around corners.
 	 * @param delta time in milliseconds since last update
 	 */
 	public void update(float delta) {
+		super.update(delta);
 //		Node tile = this.getTile();
 		// Update position based on velocity
 //		float dX = (1/delta) * tile.dir.x + velocity.x - FRICTION;

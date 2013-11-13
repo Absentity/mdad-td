@@ -1,6 +1,7 @@
 package com.me.tiledMapGame.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Unit extends MobileEntity {
 
@@ -11,10 +12,21 @@ public class Unit extends MobileEntity {
 		this.unit = unit;
 	}
 
+	public void update(float stateTime){
+		super.update(stateTime);
+	}
+	
+	public float getStateTime(){
+		return super.getStatetime();
+	}
+	
+	public TextureRegion getCurrentFrame(){
+		return super.getCurrentFrame();
+	}
+	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

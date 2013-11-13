@@ -54,6 +54,8 @@ import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.ProjectileType;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
+import com.me.tiledMapGame.entities.Unit;
+import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.pathing.PathFinder;
 
 public class GameScreen implements Screen {
@@ -66,20 +68,30 @@ public class GameScreen implements Screen {
 	Vector2 cVel = new Vector2();
 	
 	private int towerChoice = 1;
+	private int unitChoice = 1;
+	boolean usingTower = false;
+	boolean usingUnit = false;
 	
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
 	public static ArrayList<Tower> towers = new ArrayList<>();
+	public static ArrayList<Unit> units = new ArrayList<>();
 	//public static ArrayList<Enemy> enemies = new ArrayList<>();
 	public static boolean openTowerMenu = false;
+	public static boolean openUnitMenu = false;
+	
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
 	// UI stuff here
 	Button twrsButton;
+	Button unitsButton;
 	Button cresButton;
 	Button bombButton;
 	Button ampButton;
 	Button fireballButton;
+	
+	Button mageButton;
+	
 	TextButton confirmSelection;
 	TextButton closeMenu;
 	Skin skin;
@@ -87,12 +99,16 @@ public class GameScreen implements Screen {
 	Table buttonTable;
 //	ScrollPane scrollPane;
 	MenuNinePatch towerNinePatch;
-	MenuNinePatch towerInfoNinePatch;
+	MenuNinePatch infoNinePatch;
+	MenuNinePatch unitNinePatch;
+	MenuNinePatch unitInfoNinePatch;
 	Table towerTable;
 	Table infoTable;
-	TextButton towerNameLabel; // Button without a listener
-	TextButton towerDamageLabel; // Button without a listener
-	TextButton towerRangeLabel; // Button without a listener
+	Table unitTable;
+	Table unitInfoTable;
+	TextButton nameLabel; // Button without a listener
+	TextButton damageLabel; // Button without a listener
+	TextButton rangeLabel; // Button without a listener
 	TextButton peaceTimer; // Button without a listener
 
 	Button displayButton;
@@ -152,8 +168,6 @@ public class GameScreen implements Screen {
 		if(ty + cVel.y*Gdx.graphics.getDeltaTime()-(TiledMapGame.screenHeight/2) > 0 && ty + cVel.y*Gdx.graphics.getDeltaTime()+(TiledMapGame.screenHeight/2) < TiledMapGame.screenHeight){ // Bound y
 			camera.position.y += cVel.y*Gdx.graphics.getDeltaTime();
 		}
-//		camera.position.x += cVel.x*Gdx.graphics.getDeltaTime();
-//		camera.position.y += cVel.y*Gdx.graphics.getDeltaTime();
 		
 		cVel.x = 0;
 		cVel.y = 0;
@@ -170,9 +184,9 @@ public class GameScreen implements Screen {
 				
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
+				} else if(e.getX()+10 <= 512 && e.getY()-35 >= 0) { // bound lower right
+					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()+10, e.getY()-30);
 				}
-				
-				// TODO: bound lower right
 			}
 		}
 			
@@ -190,17 +204,13 @@ public class GameScreen implements Screen {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 			
-//			if(t.isPlaced()){
-//				for(Enemy e: level.enemies){
-//					if(Math.hypot(e.getX()-t.getX(), e.getY()-t.getY()) <= 90){
-//						if(fireRate % 75 == 0){
-//							t.createProjectiles(e);
-//						}
-//					}
-//				}
-//			}
-			
 		} // FOR TESTING
+		
+		for(Unit u: units){
+			u.update(Gdx.graphics.getDeltaTime());
+			renderer.getSpriteBatch().setColor(1,1,1,1);
+			renderer.getSpriteBatch().draw(u.getCurrentFrame(), 398, 398);
+		}
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
 		
@@ -219,31 +229,56 @@ public class GameScreen implements Screen {
 			
 			stage.getSpriteBatch().begin();
 			if(thinking) {
-				towerNameLabel.setVisible(true);
-				towerDamageLabel.setVisible(true);
-				towerRangeLabel.setVisible(true);
+				nameLabel.setVisible(true);
+				damageLabel.setVisible(true);
+				rangeLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-				towerInfoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
+				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
 			}
 			if(selectionConfirmed){
 				selectionConfirmed = false;
-				Gdx.input.setInputProcessor(i);
+				
+				if(usingTower){
+					Gdx.input.setInputProcessor(i);
+				}
+				
 				confirmSelection.setVisible(false);
-				towerNameLabel.setVisible(false);
-				towerDamageLabel.setVisible(false);
-				towerRangeLabel.setVisible(false);
+				nameLabel.setVisible(false);
+				damageLabel.setVisible(false);
+				rangeLabel.setVisible(false);
 			}
+			
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); 
 			
 			stage.getSpriteBatch().end();
 			
+		} else if(openUnitMenu){
+			unitTable.setVisible(true);
+			closeMenu.setVisible(true);
+			
+			stage.getSpriteBatch().begin();
+			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
+			
+			if(thinking){
+				nameLabel.setVisible(true);
+				damageLabel.setVisible(true);
+				rangeLabel.setVisible(true);
+				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
+				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
+			}
+			unitNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight());
+			
+			stage.getSpriteBatch().end();
+			
+			
 		} else {
 			confirmSelection.setVisible(false);
-			towerNameLabel.setVisible(false);
-			towerDamageLabel.setVisible(false);
-			towerRangeLabel.setVisible(false);
+			nameLabel.setVisible(false);
+			damageLabel.setVisible(false);
+			rangeLabel.setVisible(false);
 			towerTable.setVisible(false);
+			unitTable.setVisible(false);
 			closeMenu.setVisible(false);
 		}
 		
@@ -263,7 +298,6 @@ public class GameScreen implements Screen {
 			for(int j=0 ; j<5 ; j++) {
 				level.enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
 				level.enemies.get(j).setPosition(10, (j+8)*32);
-//				stage.addActor(level.enemies.get(j).actor);
 			}
 			
 //			//Print out Pathing
@@ -331,15 +365,19 @@ public class GameScreen implements Screen {
 		setupSkin();
 		createUIButtons();
 	    createInfoBox();
-	    setupTowerOptions();
+	    cancelConfirm();
 	    setupButtonTable();
-		setupTowerTable();
+	    setupTowerOptions();
+	    setupTowerTable();
+		setupUnitOptions();		
+		setupUnitTable();
 		
 		stage.addActor(buttonTable);		
 		stage.addActor(closeMenu);
 		stage.addActor(confirmSelection);
 		stage.addActor(towerTable);
 		stage.addActor(infoTable);
+		stage.addActor(unitTable);
 		
 		
 	}
@@ -384,7 +422,19 @@ public class GameScreen implements Screen {
 		if(openTowerMenu) {
 			openTowerMenu = false;
 		} else {
+			openUnitMenu = false; // close the other menu
+			unitTable.setVisible(false); // close the other menu
 			openTowerMenu = true;
+		}
+	}
+	
+	private void changeUnitMenuState() {
+		if(openUnitMenu) {
+			openUnitMenu = false;
+		} else {
+			openTowerMenu = false; // close the other menu
+			towerTable.setVisible(false); // close the other menu
+			openUnitMenu = true;
 		}
 	}
 	
@@ -393,6 +443,8 @@ public class GameScreen implements Screen {
 		skin = new Skin();
 		skin.add("up", new Sprite(new Texture("img/buttonUp.png")));
 		skin.add("down", new Sprite(new Texture("img/buttonDown.png")));
+		skin.add("uUp", new Sprite(new Texture("img/uButtonUp.png")));
+		skin.add("uDown", new Sprite(new Texture("img/uButtonDown.png")));
 		skin.add("cresUp", new Sprite(new Texture("img/CresTow1.png")));
 		skin.add("cresDown", new Sprite(new Texture("img/CresTow8.png")));
 		skin.add("bombUp", new Sprite(new Texture("img/bombTowerUp.png")));
@@ -401,6 +453,10 @@ public class GameScreen implements Screen {
 		skin.add("ampDown", new Sprite(new Texture("img/amplifyTowerDown.png")));
 		skin.add("fireballUp", new Sprite(new Texture("img/fireballTowerUp.png")));
 		skin.add("fireballDown", new Sprite(new Texture("img/fireballTowerDown.png")));
+		
+		skin.add("mageUp", new Sprite(new Texture("img/mageUp.png")));
+		skin.add("mageDown", new Sprite(new Texture("img/mageDown.png")));
+		
 		skin.add("enemyDisplay", new Sprite(new Texture("img/enemyDisplay.png")));
 	}
 	
@@ -420,6 +476,23 @@ public class GameScreen implements Screen {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        			changeTowerMenuState();
+	        }
+	    });
+	    
+	    TextButtonStyle unitsButtonStyle = new TextButtonStyle();
+		unitsButtonStyle.up = skin.getDrawable("uUp");
+		unitsButtonStyle.down = skin.getDrawable("uDown");
+		
+	    unitsButton = new Button(unitsButtonStyle);
+	    unitsButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        			changeUnitMenuState();
 	        }	        
 	    });
 	    
@@ -432,15 +505,19 @@ public class GameScreen implements Screen {
 	    	
 	    	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 	    		
-	    		if(!level.enemies.isEmpty()){
-	    			showHealth = true;
+	    		if(!showHealth) {
+	    			if(!level.enemies.isEmpty()){
+	    				showHealth = true;
+	    			}
+	    		} else {
+	    			showHealth = false;
 	    		}
 	    		
 	    		return true;
 	     	}
 	     
 	     	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-	     		showHealth = false;
+	     	
 	     	}
 
 	    	
@@ -451,7 +528,7 @@ public class GameScreen implements Screen {
 	// Peace Timer stuff also here
 	private void createInfoBox() {
 		
-		towerInfoNinePatch = new MenuNinePatch();
+		infoNinePatch = new MenuNinePatch();
 		
 		infoTable = new Table();
 		infoTable.setBounds(TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
@@ -462,18 +539,18 @@ public class GameScreen implements Screen {
 		infoStyle.font = new BitmapFont();
 		infoStyle.fontColor = new Color(255,0,0,.7f);
 		
-		towerNameLabel = new TextButton("Tower Name", infoStyle);
-		towerDamageLabel = new TextButton("Tower Damage", infoStyle);
-		towerRangeLabel = new TextButton("Tower Range", infoStyle);
-		towerNameLabel.setVisible(false);
-		towerDamageLabel.setVisible(false);
-		towerRangeLabel.setVisible(false);
+		nameLabel = new TextButton("Tower Name", infoStyle);
+		damageLabel = new TextButton("Tower Damage", infoStyle);
+		rangeLabel = new TextButton("Tower Range", infoStyle);
+		nameLabel.setVisible(false);
+		damageLabel.setVisible(false);
+		rangeLabel.setVisible(false);
 		
-		infoTable.add(towerNameLabel);
+		infoTable.add(nameLabel);
 		infoTable.row();
-		infoTable.add(towerDamageLabel);
+		infoTable.add(damageLabel);
 		infoTable.row();
-		infoTable.add(towerRangeLabel);
+		infoTable.add(rangeLabel);
 		
 		peaceTimer = new TextButton("20",infoStyle);
 		peaceTimer.setWidth(20f);
@@ -504,9 +581,10 @@ public class GameScreen implements Screen {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	towerChoice = 1;
-	        	towerNameLabel.setText("Cresent Tower");
-	        	towerDamageLabel.setText("Damage: 50");
-	        	towerRangeLabel.setText("Range: 90");
+	        	usingTower = true;
+	        	nameLabel.setText("Cresent Tower");
+	        	damageLabel.setText("Damage: 50");
+	        	rangeLabel.setText("Range: 90");
 	        }
 	    });
 	    
@@ -527,9 +605,10 @@ public class GameScreen implements Screen {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	towerChoice = 2;
-	        	towerNameLabel.setText("Bomb Tower");
-	        	towerDamageLabel.setText("Damage: 80");
-	        	towerRangeLabel.setText("Range: 50");
+	        	usingTower = true;
+	        	nameLabel.setText("Bomb Tower");
+	        	damageLabel.setText("Damage: 80");
+	        	rangeLabel.setText("Range: 50");
 	        }
 	    });
 		
@@ -550,9 +629,10 @@ public class GameScreen implements Screen {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	towerChoice = 3;
-	        	towerNameLabel.setText("Amplifier Tower");
-	        	towerDamageLabel.setText("Damage: 0");
-	        	towerRangeLabel.setText("Range: 100");
+	        	usingTower = true;
+	        	nameLabel.setText("Amplifier Tower");
+	        	damageLabel.setText("Damage: 0");
+	        	rangeLabel.setText("Range: 100");
 	        }
 	    });
 	    
@@ -573,12 +653,47 @@ public class GameScreen implements Screen {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	towerChoice = 4;
-	        	towerNameLabel.setText("Fireball Tower");
-	        	towerDamageLabel.setText("Damage: 60");
-	        	towerRangeLabel.setText("Range: 90");
+	        	usingTower = true;
+	        	nameLabel.setText("Fireball Tower");
+	        	damageLabel.setText("Damage: 60");
+	        	rangeLabel.setText("Range: 90");
 	        }
 	    });
+	}
+	
+	private void setupUnitOptions(){
+		
+		unitNinePatch = new MenuNinePatch();
+		
+		TextButtonStyle mageButtonStyle = new TextButtonStyle();
+	    mageButtonStyle.up = skin.getDrawable("mageUp");
+	    mageButtonStyle.down = skin.getDrawable("mageDown");
 	    
+	    mageButton = new Button(mageButtonStyle);
+	    mageButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+//	        		System.out.println("Mage selected");
+	        		thinking = true;
+	        		confirmSelection.setVisible(true);
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        	openTowerMenu = false;
+	        	usingUnit = true;
+	        	unitChoice = 1;
+	        	nameLabel.setText("Mage");
+	        	damageLabel.setText("Damage: 20");
+	        	rangeLabel.setText("Range: 90");
+	        }
+	    });
+		
+	}
+	
+	private void cancelConfirm(){
+	    // Close and confirm buttons
 	    TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 	    style.font = new BitmapFont();
 	    style.fontColor = new Color(0, 0, 200, .8f);
@@ -595,7 +710,13 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        		if(openTowerMenu) {
 	        			changeTowerMenuState();
+	        		} 
+	        		if(openUnitMenu) {
+	        			changeUnitMenuState();
+	        		}
+	        		
 	        }
 	    });
 	    closeMenu.setPosition(75, 5);
@@ -613,20 +734,35 @@ public class GameScreen implements Screen {
 	                int pointer, int button) {
 	        	selectionConfirmed = true;
 	        	
-	        	switch(towerChoice){
-	        		case 1:
-	        			towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
-	        			break;
-	        		case 2:
-	        			towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
-	        			break;
-	        		case 3:
-	        			towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
-	        			break;
-	        		case 4:
-	        			towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
-	        		default:
-	        			break;
+	        	if(usingTower) {
+	        		usingUnit = false;
+	        		
+		        	switch(towerChoice){
+		        		case 1:
+		        			towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
+		        			break;
+		        		case 2:
+		        			towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
+		        			break;
+		        		case 3:
+		        			towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
+		        			break;
+		        		case 4:
+		        			towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
+		        		default:
+		        			break;
+		        	}
+	        	}
+	        	else if(usingUnit) {
+	        		usingTower = false;
+	        		
+		        	switch(unitChoice){
+		        		case 1:
+		        			units.add(new Unit(new UnitType(new Texture("img/mage.png"), 100, 2f, 1)));
+		        			break;
+		        		default:
+		        			break;
+		        	}
 	        	}
 	        	
 	        }
@@ -658,14 +794,32 @@ public class GameScreen implements Screen {
 		towerTable.setVisible(false);
 	}
 	
+	private void setupUnitTable(){
+		
+		unitTable = new Table();
+		unitTable.setBounds(0, 0, 100, TiledMapGame.screenHeight-10); // offset y by 10 for appearance
+		unitTable.pad(0, 20, 0, 0);
+		unitTable.top();
+		
+		unitTable.add(mageButton).spaceRight(24).spaceBottom(5);
+//		unitTable.add(another unit button).spaceBottom(5);
+		unitTable.row();
+		
+		unitTable.setVisible(false);
+		
+		
+	}
+	
 	private void setupButtonTable() {
 		
 		buttonTable = new Table();
 		
+		buttonTable.setPosition(TiledMapGame.screenWidth-94, 25);
+		
 	    buttonTable.add(displayButton).pad(15);
-	    buttonTable.setPosition(TiledMapGame.screenWidth-60, 25);
+	    buttonTable.add(unitsButton).pad(15);
+	    buttonTable.add(twrsButton).pad(15);
 	    
-	    buttonTable.add(twrsButton);
 	    
 	}
 	

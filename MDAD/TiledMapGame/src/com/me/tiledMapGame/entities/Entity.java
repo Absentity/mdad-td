@@ -20,7 +20,7 @@ public abstract class Entity extends Sprite {
 	protected float stateTime;
 	
 	private Animation animation;
-    private Texture sheet;
+//    private Texture sheet;
     private static TextureRegion[] frames;
     private static TextureRegion currentFrame;
 	private int index = 0;
@@ -35,7 +35,7 @@ public abstract class Entity extends Sprite {
 			index = 0;
 			for (int i = 0; i < 3; i++) {
 	            for (int j = 0; j < 4; j++) {
-	                    frames[index++] = tempTexReg[i][j];
+	            	frames[index++] = tempTexReg[i][j];
 	            }
 			}
 			animation = new Animation(.05f, frames);
@@ -46,7 +46,7 @@ public abstract class Entity extends Sprite {
 			index = 0;
 			for (int i = 0; i < 5; i++) {
 	            for (int j = 0; j < 4; j++) {
-	                    frames[index++] = tempTexReg[i][j];
+	            	frames[index++] = tempTexReg[i][j];
 	            }
 			}
 			animation = new Animation(.05f, frames);
@@ -57,9 +57,31 @@ public abstract class Entity extends Sprite {
 			index = 0;
 			for (int i = 0; i < 3; i++) {
 	            for (int j = 0; j < 9; j++) {
-	                    frames[index++] = tempTexReg[i][j];
+	            	frames[index++] = tempTexReg[i][j];
 	            }
 			}
+			animation = new Animation(.05f, frames);
+	        stateTime = 0f;
+		} else if(texture.getHeight() == 48){
+			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/3);
+			frames = new TextureRegion[12];
+			index = 0;
+			for (int i = 0; i < 3; i++) {
+	            for (int j = 0; j < 4; j++) {
+	            	frames[index++] = tempTexReg[i][j];
+	            }
+			}
+			animation = new Animation(.05f, frames);
+	        stateTime = 0f;
+		} else if(texture.getHeight() == 16){
+//			TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/4, texture.getHeight()/3);
+			frames = new TextureRegion[1];
+//			index = 0;
+//			for (int i = 0; i < 3; i++) {
+//	            for (int j = 0; j < 4; j++) {
+//	            	frames[index++] = tempTexReg[i][j];
+//	            }
+//			}
 			animation = new Animation(.05f, frames);
 	        stateTime = 0f;
 		}
@@ -71,14 +93,6 @@ public abstract class Entity extends Sprite {
 		this.stateTime += stateTime;
 	}
 	
-	public Node getTile() {
-		// TODO: Implement me! D:
-		return null;
-	}
-
-	// TODO: Subclasses such as Tower could create some explosion effects on dispose!
-	public abstract void dispose();
-	
 	public float getStatetime() {
 		return stateTime;
 	}
@@ -86,4 +100,12 @@ public abstract class Entity extends Sprite {
 	public TextureRegion getCurrentFrame() {
 		return currentFrame;
 	}
+	
+	public Node getTile() {
+		// TODO: Implement me! D:
+		return null;
+	}
+
+	// TODO: Subclasses such as Tower could create some explosion effects on dispose!
+	public abstract void dispose();
 }

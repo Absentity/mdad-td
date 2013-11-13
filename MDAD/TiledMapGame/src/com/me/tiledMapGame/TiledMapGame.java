@@ -93,7 +93,7 @@ public class TiledMapGame extends Game {
 		// music code - change directory to sounds/song name.mp3 to change song
 		Music song = Gdx.audio.newMusic(Gdx.files.internal("sounds/towersLoop.mp3"));
 		song.setLooping(true);
-		song.setVolume(.2f);
+		song.setVolume(.8f);
 		song.play();
 		musicLibrary.put("facade", song);
 	}
