@@ -16,7 +16,7 @@ import com.me.tiledMapGame.entities.Entity;
  * Contains multiple {@link GridLayer}s and a list of all entities.
  */
 public class ObjectGrid {
-    public List<GridLayer> gridLayers;
+    public static List<GridLayer> gridLayers;
     private int length;
     private int width;
     private List<Entity> entities;
@@ -65,6 +65,22 @@ public class ObjectGrid {
     public List<Entity> entityList() {
     	return entities;
     }
+
+    /**
+     * Convert screen coordinates into tile coordinate space. May change if
+     * panning is offered.
+     * @param x
+     * @param y
+     * @return 
+     */
+	public static int[] worldToTileCoordinates(float x, float y) {
+		// TODO This is probably naively constructed.
+		// Also, not very flexible :(
+		int[] tile = new int[2];
+		tile[0] = (int) x/32;
+		tile[1] = (int) y/32;
+		return tile;
+	}
     
 //    /**
 //     * Creates a new Tower object at location (x,y) with the properties

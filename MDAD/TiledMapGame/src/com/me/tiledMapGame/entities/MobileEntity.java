@@ -23,14 +23,6 @@ public abstract class MobileEntity extends Entity {
 	
 	float maxVelocity;
 	protected Vector2 velocity;
-	Node[][] gridRef;
-	
-	public MobileEntity(Texture texture, int health, float maxVelocity, Node[][] grid) {
-		super(texture, health);
-		this.maxVelocity = maxVelocity;
-		this.gridRef = grid;
-		
-	}
 	
 	public MobileEntity(Texture texture, int health, float maxVelocity){
 		super(texture, health);
@@ -42,20 +34,6 @@ public abstract class MobileEntity extends Entity {
 		super.draw(spriteBatch);
 	}
 	
-//	public void update(float stateTime){
-//		super.update(stateTime);
-//		currentFrame = animation.getKeyFrame(this.stateTime, true);
-//		this.stateTime += stateTime;
-//	}
-	
-//	public float getStateTime(){
-//		return super.getStatetime();
-//	}
-//	
-//	public TextureRegion getCurrentFrame(){
-//		return super.getCurrentFrame();
-//	}
-	
 	/**
 	 * Update the position of the mobile entity, letting them curve
 	 * around corners.
@@ -63,11 +41,23 @@ public abstract class MobileEntity extends Entity {
 	 */
 	public void update(float delta) {
 		super.update(delta);
+		
 //		Node tile = this.getTile();
 		// Update position based on velocity
 //		float dX = (1/delta) * tile.dir.x + velocity.x - FRICTION;
 //		float dY = (1/delta) * tile.dir.y + velocity.y - FRICTION;
 //		Vector2 dir = new Vector2(dX,dY).limit(maxVelocity);
 //		this.setX()
+		
+		// Requires Entity.java's getTile() method to work!
+		int toMoveX = (int) getTile().dir.x;
+		int toMoveY = (int) getTile().dir.y;
+
+		//TODO: Hardcoded destination seeking. Remove?
+		if (getX() - 10 <= 5 && getY() - 10 <= 5) { // within 5 pixels 
+//			destination reached, begin attacking 
+		}
+		
+		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}
 }
