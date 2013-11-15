@@ -56,7 +56,7 @@ public abstract class Entity extends Sprite {
 	 */
 	private Animation createAnimation(Texture texture, int widthBounds, int heightBounds, int numFrames) {
 		TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/widthBounds, texture.getHeight()/heightBounds);
-		TextureRegion[] frames = new TextureRegion[12];
+		TextureRegion[] frames = new TextureRegion[numFrames];
 		index = 0;
 		for (int i = 0; i < heightBounds; i++) {
             for (int j = 0; j < widthBounds; j++) {
@@ -91,14 +91,26 @@ public abstract class Entity extends Sprite {
 		// TODO: Implement me! D:
 	}
 	
+	/**
+	 * Get the Node the entity stands on. Useful for determining movement
+	 * direction from the tile for MobileEntities.
+	 * @return
+	 */
 	public Node getTile() {
-		// TODO: Implement me! D:
-		// I need to have a way to 
 		int[] tile = ObjectGrid.worldToTileCoordinates(getX(), getY());
 		int x = tile[0];
 		int y = tile[1];
-		Node node = ObjectGrid.gridLayers().get(0).getNodeInGrid(x, y);
-		return null;
+		
+		Node node;
+		try {
+			node = ObjectGrid.gridLayer(0).getNodeInGrid(x, y);
+		} catch (IndexOutOfBoundsException e) {
+			// Handle properly? Use logs? At least give more info.
+//			e.printStackTrace();
+			System.err.println("Off the map!");
+			return Node.SENTINEL;
+		}
+		return node;
 	}
 
 	// TODO: Subclasses such as Tower could create some explosion effects on dispose!

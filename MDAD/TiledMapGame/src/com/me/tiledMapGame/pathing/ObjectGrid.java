@@ -19,7 +19,7 @@ public class ObjectGrid {
 	
     private int length;
     private int width;
-    private static List<GridLayer> gridLayers;
+    public static List<GridLayer> gridLayers;
     private static List<Entity> entities;
     
     public ObjectGrid(int length, int width){
@@ -76,8 +76,8 @@ public class ObjectGrid {
      * Retrieve the list of all grid layers
      * @return grid layers list
      */
-    public static List<GridLayer> gridLayers() {
-    	return gridLayers;
+    public static GridLayer gridLayer(int layerIndex) {
+    	return gridLayers.get(layerIndex);
     }
 
     /**

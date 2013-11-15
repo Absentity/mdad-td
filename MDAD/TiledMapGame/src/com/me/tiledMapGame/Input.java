@@ -1,14 +1,8 @@
 package com.me.tiledMapGame;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
-import com.me.tiledMapGame.entities.Enemy;
-import com.me.tiledMapGame.entities.Tower;
-import com.me.tiledMapGame.entities.TowerType;
+import com.me.tiledMapGame.pathing.ObjectGrid;
 import com.me.tiledMapGame.pathing.PathFinder;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
@@ -77,7 +71,7 @@ public class Input implements InputProcessor {
 				level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
 				System.out.println(screenX/32 + " " + (16-(screenY/32)));
 				level.getObjectGrid().clearAllVisited();
-				PathFinder.find_path(level.getGrid(0), 10, 10);
+				PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(), 10, 10);
 				
 				//Reset enemy grids
 				

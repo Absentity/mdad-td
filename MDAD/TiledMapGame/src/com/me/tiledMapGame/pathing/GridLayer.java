@@ -45,18 +45,20 @@ public class GridLayer{
      * 
      * @return returns the 2 Dimensional array of Nodes for this GridLayer.
      */
-    public Node[][] getGrid(){
+    public Node[][] getGrid() {
 		return grid;
     }
     
     /**
-     * Quickly access the node specified by x and y in grid.
+     * Quickly access the node specified by x and y in grid. This is method
+     * secures proper coordinates, separating grid-to-screen logic from the
+     * rest of the program.
      * 
      * @param x
      * @param y
      * @return the node specified by grid[y][x].
      */
-    public Node getNodeInGrid(int x, int y){
+    public Node getNodeInGrid(int x, int y) {
     	return grid[y][x];
     }
 }

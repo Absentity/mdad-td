@@ -6,9 +6,9 @@ package com.me.tiledMapGame.entities;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -18,96 +18,96 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
  * NOTE: Tower sprites MUST have 12 frames in the sprite sheet. (currently)
  */
 public class Tower extends Entity {
-	
+
+	@Deprecated
 	public final int CRESENT = 1;
+	@Deprecated
 	public final int BOMB = 2;
+	@Deprecated
 	public final int AMPLIFIER = 3;
+	@Deprecated
 	public final int FIREBALL = 4;
 	
 	// DEFAULT
+	@Deprecated
 	public int towerType = 1;
 	
 	private boolean moved = false;
 	
-	private Animation animation;
-    private Texture sheet;
-    private static TextureRegion[] frames;
-    private static TextureRegion currentFrame;
-	private int index = 0;
-	private float stateTime;
 	private TowerType tower;
-	
+	private Circle range;
+	private float cooldown;
 	private boolean placed = false;
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
 	
 	private ArrayList<Projectile> magazine = new ArrayList<>(); 
 	
-//	public Tower(Sprite sprite) {
-//		super(sprite);
-//		sheet = sprite.getTexture();
-//		TextureRegion[][] tempTexReg = TextureRegion.split(sheet, sheet.getWidth()/4, sheet.getHeight()/3);
-//		frames = new TextureRegion[12];
-//		index = 0;
-//		for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 4; j++) {
-//                    frames[index++] = tempTexReg[i][j];
-//            }
-//		}
-//		animation = new Animation(.05f, frames);
-//        stateTime = 0f;	
-//	}
-	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
 		this.tower = tower;
-		sheet = tower.texture;
+		range = new Circle(getX(), getY(), tower.sightRange);
 		towerType = 1;
 	}
 	
-//	public Tower(TowerType tower) {
-//		super(tower.texture, tower.health);
-//		this.tower = tower;
-////		super(sprite);
-//		sheet = tower.texture;
-//		// TODO Move Animation generating code into Entity
-//		TextureRegion[][] tempTexReg = TextureRegion.split(sheet, sheet.getWidth()/4, sheet.getHeight()/3);
-//		frames = new TextureRegion[12];
-//		index = 0;
-//		for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 4; j++) {
-//                    frames[index++] = tempTexReg[i][j];
-//            }
-//		}
-//		animation = new Animation(.05f, frames);
-//        stateTime = 0f;
-//	}
+	/**
+	 * Fire at enemies every so often. We use a cooldown mechanism here.
+	 * We want the tower to fire as soon as it's ready, not on some global
+	 * beat.
+	 */
+	public void update(float delta) {
+		super.update(delta);
+		
+		cooldown -= delta;
+		if (cooldown <= 0) {
+			// The enemy detection method can be easily changed
+			Enemy enemyInRange = detectFirstEnemy();
+			
+			// Fire!!
+			if (enemyInRange != null) {
+				createProjectiles(enemyInRange);
+				cooldown = tower.projectileCooldown;
+			}
+		}
+	}
 
+	/**
+	 * TODO: Does this fire at enemies? Or is something else controlling
+	 * when the projectiles come out?
+	 * @param target
+	 */
 	public void createProjectiles(Enemy target) {
-		// TODO: create the projectile
 		Projectile p = new Projectile(new ProjectileType(new Texture("img/possibleCresent.png"), 5), target);
 		p.scale(-.5f);
 		p.setPosition(getX(), getY());
 		magazine.add(p);
 	}
 
+	/**
+	 * Seek out any enemies in the tower's range and return the first one it finds.
+	 * @return
+	 */
 	private Enemy detectFirstEnemy() {
 		for (Entity e : ObjectGrid.entityList()) {
-			if (e instanceof Enemy &&)
+			if (e instanceof Enemy && Intersector.overlaps(range, e.getBoundingRectangle())) {
+				return (Enemy) e;
+			}
 		}
+		return null;
 	}
 	
+	@Deprecated
 	public float getStateTime(){
 		return super.getStatetime();
 	}
-	
+
+	@Deprecated
 	public TextureRegion getCurrentFrame(){
 		return super.getCurrentFrame();
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		// TODO Create nifty explosion? ~LOWPRIORITY
 	}
 	
 	public boolean isPlaced(){

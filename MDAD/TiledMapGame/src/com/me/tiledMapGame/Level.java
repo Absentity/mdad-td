@@ -21,12 +21,16 @@ public class Level {
 	private int gold; // Example resource
 	
 	public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	
 	/**
 	 * 
 	 * @param name Name of a map, not a path
 	 */
 	public Level(String name) {
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
+		// TODO load enemy wave data file
+		// TODO from map, generate blocked grid, not manually
+		
 		objectGrid = new ObjectGrid(16,16);
 		
 		/*Mark all unbuildable spots here*/
@@ -38,9 +42,7 @@ public class Level {
 
 		this.getNode(9, 16-7).markTower();
 		
-		// TODO: load enemy wave data file
-		// from map, generate blocked grid
-		// start off with a set amount of money
+		// TODO start off with a set amount of money
 	}
 	
 	/**
@@ -71,11 +73,13 @@ public class Level {
 	public TiledMap getMap(){
 		return map;
 	}
-	
+
+	@Deprecated
 	public ObjectGrid getObjectGrid(){
 		return objectGrid;
 	}
 	
+	@Deprecated
 	public Node[][] getGrid(int li){
 		return objectGrid.gridLayers.get(0).getGrid();
 	}
@@ -88,6 +92,7 @@ public class Level {
 	 * @param m multiplier for coordinates
 	 * @return a node from the first GridLayer in this.objectGrid
 	 */
+	@Deprecated
 	public Node getNode(int x, int y){
 		return objectGrid.gridLayers.get(0).getNodeInGrid(x, y);
 	}
@@ -99,7 +104,8 @@ public class Level {
 	public void removeEnemy(int position){
 		enemies.remove(position);
 	}
-	
+
+	@Deprecated
 	public void runPathing(int li){
 		//TODO why was PathFinder changed?
 	}

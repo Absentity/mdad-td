@@ -3,7 +3,6 @@
  */
 package com.me.tiledMapGame.entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -76,6 +75,7 @@ public class Projectile extends MobileEntity {
 		super(projectile.texture, 1000000, 5);
 		// Project
 		this.target = target;
+		maxDistance = 300f;
 	}
 	
 	/**

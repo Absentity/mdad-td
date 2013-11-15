@@ -6,10 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.me.tiledMapGame.entities.Enemy;
-import com.me.tiledMapGame.entities.Tower;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.me.tiledMapGame.entities.EnemyType;
+import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
@@ -30,28 +30,25 @@ public class TiledMapGame extends Game {
 	LevelSelectScreen L;
 	GameScreen P;
 	
-	public static ObjectMap<String, Enemy> enemyLibrary;
-	public static ObjectMap<String, Tower> towerLibrary;
+	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
+	public static ObjectMap<String, TowerType> towerTypeLibrary;
 	public static ObjectMap<String, Texture> textureLibrary;
 	public static ObjectMap<String, Music> musicLibrary;
 	public static ObjectMap<String, Sound> soundLibrary;
+
+	public ClickListener listener = new ClickListener();
 	
 	@Override
 	public void create() {
+		S = new Splash(this);
 		
 		// Start up the game
 		loadEntities();
 		loadAudio();
 		loadTextures();
 
-		S = new Splash(this);
 		M = new MainMenuScreen();
 		this.setScreen(S);
-//		loadAudio();
-//		loadTextures();
-//		
-//		M = new MainMenuScreen();
-//		this.setScreen(M);
 	}
 
 	/**
@@ -69,22 +66,6 @@ public class TiledMapGame extends Game {
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
 	}
-//	public static Music music;
-//	public static Splash S;
-	public ClickListener listener = new ClickListener();
-	
-//	@Override
-//	public void create() {
-//		S = new Splash(this);
-//		M = new MainMenuScreen();
-//		this.setScreen(S);
-//>>>>>>> Major: Splash Screen, TWRS button
-//		
-//		// textureLibrary.put(key, value);
-//	}
-		
-		// textureLibrary.put(key, value);
-//	}
 
 	private void loadAudio() {
 		musicLibrary = new ObjectMap<String, Music>();
@@ -99,9 +80,10 @@ public class TiledMapGame extends Game {
 	}
 
 	private void loadEntities() {
-		enemyLibrary = new ObjectMap<String, Enemy>();
-		towerLibrary = new ObjectMap<String, Tower>();
+		enemyTypeLibrary = new ObjectMap<String, EnemyType>();
+		towerTypeLibrary = new ObjectMap<String, TowerType>();
 		
+		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, 1f));
 	}
 
 	@Override
