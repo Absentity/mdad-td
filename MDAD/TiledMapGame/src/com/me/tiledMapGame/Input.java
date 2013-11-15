@@ -1,7 +1,10 @@
 package com.me.tiledMapGame;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 import com.me.tiledMapGame.pathing.PathFinder;
 import com.me.tiledMapGame.screens.GameScreen;
@@ -51,9 +54,10 @@ public class Input implements InputProcessor {
 
 		MainMenuScreen.done = true; // FOR TESTING
 		
-		GameScreen.towers.get(GameScreen.towers.size()-1).setPosition(x, y); // FOR TESTING
-		GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(.65f); // FOR TESTING
-		GameScreen.towers.get(GameScreen.towers.size()-1).setMoved(true);
+		List<Tower> towers = ObjectGrid.towers;
+		towers.get(towers.size()-1).setPosition(x, y); // FOR TESTING
+		towers.get(towers.size()-1).setAlpha(.65f); // FOR TESTING
+		towers.get(towers.size()-1).setMoved(true);
 		
 		return true;
 	}
@@ -61,12 +65,13 @@ public class Input implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		
+		List<Tower> towers = ObjectGrid.towers;
 		
 		if(MainMenuScreen.done){ // FOR TESTING
 			//make sure that the tower can be placed
 			if(level.getNode(screenX/32, 15-(screenY)/32).is_buildable){
-				GameScreen.towers.get(GameScreen.towers.size()-1).setAlpha(1);
-				GameScreen.towers.get(GameScreen.towers.size()-1).setPlaced(true);
+				towers.get(towers.size()-1).setAlpha(1);
+				towers.get(towers.size()-1).setPlaced(true);
 				//mark the spot as unbuildable for now TODO
 				level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
 				System.out.println(screenX/32 + " " + (16-(screenY/32)));
@@ -81,8 +86,8 @@ public class Input implements InputProcessor {
 				
 			}
 			else{
-				GameScreen.towers.get(GameScreen.towers.size()-1).dispose();
-				GameScreen.towers.remove(GameScreen.towers.size()-1);
+				towers.get(towers.size()-1).dispose();
+				towers.remove(towers.size()-1);
 				System.out.println("Can't build here!");//testing
 			}
 
@@ -118,7 +123,7 @@ public class Input implements InputProcessor {
 		
 		
 		if(MainMenuScreen.done){ // FOR TESTING
-			GameScreen.towers.get(GameScreen.towers.size()-1).setPosition(x, y);
+			ObjectGrid.towerList().get(ObjectGrid.towerList().size()-1).setPosition(x, y);
 		}
 		
 		

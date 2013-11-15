@@ -20,8 +20,6 @@ public class Level {
 	private ObjectGrid objectGrid;
 	private int gold; // Example resource
 	
-	public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	
 	/**
 	 * 
 	 * @param name Name of a map, not a path
@@ -102,7 +100,7 @@ public class Level {
 	 * @param position The place in the ArrayList.
 	 */
 	public void removeEnemy(int position){
-		enemies.remove(position);
+		ObjectGrid.enemies.remove(position);
 	}
 
 	@Deprecated

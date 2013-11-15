@@ -53,9 +53,6 @@ public class GameScreen implements Screen {
 	
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
-	public static ArrayList<Tower> towers = new ArrayList<>();
-	public static ArrayList<Unit> units = new ArrayList<>();
-	//public static ArrayList<Enemy> enemies = new ArrayList<>();
 	public static boolean openTowerMenu = false;
 	public static boolean openUnitMenu = false;
 	
@@ -159,7 +156,7 @@ public class GameScreen implements Screen {
 		
 		
 		if(showHealth) {
-			for(Enemy e: level.enemies) {
+			for(Enemy e: ObjectGrid.enemyList()) {
 				
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
@@ -176,7 +173,7 @@ public class GameScreen implements Screen {
 		}
 	
 		// Draw towers
-		for(Tower t: towers){ // FOR TESTING
+		for(Tower t: ObjectGrid.towerList()){ // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
 			if(t.getMoved()){
@@ -185,7 +182,7 @@ public class GameScreen implements Screen {
 			
 		} // FOR TESTING
 		
-		for(Unit u: units){
+		for(Unit u: ObjectGrid.unitList()){
 			u.update(Gdx.graphics.getDeltaTime());
 			renderer.getSpriteBatch().setColor(1,1,1,1);
 			renderer.getSpriteBatch().draw(u.getCurrentFrame(), 398, 398);
@@ -193,7 +190,7 @@ public class GameScreen implements Screen {
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
 		
-		for(Enemy e: level.enemies){
+		for(Enemy e: ObjectGrid.enemyList()){
 			if(e.getHealth() >= 0){
 				e.draw(renderer.getSpriteBatch());
 			}
@@ -277,8 +274,8 @@ public class GameScreen implements Screen {
 			// TODO: Eventually remove the following section for natural level spawning
 			// add 5 skeletons
 			for(int j=0 ; j<5 ; j++) {
-				level.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
-				level.enemies.get(j).setPosition(10, (j+8)*32);
+				ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
+				ObjectGrid.enemies.get(j).setPosition(10, (j+8)*32);
 			}
 			
 //			//Print out Pathing
@@ -298,13 +295,13 @@ public class GameScreen implements Screen {
 		 * independently of the tower when panning. Need to calculate correct
 		 * position to draw range circles. Also, zoom messes with the animations!
 		 */
-		for(Tower t: towers){ // FOR TESTING
-			if(t.getMoved()) {
-				if(!t.isPlaced()){ // FOR TESTING
-				sr.begin(ShapeType.Line); // FOR TESTING
-				sr.setColor(Color.BLACK); // FOR TESTING
-				sr.circle(t.getX()+16, t.getY()+16, 90); // FOR TESTING
-				sr.end(); // FOR TESTING
+		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
+			if (t.getMoved()) {
+				if (!t.isPlaced()) { // FOR TESTING
+					sr.begin(ShapeType.Line); // FOR TESTING
+					sr.setColor(Color.BLACK); // FOR TESTING
+					sr.circle(t.getX()+16, t.getY()+16, 90); // FOR TESTING
+					sr.end(); // FOR TESTING
 				} // FOR TESTING
 			}
 		} // FOR TESTING
@@ -384,7 +381,7 @@ public class GameScreen implements Screen {
 	public void dispose() {
 		renderer.getSpriteBatch().dispose();
 //		renderer.dispose(); Leave out until there is another screen to switch to
-		for(Tower t: towers){
+		for(Tower t: ObjectGrid.towers){
 			t.getTexture().dispose();
 			t.dispose();
 		}
@@ -487,7 +484,7 @@ public class GameScreen implements Screen {
 	    	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 	    		
 	    		if(!showHealth) {
-	    			if(!level.enemies.isEmpty()){
+	    			if(!ObjectGrid.enemyList().isEmpty()){
 	    				showHealth = true;
 	    			}
 	    		} else {
@@ -720,16 +717,16 @@ public class GameScreen implements Screen {
 	        		
 		        	switch(towerChoice){
 		        		case 1:
-		        			towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
 		        			break;
 		        		case 2:
-		        			towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
 		        			break;
 		        		case 3:
-		        			towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
 		        			break;
 		        		case 4:
-		        			towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
 		        		default:
 		        			break;
 		        	}
@@ -739,7 +736,7 @@ public class GameScreen implements Screen {
 	        		
 		        	switch(unitChoice){
 		        		case 1:
-		        			units.add(new Unit(new UnitType(new Texture("img/mage.png"), 100, 2f, 1)));
+		        			ObjectGrid.units.add(new Unit(new UnitType(new Texture("img/mage.png"), 100, 2f, 1)));
 		        			break;
 		        		default:
 		        			break;

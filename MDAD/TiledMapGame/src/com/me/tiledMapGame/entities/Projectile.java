@@ -94,10 +94,9 @@ public class Projectile extends MobileEntity {
 		distanceTravelled += projection.len();
 		
 		// Collision with enemy? This may be inflexible if we ever want enemies to shoot
-		for (Entity collidable : ObjectGrid.entityList()) {
-			if (collidable instanceof Enemy &&
-					this.getBoundingRectangle().overlaps(collidable.getBoundingRectangle())) {
-				collidable.hurt(damage);
+		for (Enemy e : ObjectGrid.enemyList()) {
+			if (this.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
+				e.hurt(damage);
 			}
 		}
 		

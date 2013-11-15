@@ -87,9 +87,9 @@ public class Tower extends Entity {
 	 * @return
 	 */
 	private Enemy detectFirstEnemy() {
-		for (Entity e : ObjectGrid.entityList()) {
-			if (e instanceof Enemy && Intersector.overlaps(range, e.getBoundingRectangle())) {
-				return (Enemy) e;
+		for (Enemy e : ObjectGrid.enemyList()) {
+			if (Intersector.overlaps(range, e.getBoundingRectangle())) {
+				return e;
 			}
 		}
 		return null;

@@ -6,7 +6,10 @@ package com.me.tiledMapGame.pathing;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
+import com.me.tiledMapGame.entities.Tower;
+import com.me.tiledMapGame.entities.Unit;
 
 /**
  *
@@ -20,15 +23,20 @@ public class ObjectGrid {
     private int length;
     private int width;
     public static List<GridLayer> gridLayers;
-    private static List<Entity> entities;
+//    private static List<Entity> entities;
+	public static ArrayList<Tower> towers = new ArrayList<>();
+	public static ArrayList<Unit> units = new ArrayList<>();
+	public static ArrayList<Enemy> enemies = new ArrayList<>();
     
     public ObjectGrid(int length, int width){
     	this.length = length;
     	this.width = width;
     	gridLayers = new ArrayList<GridLayer>();
     	gridLayers.add(new GridLayer(length, width));
-    	if (entities == null)
-    		entities = new ArrayList<Entity>();
+    	
+    	towers = new ArrayList<Tower>();
+    	units = new ArrayList<Unit>();
+    	enemies = new ArrayList<Enemy>();
     }
     
     /**
@@ -64,14 +72,32 @@ public class ObjectGrid {
     		this.clearVisited(i);
     	}
     }
+
+    /**
+     * Retrieve the list of all entities on the grid
+     * @return entity list
+     */
+    public static List<Tower> towerList() {
+    	// Set final before returning?
+    	return towers;
+    }
     
     /**
      * Retrieve the list of all entities on the grid
      * @return entity list
      */
-    public static List<Entity> entityList() {
+    public static List<Unit> unitList() {
     	// Set final before returning?
-    	return entities;
+    	return units;
+    }
+    
+    /**
+     * Retrieve the list of all entities on the grid
+     * @return entity list
+     */
+    public static List<Enemy> enemyList() {
+    	// Set final before returning?
+    	return enemies;
     }
     
     /**
