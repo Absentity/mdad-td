@@ -27,6 +27,8 @@ public class ObjectGrid {
     	this.width = width;
     	gridLayers = new ArrayList<GridLayer>();
     	gridLayers.add(new GridLayer(length, width));
+    	if (entities == null)
+    		entities = new ArrayList<Entity>();
     }
     
     /**
