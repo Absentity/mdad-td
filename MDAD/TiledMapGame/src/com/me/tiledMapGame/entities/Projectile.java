@@ -6,6 +6,7 @@ package com.me.tiledMapGame.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
  * @author Bret
@@ -13,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Projectile extends MobileEntity {
 	
-	private Vector2 direction; // TODO not needed. see directional code in update
+	private Vector2 projection; // TODO not needed. see directional code in update
 	                           // Bret: Unless the target is a point and not following a target, right?
 								// Reggie: We would just set target.x to the point's x and target.y to the point's y, see the comment block below
 
@@ -44,16 +45,24 @@ public class Projectile extends MobileEntity {
 	private float distanceToTarget = 9000;
 	private float delX = 0, delY = 0, angle = 0;
 
+	private ProjectileType projectile;
+	private float distanceTravelled;
+	private float maxDistance;
+	private int damage;
+
 	/**
 	 * Use this constructor to create projectiles that don't aim for targets.
 	 * For example, a frag bomb would create sub explosions in random directions
 	 * coming from the original explosion.
 	 * @param projectile Projectile type that defines this projectile
-	 * @param direction  Initial velocity
+	 * @param projection  Initial velocity
 	 */
-	public Projectile(ProjectileType projectile, Vector2 direction) {
+	public Projectile(ProjectileType projectile, Vector2 projection, float maxDistance, int damage) {
 		super(projectile.texture, 1000000, projectile.maxVelocity);
-//		this.direction = direction;
+		this.projectile = projectile;
+		this.projection = projection;
+		this.maxDistance = maxDistance;
+		this.damage = damage;
 	}
 	
 	// TODO Change this to public static fireAt(Texture, Entity) ? to return new Projectile
@@ -74,12 +83,32 @@ public class Projectile extends MobileEntity {
 	 */
 	public void update(float delta) {
 		// Ignore path layer and follow direct projectile vector
+		// Has the projectile gone too far??
+		if (distanceTravelled >= maxDistance)
+			dispose();
+		
+		// Move
+		float dX = getX() + projection.x;
+		float dY = getY() + projection.y;
+		setPosition(dX, dY);
+		distanceTravelled += projection.len();
+		
+		// Collision with enemy? This may be inflexible if we ever want enemies to shoot
+		for (Entity collidable : ObjectGrid.entityList()) {
+			if (collidable instanceof Enemy &&
+					this.getBoundingRectangle().overlaps(collidable.getBoundingRectangle())) {
+				collidable.hurt(damage);
+			}
+		}
+		
+		// Animation
 		rotate(-15); // TODO Investigate: possibly more costly than sprite animation frames
 		
-		calculateAngle(target);
-		setPosition((float)(getX() + speed*Math.cos(angle)),(float)(getY() + speed*Math.sin(angle)));
+		// Tracking. Hold onto this in case of making homing projectiles
+//		calculateAngle(target);
+//		setPosition((float)(getX() + speed*Math.cos(angle)),(float)(getY() + speed*Math.sin(angle)));
 		
-		distanceToTarget = (float)Math.hypot(getX()-target.getX(), getY()-target.getY()); // can be used later to determine if in range to deal damage
+//		distanceToTarget = (float)Math.hypot(getX()-target.getX(), getY()-target.getY()); // can be used later to determine if in range to deal damage
 	}
 	
 	public Sprite getTarget(){
@@ -108,7 +137,8 @@ public class Projectile extends MobileEntity {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		// Do nothing but stop rendering. Add to projectile pool if we have time to optimize?
+		// Hack currently to make it behave properly, but not animate properly
+		damage = 0;
 	}
 }

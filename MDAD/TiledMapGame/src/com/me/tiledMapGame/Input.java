@@ -81,9 +81,9 @@ public class Input implements InputProcessor {
 				
 				//Reset enemy grids
 				
-				for(Enemy e: level.enemies){
-					e.resetGrid(level.getGrid(0));
-				}
+//				for(Enemy e: level.enemies){
+//					e.resetGrid(level.getGrid(0));
+//				}
 				
 			}
 			else{

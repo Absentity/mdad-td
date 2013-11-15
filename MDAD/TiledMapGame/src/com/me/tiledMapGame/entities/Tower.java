@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
  * This is an instance of a Tower object. When the player places a tower
@@ -88,11 +89,11 @@ public class Tower extends Entity {
 		p.setPosition(getX(), getY());
 		magazine.add(p);
 	}
-	
-	public void update(float stateTime){
-		super.update(stateTime);
-//		currentFrame = animation.getKeyFrame(this.stateTime, true);
-//		this.stateTime += stateTime;
+
+	private Enemy detectFirstEnemy() {
+		for (Entity e : ObjectGrid.entityList()) {
+			if (e instanceof Enemy &&)
+		}
 	}
 	
 	public float getStateTime(){

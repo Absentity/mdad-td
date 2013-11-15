@@ -296,7 +296,7 @@ public class GameScreen implements Screen {
 			PathFinder.find_path(level.getGrid(0),10, 10);
 			// add 5 skeletons
 			for(int j=0 ; j<5 ; j++) {
-				level.enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1), level.getGrid(0)));
+				level.enemies.add(new Enemy(new EnemyType(new Texture("img/Skeleton.png"), 100, 1)));
 				level.enemies.get(j).setPosition(10, (j+8)*32);
 			}
 			

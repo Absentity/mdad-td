@@ -16,10 +16,11 @@ import com.me.tiledMapGame.entities.Entity;
  * Contains multiple {@link GridLayer}s and a list of all entities.
  */
 public class ObjectGrid {
-    public static List<GridLayer> gridLayers;
+	
     private int length;
     private int width;
-    private List<Entity> entities;
+    private static List<GridLayer> gridLayers;
+    private static List<Entity> entities;
     
     public ObjectGrid(int length, int width){
     	this.length = length;
@@ -62,8 +63,21 @@ public class ObjectGrid {
     	}
     }
     
-    public List<Entity> entityList() {
+    /**
+     * Retrieve the list of all entities on the grid
+     * @return entity list
+     */
+    public static List<Entity> entityList() {
+    	// Set final before returning?
     	return entities;
+    }
+    
+    /**
+     * Retrieve the list of all grid layers
+     * @return grid layers list
+     */
+    public static List<GridLayer> gridLayers() {
+    	return gridLayers;
     }
 
     /**

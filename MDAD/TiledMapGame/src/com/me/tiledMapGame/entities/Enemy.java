@@ -1,8 +1,6 @@
 package com.me.tiledMapGame.entities;
 
 
-import com.badlogic.gdx.math.Vector2;
-import com.me.tiledMapGame.pathing.Node;
 
 
 public class Enemy extends MobileEntity {

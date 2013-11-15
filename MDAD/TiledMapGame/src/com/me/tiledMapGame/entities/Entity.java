@@ -79,6 +79,14 @@ public abstract class Entity extends Sprite {
 		return currentFrame;
 	}
 	
+	/**
+	 * Decrease the health of this enemy by the damageAmount
+	 * @param damageAmount
+	 */
+	public void hurt(int damageAmount) {
+		health -= damageAmount;
+	}
+	
 	public void drawHealthBar(float healthRatio) {
 		// TODO: Implement me! D:
 	}
@@ -89,7 +97,7 @@ public abstract class Entity extends Sprite {
 		int[] tile = ObjectGrid.worldToTileCoordinates(getX(), getY());
 		int x = tile[0];
 		int y = tile[1];
-		Node node = ObjectGrid.gridLayers.get(0).getNodeInGrid(x, y);
+		Node node = ObjectGrid.gridLayers().get(0).getNodeInGrid(x, y);
 		return null;
 	}
 
