@@ -19,9 +19,14 @@ import com.me.tiledMapGame.TiledMapGame;
 public class MainMenuScreen implements Screen {
 
 	// TODO: Extend this to launch Play screen instead of setting it every time in TiledMapGame.java 
-	public ClickListener listener = new ClickListener();
+	public ClickListener levelSelectListener = new ClickListener();
+	public ClickListener levelLoadListener = new ClickListener();
+	public ClickListener optionsMenuListener = new ClickListener();
+	
 	private Stage stage = new Stage();
 	private TextButton startGameButton;
+	private TextButton loadGameButton;
+	private TextButton optionsButton;
 	private TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 	// TODO: unify assets, get from central location
 	private Texture background = new Texture("img/title512x512.png");
@@ -34,20 +39,32 @@ public class MainMenuScreen implements Screen {
 		style.font = new BitmapFont();
 		style.overFontColor = new Color(.1f,.1f,.1f,1f);
 		style.fontColor = new Color(1,1,1,1);
-		startGameButton = new TextButton("Start", style);
-    
-		// label "welcome"       
-//		Label welcomeLabel = new Label( "Welcome to Tyrian for Android!", new Skin());   
-//		welcomeLabel.setX(( ( width - welcomeLabel.getWidth() ) / 2 ));       
-//		welcomeLabel.setY(( currentY + 100 ));      
-//		stage.addActor( welcomeLabel );        
-		// button "start game"        
+		startGameButton = new TextButton("Start", style);    
+		loadGameButton = new TextButton("Load", style);
+		optionsButton = new TextButton("Options", style);
 				
 		startGameButton.setWidth(32f);
 		startGameButton.setHeight(12f);
-		startGameButton.setBounds(stage.getWidth() - startGameButton.getWidth() / 2, 280, 32, 12);
-		startGameButton.addListener(listener);
+		startGameButton.setBounds((stage.getWidth() - startGameButton.getWidth() - 48)/2, 240, 32, 12);
+		startGameButton.addListener(levelSelectListener);
+		startGameButton.setX((stage.getWidth()- startGameButton.getWidth() - 48)/2);
+		startGameButton.setY(240);
+		
+		loadGameButton.setWidth(32f);
+		loadGameButton.setHeight(12f);
+		loadGameButton.addListener(levelLoadListener);
+		loadGameButton.setX((stage.getWidth()- loadGameButton.getWidth() - 48)/2);
+		loadGameButton.setY(200);
+		
+		optionsButton.setWidth(32f);
+		optionsButton.setHeight(12f);
+		optionsButton.addListener(optionsMenuListener);
+		optionsButton.setX((stage.getWidth()- optionsButton.getWidth() - 48)/2);
+		optionsButton.setY(160);
+		
 		stage.addActor( startGameButton );  
+		stage.addActor( loadGameButton );
+		stage.addActor( optionsButton );
 		b.setSize(TiledMapGame.screenWidth, TiledMapGame.screenHeight);
 		Gdx.input.setInputProcessor(stage);
 	}
@@ -81,15 +98,7 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		float buttonX = ( stage.getWidth() - startGameButton.getWidth()) / 2;
-		float currentY = 280f;   
 		
-		startGameButton.setX(buttonX);    
-		startGameButton.setY(currentY);   
-		startGameButton.setWidth(32.0f);  
-		startGameButton.setHeight(12.0f);  
-     
 	}
 
 	@Override
