@@ -27,7 +27,7 @@ public class TiledMapGame extends Game {
 	boolean mainScreen = true;
 	public static MainMenuScreen M;
 	public static Splash S;
-	LevelSelectScreen L;
+	public static LevelSelectScreen L;
 	GameScreen P;
 	
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
@@ -49,6 +49,7 @@ public class TiledMapGame extends Game {
 
 		M = new MainMenuScreen();
 		this.setScreen(S);
+		
 	}
 
 	/**
@@ -97,8 +98,15 @@ public class TiledMapGame extends Game {
 	@Override
 	public void render() {		
 		super.render();
-		// TODO: Remove this in favor of an event?
-		if(M.listener.isPressed()){
+		//Set the screen to the level select screen
+		if(M.levelSelectListener.isPressed()){
+			this.getScreen().dispose();
+			L = new LevelSelectScreen();
+			this.setScreen(L);
+		}
+		
+		//Set the screen to a level screen, TODO load level info
+		if(M.levelLoadListener.isPressed()){
 			this.getScreen().dispose();
 			P = new GameScreen(null);
 			this.setScreen(P);
