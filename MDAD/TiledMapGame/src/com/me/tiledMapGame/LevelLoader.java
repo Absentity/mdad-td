@@ -21,6 +21,10 @@ public class LevelLoader {
 	 * @return True if succesful; false if the level is not found or the 'checkSum' is not valid.
 	 */
 	public boolean loadLevel(String loadFile){
+		char first;
+		char fourth;
+		int digits1;
+		int digits2;
 		//TODO
 	
 		return false;

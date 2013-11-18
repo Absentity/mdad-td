@@ -100,16 +100,21 @@ public class TiledMapGame extends Game {
 		super.render();
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
-			this.getScreen().dispose();
+			M.dispose();
 			L = new LevelSelectScreen();
 			this.setScreen(L);
 		}
 		
 		//Set the screen to a level screen, TODO load level info
 		if(M.levelLoadListener.isPressed()){
-			this.getScreen().dispose();
+			M.dispose();
 			P = new GameScreen(null);
 			this.setScreen(P);
+		}
+		if(L != null && L.goBackListener.isPressed()){
+			L.dispose();
+			M = new MainMenuScreen();
+			this.setScreen(M);
 		}
 	}
 
