@@ -12,10 +12,12 @@ public class TowerType {
 	float sightRange;
 	float projectileCooldown;
 	int projectileDamage;
+	int towerType;
 	
 	public TowerType(Texture texture, int health, float sightRange, int tower) {
 		this.texture = texture;
 		this.health = health;
 		this.sightRange = sightRange;
+		this.towerType = tower;
 	}
 }

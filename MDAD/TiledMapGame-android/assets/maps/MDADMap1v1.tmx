@@ -2,10 +2,73 @@
 <map version="1.0" orientation="orthogonal" width="16" height="16" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="TileSet1" tilewidth="32" tileheight="32">
   <image source="TileSet1.png" width="160" height="160"/>
+  <tile id="3">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="26" name="spawnPoint" tilewidth="32" tileheight="32">
+  <image source="../img/spawnPoint.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="spawn" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJylkesNwyAMhE1fIs2jVVtlHkbLKBmFUTpKj0CKcQNCzY9PYLizDVZEVhFRjjGNjbifSt7gXzRN6pd5ivUH8Iw5OLL3n7zwG+e/gwfT6MoeXP9D9C5+eK2uy2FH0ecL+XD2Xsn5mN5yPeK58bUpvMMh57A5Ux3+kr9FxVym5GW6LXL/UDvnr65D/Raxo/vDf8Jf9Fh7v6/txYS5uvoTalPr94nu6JkPWFcuOznv5JrhJuDnXPcBrxYblQ==
+   eJylkdkNwjAQRNdcSsgBShAfVOPSUkpKcSmUwhh7Yb3EJlI+nnzN7GVD5AwR5binZ6vep5I3+t+aOvUnceo/+XswLuscv2Xq837rNVcwCE0V1/57n61faSy8rhIxCj24OL/PjG+Ih7snwzWo/qTeST3Ocx1yU+yDuL9xwS9hrezFCP9Q8BqRU1OY4c9/aB5K1yJ/g7OnXeHXeQ6Yb4e1C/u1tdj4rz7/hNzUhH2i2wfmHVbmtJHjRs4ZLgp5L3Uv8YYbjQ==
   </data>
  </layer>
 </map>

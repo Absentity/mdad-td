@@ -3,7 +3,9 @@ package com.me.tiledMapGame;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -19,6 +21,8 @@ public class Level {
 	private TiledMap map;
 	private ObjectGrid objectGrid;
 	private int gold; // Example resource
+
+	Vector2 spawnPoint = new Vector2();
 	
 	/**
 	 * 
@@ -26,21 +30,37 @@ public class Level {
 	 */
 	public Level(String name) {
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
-		// TODO load enemy wave data file
-		// TODO from map, generate blocked grid, not manually
 		
 		objectGrid = new ObjectGrid(16,16);
+		TiledMapTileLayer groundLayer = (TiledMapTileLayer)map.getLayers().get(0);
 		
-		/*Mark all unbuildable spots here*/
-		this.getNode(10, 2).markObstacle();
-		this.getNode(10, 3).markObstacle();
-		this.getNode(10, 4).markObstacle();
-		this.getNode(11, 3).markObstacle();
-		this.getNode(13, 7).markObstacle();
+		for(int i=0 ; i<16 ; i++) {
+			for(int j=0 ; j<16 ; j++) {
+				
+				if(groundLayer.getCell(j, i).getTile().getProperties().containsKey("blocked")) {
+					objectGrid.gridLayer(0).getNodeInGrid(j, i).is_passable = false;
+					objectGrid.gridLayer(0).getNodeInGrid(j, i).is_buildable = false;
+				} else if(groundLayer.getCell(j, i).getTile().getProperties().containsKey("solid")) {
+					objectGrid.gridLayer(0).getNodeInGrid(j, i).is_buildable = false;
+				} else if(groundLayer.getCell(j, i).getTile().getProperties().containsKey("spawn")) {
+					spawnPoint.x = j*32;
+					spawnPoint.y = i*32;
+				}
+				
+			}
+		}
 
-		this.getNode(9, 16-7).markTower();
+		System.out.println("spawn x = " + spawnPoint.x);
+		System.out.println("spawn y = " + spawnPoint.y);
+		
+		// TODO load enemy wave data file
 		
 		// TODO start off with a set amount of money
+	}
+	
+	public void generateSkeleton() {
+		ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
+		ObjectGrid.enemies.get(ObjectGrid.enemies.size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
 	}
 	
 	/**
@@ -103,8 +123,4 @@ public class Level {
 		ObjectGrid.enemies.remove(position);
 	}
 
-	@Deprecated
-	public void runPathing(int li){
-		//TODO why was PathFinder changed?
-	}
 }

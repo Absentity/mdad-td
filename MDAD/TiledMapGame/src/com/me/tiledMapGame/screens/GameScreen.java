@@ -93,6 +93,8 @@ public class GameScreen implements Screen {
 	
 	
 	float current = 5;
+	float spawn = 0;
+	float eCounter = 0;
 	
 	int fireRate = 0;
 	boolean created;
@@ -176,7 +178,9 @@ public class GameScreen implements Screen {
 		for(Tower t: ObjectGrid.towerList()){ // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
-			if(t.getMoved()){
+			if(t.towerType == 0) {
+				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+			} else if(t.getMoved()){
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 			
@@ -188,7 +192,7 @@ public class GameScreen implements Screen {
 			renderer.getSpriteBatch().draw(u.getCurrentFrame(), 398, 398);
 		}
 		
-		renderer.getSpriteBatch().setColor(1, 1, 1, 1); // FOR TESTING
+		renderer.getSpriteBatch().setColor(1, 1, 1, 1);
 		
 		for(Enemy e: ObjectGrid.enemyList()){
 			if(e.getHealth() >= 0){
@@ -196,9 +200,9 @@ public class GameScreen implements Screen {
 			}
 		}
 		
-		renderer.getSpriteBatch().end(); // FOR TESTING
+		renderer.getSpriteBatch().end();
 		
-		// TESTING: Determine whether or not to draw menu and draw/don't
+		// Determine whether or not to draw menu and draw/don't
 		if(openTowerMenu){
 			towerTable.setVisible(true);
 			closeMenu.setVisible(true);
@@ -272,11 +276,19 @@ public class GameScreen implements Screen {
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),10, 10);
 			
 			// TODO: Eventually remove the following section for natural level spawning
-			// add 5 skeletons
-			for(int j=0 ; j<5 ; j++) {
-				ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
-				ObjectGrid.enemies.get(j).setPosition(10, (j+8)*32);
+
+			if(spawn > 0){
+				spawn -= Gdx.graphics.getDeltaTime();
+			} else {
+				if(eCounter < 5) {
+					spawn = .4f;
+					level.generateSkeleton();
+					eCounter++;
+				}
 			}
+
+			// add 5 skeletons
+			
 			
 //			//Print out Pathing
 //			for(int k = 0; k <16; ++k){
@@ -285,7 +297,9 @@ public class GameScreen implements Screen {
 //				}
 //				System.out.println();
 //			}
-			current = 5;
+			
+//			current = 5;
+
 			
 		}
 		
@@ -356,6 +370,11 @@ public class GameScreen implements Screen {
 		stage.addActor(towerTable);
 		stage.addActor(infoTable);
 		stage.addActor(unitTable);
+		
+		// TEMPORARY KINGDOM
+		ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
+		ObjectGrid.towerList().get(0).setPosition(320, 320);
+		
 		
 		
 	}

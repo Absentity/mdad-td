@@ -20,6 +20,8 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
 public class Tower extends Entity {
 
 	@Deprecated
+	public final int PORTAL = 0;
+	@Deprecated
 	public final int CRESENT = 1;
 	@Deprecated
 	public final int BOMB = 2;
@@ -46,7 +48,10 @@ public class Tower extends Entity {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 		range = new Circle(getX(), getY(), tower.sightRange);
-		towerType = 1;
+		towerType = tower.towerType;
+		if(tower.towerType == 0){
+			alpha = 1;
+		}
 	}
 	
 	/**

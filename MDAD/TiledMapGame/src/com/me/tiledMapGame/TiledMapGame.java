@@ -73,11 +73,18 @@ public class TiledMapGame extends Game {
 		soundLibrary = new ObjectMap<String, Sound>();
 
 		// music code - change directory to sounds/song name.mp3 to change song
-		Music song = Gdx.audio.newMusic(Gdx.files.internal("sounds/towersLoop.mp3"));
-		song.setLooping(true);
-		song.setVolume(.8f);
-		song.play();
-		musicLibrary.put("facade", song);
+
+		Music titleSong = Gdx.audio.newMusic(Gdx.files.internal("sounds/towersLoop.mp3"));
+		titleSong.setLooping(true);
+		titleSong.setVolume(.8f);
+		titleSong.play();
+		musicLibrary.put("titleSong", titleSong);
+		
+		Music worldOne = Gdx.audio.newMusic(Gdx.files.internal("sounds/World 1.mp3"));
+		worldOne.setLooping(true);
+		worldOne.setVolume(.8f);
+		musicLibrary.put("worldOne", worldOne);
+
 	}
 
 	private void loadEntities() {
@@ -109,6 +116,8 @@ public class TiledMapGame extends Game {
 		if(M.levelLoadListener.isPressed()){
 			M.dispose();
 			P = new GameScreen(null);
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldOne").play();
 			this.setScreen(P);
 		}
 		if(L != null && L.goBackListener.isPressed()){
