@@ -45,7 +45,7 @@ public class LevelSelectScreen implements Screen {
 		//Set up Buttons
 		style = new TextButton.TextButtonStyle();
 		style.font = new BitmapFont();
-		style.fontColor = new Color(.8f, .9f, 0, 1f);
+		style.fontColor = new Color(1f, 1f, 0, 1f);
 		style.overFontColor = new Color(.1f, .1f, .1f, 1f);
 		goBackButton = new TextButton("Go Back", style);
 		goBackButton.setWidth(32f);
