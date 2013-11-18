@@ -22,11 +22,14 @@ public class MainMenuScreen implements Screen {
 	public ClickListener levelSelectListener = new ClickListener();
 	public ClickListener levelLoadListener = new ClickListener();
 	public ClickListener optionsMenuListener = new ClickListener();
+	public ClickListener creditsScreenListener = new ClickListener();
+	
 	
 	private Stage stage = new Stage();
 	private TextButton startGameButton;
 	private TextButton loadGameButton;
 	private TextButton optionsButton;
+	private TextButton creditsButton;
 	private TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 	// TODO: unify assets, get from central location
 	private Texture background = new Texture("img/title512x512.png");
@@ -42,6 +45,7 @@ public class MainMenuScreen implements Screen {
 		startGameButton = new TextButton("Start", style);    
 		loadGameButton = new TextButton("Load", style);
 		optionsButton = new TextButton("Options", style);
+		creditsButton = new TextButton("Credits", style);
 				
 		startGameButton.setWidth(32f);
 		startGameButton.setHeight(12f);
@@ -62,9 +66,17 @@ public class MainMenuScreen implements Screen {
 		optionsButton.setX((stage.getWidth()- optionsButton.getWidth() - 48)/2);
 		optionsButton.setY(160);
 		
+		creditsButton.setWidth(32f);
+		creditsButton.setHeight(12f);
+		creditsButton.setBounds((stage.getWidth() - creditsButton.getWidth() - 48)/2, 240, 32, 12);
+		creditsButton.addListener(creditsScreenListener);
+		creditsButton.setX((stage.getWidth()- creditsButton.getWidth() - 48)/2);
+		creditsButton.setY(120);
+		
 		stage.addActor( startGameButton );  
 		stage.addActor( loadGameButton );
 		stage.addActor( optionsButton );
+		stage.addActor( creditsButton );
 		b.setSize(TiledMapGame.screenWidth, TiledMapGame.screenHeight);
 		Gdx.input.setInputProcessor(stage);
 	}
