@@ -9,7 +9,7 @@ public class TowerType {
 	
 	Texture texture;
 	int health;
-	float sightRange;
+	public float sightRange;
 	float projectileCooldown;
 	int projectileDamage;
 	

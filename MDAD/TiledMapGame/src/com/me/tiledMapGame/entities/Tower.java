@@ -137,4 +137,12 @@ public class Tower extends Entity {
 	public void setMoved(boolean moved){
 		this.moved = moved;
 	}
+	
+	public float getRange() {
+		return tower.sightRange;
+	}
+	
+	public void setRange(float sightRange) {
+		this.tower.sightRange = sightRange;
+	}
 }

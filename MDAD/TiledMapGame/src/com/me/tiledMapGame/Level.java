@@ -3,6 +3,7 @@ package com.me.tiledMapGame;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.pathing.Node;
@@ -30,15 +31,31 @@ public class Level {
 		// TODO from map, generate blocked grid, not manually
 		
 		objectGrid = new ObjectGrid(16,16);
+		TiledMapTileLayer groundLayer = (TiledMapTileLayer)map.getLayers().get(0);
 		
 		/*Mark all unbuildable spots here*/
-		this.getNode(10, 2).markObstacle();
+		/*this.getNode(10, 2).markObstacle();
 		this.getNode(10, 3).markObstacle();
 		this.getNode(10, 4).markObstacle();
 		this.getNode(11, 3).markObstacle();
-		this.getNode(13, 7).markObstacle();
+		this.getNode(13, 7).markObstacle();*/
 
-		this.getNode(9, 16-7).markTower();
+//		this.getNode(9, 16-7).markTower();
+		
+		for(int i=0 ; i<16 ; i++) {
+			for(int j=0 ; j<16 ; j++) {
+
+				if(groundLayer.getCell(j, i).getTile().getProperties().containsKey("blocked")) {
+					objectGrid.gridLayer(0).getNodeInGrid(j, i).is_passable = false;
+					objectGrid.gridLayer(0).getNodeInGrid(j, i).is_buildable = false;
+				} else if(groundLayer.getCell(j, i).getTile().getProperties().containsKey("solid")) {
+					objectGrid.gridLayer(0).getNodeInGrid(j, i).is_buildable = false;
+				}
+				
+				
+				
+			}
+		}
 		
 		// TODO start off with a set amount of money
 	}

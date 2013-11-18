@@ -63,7 +63,7 @@ public class ObjectGrid {
     		}
     	}
     }
-    
+
     /**
      * Calls {@link clearVisited(int li)} for all layers in {@link GridLayer}s.
      */

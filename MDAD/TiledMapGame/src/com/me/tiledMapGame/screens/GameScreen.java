@@ -3,6 +3,7 @@ package com.me.tiledMapGame.screens;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -93,6 +94,8 @@ public class GameScreen implements Screen {
 	
 	
 	float current = 5;
+	float spawn = 1;
+	
 	
 	int fireRate = 0;
 	boolean created;
@@ -210,7 +213,7 @@ public class GameScreen implements Screen {
 				rangeLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
-			}
+			
 			if(selectionConfirmed){
 				selectionConfirmed = false;
 				
@@ -223,7 +226,7 @@ public class GameScreen implements Screen {
 				damageLabel.setVisible(false);
 				rangeLabel.setVisible(false);
 			}
-			
+			}
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); 
 			
@@ -263,44 +266,46 @@ public class GameScreen implements Screen {
 		// Timer Stuff
 		if (current > 0) {
 			peaceTimer.setVisible(true);
-			current -= (Gdx.graphics.getDeltaTime());
+			current -= Gdx.graphics.getDeltaTime();
 			current = (float)(Math.floor(current * 1e2) / 1e2);
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
-//			level.enemies.clear();
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),10, 10);
 			
 			// TODO: Eventually remove the following section for natural level spawning
-			// add 5 skeletons
-			for(int j=0 ; j<5 ; j++) {
+			if(spawn > 0){
+				spawn -= Gdx.graphics.getDeltaTime();
+			} else {
+				spawn = .4f;
 				ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
-				ObjectGrid.enemies.get(j).setPosition(10, (j+8)*32);
+				ObjectGrid.enemies.get(ObjectGrid.enemies.size()-1).setPosition(0,6*32);
 			}
 			
-//			//Print out Pathing
+			//Print out Pathing
 //			for(int k = 0; k <16; ++k){
 //				for(int jk = 0; jk<16; ++jk){
-//					System.out.print(level.getNode(jk, k).dir.y + " ");
+//					if(level.getNode(jk, k).dir.x == 0 && level.getNode(jk, k).dir.y == 0)
+////						System.out.print(level.getNode(jk, k).dir.x + "  " + level.getNode(jk, k).dir.y + " |");
+//						System.out.println(jk + " " + k);
 //				}
 //				System.out.println();
 //			}
-			current = 5;
-			
+	
+//			current = 5;
 		}
-		
 		
 		/* ShapeRenderers have their own SpriteBatch and it does not seem
 		 * like they can draw using any other so the range circle moves
 		 * independently of the tower when panning. Need to calculate correct
 		 * position to draw range circles. Also, zoom messes with the animations!
 		 */
-		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
+		for (Tower t: ObjectGrid.towerList()) {
 			if (t.getMoved()) {
-				if (!t.isPlaced()) { // FOR TESTING
-					sr.begin(ShapeType.Line); // FOR TESTING
-					sr.setColor(Color.BLACK); // FOR TESTING
-					sr.circle(t.getX()+16, t.getY()+16, 90); // FOR TESTING
+				if (!t.isPlaced()) {
+					sr.begin(ShapeType.Line);
+					sr.setColor(Color.BLACK);
+					sr.circle(t.getX()+16, t.getY()+16, t.getRange()); // FOR TESTING
 					sr.end(); // FOR TESTING
 				} // FOR TESTING
 			}
@@ -717,16 +722,16 @@ public class GameScreen implements Screen {
 	        		
 		        	switch(towerChoice){
 		        		case 1:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 90f, 1)));
 		        			break;
 		        		case 2:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 60f, 2)));
 		        			break;
 		        		case 3:
 		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
 		        			break;
 		        		case 4:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
+		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 80f, 4)));
 		        		default:
 		        			break;
 		        	}
@@ -801,7 +806,8 @@ public class GameScreen implements Screen {
 	    
 	}
 	
-	public int getTowerChoice(){
+	public int getTowerChoice() {
 		return towerChoice;
 	}
+	
 }
