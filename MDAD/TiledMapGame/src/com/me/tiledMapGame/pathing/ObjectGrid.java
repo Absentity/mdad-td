@@ -24,9 +24,9 @@ public class ObjectGrid {
     private int width;
     public static List<GridLayer> gridLayers;
 //    private static List<Entity> entities;
-	public static ArrayList<Tower> towers = new ArrayList<>();
-	public static ArrayList<Unit> units = new ArrayList<>();
-	public static ArrayList<Enemy> enemies = new ArrayList<>();
+	public static ArrayList<Tower> towers = new ArrayList<Tower>();
+	public static ArrayList<Unit> units = new ArrayList<Unit>();
+	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
     public ObjectGrid(int length, int width){
     	this.length = length;

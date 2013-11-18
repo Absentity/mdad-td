@@ -21,7 +21,7 @@ public class Node {
         is_buildable = true;
         visited = false;
         dir = new Vector2();
-        neighbors = new ArrayList<>();
+        neighbors = new ArrayList<Node>();
         terrain = "none";
     }
     

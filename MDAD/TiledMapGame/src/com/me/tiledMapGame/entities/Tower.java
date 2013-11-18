@@ -4,6 +4,7 @@
 package com.me.tiledMapGame.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -40,7 +41,7 @@ public class Tower extends Entity {
 	private boolean placed = false;
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
 	
-	private ArrayList<Projectile> magazine = new ArrayList<>(); 
+	private List<Projectile> magazine = new ArrayList<Projectile>(); 
 	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
@@ -126,7 +127,7 @@ public class Tower extends Entity {
 		this.alpha = alpha;
 	}
 	
-	public ArrayList<Projectile> getProjectiles(){
+	public List<Projectile> getProjectiles(){
 		return magazine;
 	}
 	
