@@ -69,6 +69,10 @@ public abstract class Entity extends Sprite {
 	public void update(float stateTime) {
 		currentFrame = animation.getKeyFrame(this.stateTime, true);
 		this.stateTime += stateTime;
+		
+		if (health <= 0) {
+			dispose();
+		}
 	}
 	
 	public float getStatetime() {
@@ -88,7 +92,7 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void drawHealthBar(float healthRatio) {
-		// TODO: Implement me! D:
+		// TODO: Implement me ~LOWPRIORITY
 	}
 	
 	/**
