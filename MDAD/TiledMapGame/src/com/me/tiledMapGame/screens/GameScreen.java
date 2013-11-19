@@ -92,16 +92,17 @@ public class GameScreen implements Screen {
 	boolean showHealth = false;
 	BitmapFont font;
 	
+	// Wave Information
+	float current = 5; // Peace Timer
+	float wave = 1; // Current Wave
+	float tbw = 0; // Time Between Waves
+	float tbs = 0; // Time Between Spawns
+	float eCounter = 0; // Enemy Counter
 	
-	float current = 5;
-	float spawn = 0;
-	float eCounter = 0;
-	
-	int fireRate = 0;
+	// For Towers
 	boolean created;
 	
 	private Input i;
-	
 	
 	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS
 	
@@ -167,12 +168,6 @@ public class GameScreen implements Screen {
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()+10, e.getY()-30);
 				}
 			}
-		}
-			
-		
-		fireRate++;
-		if(fireRate > 1000000){
-			fireRate = 0;
 		}
 	
 		// Draw towers
@@ -268,58 +263,68 @@ public class GameScreen implements Screen {
 		// Timer Stuff
 		if (current > 0) {
 			peaceTimer.setVisible(true);
-			current -= (Gdx.graphics.getDeltaTime());
+			current -= Gdx.graphics.getDeltaTime();
 			current = (float)(Math.floor(current * 1e2) / 1e2);
 			peaceTimer.setText( Float.toString(current));
 		} else {
 			peaceTimer.setVisible(false);
-//			level.enemies.clear();
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),10, 10);
 			
 			// TODO: Eventually remove the following section for natural level spawning
-
-			if(spawn > 0){
-				spawn -= Gdx.graphics.getDeltaTime();
-			} else {
-				if(eCounter < 5) {
-					spawn = .4f;
-					level.generateSkeleton();
-					eCounter++;
+			if(wave <= level.getTotalWaves()){
+				if(tbw <= 0){
+					if(tbs <= 0){
+						tbs = level.getTimeBetSpawns(); // reset enemy spawn timer(within wave)
+						level.generateSkeleton(); // create a skeleton
+						eCounter++; // add to the counter
+						if(eCounter == level.getEnemiesPerWave()){
+							tbw = level.getTimeBetWaves(); // reset wave timer
+							eCounter = 0; // reset enemy counter
+							wave++; // wave complete
+						}
+					} else {
+						tbs -= Gdx.graphics.getDeltaTime(); // count down time since last enemy spawn
+					}
+				} else {
+					tbw -= Gdx.graphics.getDeltaTime(); // count down time since start of last wave
 				}
+			} else {
+				// done
 			}
-
-			// add 5 skeletons
 			
 			
-//			//Print out Pathing
-//			for(int k = 0; k <16; ++k){
-//				for(int jk = 0; jk<16; ++jk){
-//					System.out.print(level.getNode(jk, k).dir.y + " ");
+		}
+//			if(spawn > 0){
+//				spawn -= Gdx.graphics.getDeltaTime();
+//			} else {
+//				if(waveTimer > 0) {
+//					
+//					if(eCounter < 5) { // add 5 skeletons
+//						spawn = .4f;
+//						level.generateSkeleton();
+//						eCounter++;
+//					}
+//					
+//					waveTimer -= Gdx.graphics.getDeltaTime();
+//					
+//					
 //				}
-//				System.out.println();
 //			}
 			
 //			current = 5;
-
 			
-		}
+//		}
 		
-		
-		/* ShapeRenderers have their own SpriteBatch and it does not seem
-		 * like they can draw using any other so the range circle moves
-		 * independently of the tower when panning. Need to calculate correct
-		 * position to draw range circles. Also, zoom messes with the animations!
-		 */
-		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
+		for (Tower t: ObjectGrid.towerList()) {
 			if (t.getMoved()) {
-				if (!t.isPlaced()) { // FOR TESTING
-					sr.begin(ShapeType.Line); // FOR TESTING
-					sr.setColor(Color.BLACK); // FOR TESTING
-					sr.circle(t.getX()+16, t.getY()+16, 90); // FOR TESTING
-					sr.end(); // FOR TESTING
-				} // FOR TESTING
+				if (!t.isPlaced()) {
+					sr.begin(ShapeType.Line);
+					sr.setColor(Color.BLACK);
+					sr.circle(t.getX()+16, t.getY()+16, 90);
+					sr.end();
+				}
 			}
-		} // FOR TESTING
+		}
 				
 	}
 
@@ -336,6 +341,9 @@ public class GameScreen implements Screen {
 		
 		// TODO: Load level
 		level = new Level("MDADMap1v1");
+		tbw = level.getTimeBetWaves();
+		tbs = level.getTimeBetSpawns();
+		
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 		
 		camera = new OrthographicCamera();

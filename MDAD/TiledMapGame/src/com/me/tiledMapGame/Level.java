@@ -1,6 +1,9 @@
 package com.me.tiledMapGame;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -23,7 +26,9 @@ public class Level {
 	private ObjectGrid objectGrid;
 	private int gold;				// Example resource
 	private int wave = 1;				// Indicates what wave of enemies is attacking
-
+	private int totalWaves, enemPerWave;
+	private float timeBetweenWaves, timeBetweenSpawns;
+	
 	Vector2 spawnPoint = new Vector2();
 	
 	/**
@@ -59,6 +64,19 @@ public class Level {
 		// TODO load enemy wave data file
 		
 		// TODO start off with a set amount of money
+		
+		try {
+			Scanner sc = new Scanner(new File("levelOneInfo.txt"));
+			
+			totalWaves = sc.nextInt();
+			enemPerWave = sc.nextInt();
+			timeBetweenWaves = sc.nextFloat();
+			timeBetweenSpawns = sc.nextFloat();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void generateSkeleton() {
@@ -132,5 +150,21 @@ public class Level {
 	
 	public int getWave(){
 		return this.wave;
+	}
+	
+	public int getTotalWaves(){
+		return this.totalWaves;
+	}
+	
+	public int getEnemiesPerWave(){
+		return this.enemPerWave;
+	}
+	
+	public float getTimeBetWaves(){
+		return this.timeBetweenWaves;
+	}
+	
+	public float getTimeBetSpawns(){
+		return this.timeBetweenSpawns;
 	}
 }
