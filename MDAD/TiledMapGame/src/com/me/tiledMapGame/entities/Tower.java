@@ -142,4 +142,8 @@ public class Tower extends Entity {
 	public void setMoved(boolean moved){
 		this.moved = moved;
 	}
+	
+	public int getTowerType(){
+		return this.tower.towerType;
+	}
 }

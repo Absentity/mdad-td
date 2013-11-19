@@ -18,9 +18,11 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
  */
 public class Level {
 
+	public int levelId = 1;			// For levelSaver
 	private TiledMap map;
 	private ObjectGrid objectGrid;
-	private int gold; // Example resource
+	private int gold;				// Example resource
+	private int wave = 1;				// Indicates what wave of enemies is attacking
 
 	Vector2 spawnPoint = new Vector2();
 	
@@ -29,6 +31,7 @@ public class Level {
 	 * @param name Name of a map, not a path
 	 */
 	public Level(String name) {
+		gold = 100;
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
 		
 		objectGrid = new ObjectGrid(16,16);
@@ -123,4 +126,11 @@ public class Level {
 		ObjectGrid.enemies.remove(position);
 	}
 
+	public int getGold(){
+		return this.gold;
+	}
+	
+	public int getWave(){
+		return this.wave;
+	}
 }

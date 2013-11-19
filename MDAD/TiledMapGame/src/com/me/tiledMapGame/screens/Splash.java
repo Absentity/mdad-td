@@ -11,10 +11,11 @@ import com.me.tiledMapGame.TiledMapGame;
 
 public class Splash implements Screen {
 
+	public ClickListener listener = new ClickListener();
+	
 	private SpriteBatch spriteBatch;
     private Texture splashTexture;
     private Game myGame;
-    public ClickListener listener = new ClickListener();
     
     public Splash(Game g) {
             myGame = g;

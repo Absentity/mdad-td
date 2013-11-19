@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 public class TowerType {
 	
 	Texture texture;
-	int health;
+	
 	float sightRange;
 	float projectileCooldown;
+	
+	int health;
 	int projectileDamage;
 	int towerType;
 	

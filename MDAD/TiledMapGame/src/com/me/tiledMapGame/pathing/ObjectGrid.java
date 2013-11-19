@@ -20,13 +20,14 @@ import com.me.tiledMapGame.entities.Unit;
  */
 public class ObjectGrid {
 	
-    private int length;
-    private int width;
-    public static List<GridLayer> gridLayers;
-//    private static List<Entity> entities;
+	public static List<GridLayer> gridLayers;
+//  private static List<Entity> entities;
 	public static ArrayList<Tower> towers = new ArrayList<>();
 	public static ArrayList<Unit> units = new ArrayList<>();
 	public static ArrayList<Enemy> enemies = new ArrayList<>();
+	
+    private int length;
+    private int width;
     
     public ObjectGrid(int length, int width){
     	this.length = length;
