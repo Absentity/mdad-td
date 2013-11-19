@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.TiledMapGame;
+import com.me.tiledMapGame.levelSaver;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.Tower;
@@ -398,6 +399,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		//TEST SAVE
+		levelSaver save = new levelSaver("testSaveFile.txt");
+		save.saveLevel(level);
 		renderer.getSpriteBatch().dispose();
 //		renderer.dispose(); Leave out until there is another screen to switch to
 		for(Tower t: ObjectGrid.towers){
