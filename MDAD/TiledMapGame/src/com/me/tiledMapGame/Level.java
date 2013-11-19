@@ -80,8 +80,8 @@ public class Level {
 	}
 	
 	public void generateSkeleton() {
-		ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
-		ObjectGrid.enemies.get(ObjectGrid.enemies.size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
+		ObjectGrid.enemyList().add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
+		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
 	}
 	
 	/**
