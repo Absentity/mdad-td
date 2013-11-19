@@ -167,4 +167,12 @@ public class Level {
 	public float getTimeBetSpawns(){
 		return this.timeBetweenSpawns;
 	}
+	
+	public void setGold(int gold){
+		this.gold = gold;
+	}
+	
+	public void setWave(int wave){
+		this.wave = wave;
+	}
 }

@@ -34,15 +34,23 @@ public class levelSaver {
 			fw.write(l.getGold() + "\n");
 			fw.write(l.getWave() + "\n");
 			fw.write(ObjectGrid.towers.size()+ "\n");
+			
+			/*Finish Calculating Check Sum*/
 			checkSum += ObjectGrid.towers.size() % 100;
+			checkSum += (char) ('e' + ObjectGrid.towers.size() % 5);
+			checkSum += (l.getGold() + 67 + (ObjectGrid.towers.size() % 5) * 2);
+			
+			/*Write down each Tower*/
 			for(Tower t: ObjectGrid.towers){			//Save info for each tower
 				fw.write(t.getX() + " ");
 				fw.write(t.getY() + " ");
 				fw.write(t.getTowerType() + "\n");
 			}
-			fw.write(checkSum);
+			
+			/*Write down each Unit*/
 			//TODO
 			
+			fw.write(checkSum);							//Write down checkSum
 			fw.close();
 			
 		} catch (IOException e) {
