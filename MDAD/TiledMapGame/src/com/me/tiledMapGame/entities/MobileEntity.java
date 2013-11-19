@@ -19,10 +19,11 @@ import com.me.tiledMapGame.pathing.PathFinder;
  */
 public abstract class MobileEntity extends Entity {
 
+	protected Vector2 velocity;
+	
 	public static final float FRICTION = 0.7f;
 	
 	float maxVelocity;
-	protected Vector2 velocity;
 	
 	public MobileEntity(Texture texture, int health, float maxVelocity){
 		super(texture, health);

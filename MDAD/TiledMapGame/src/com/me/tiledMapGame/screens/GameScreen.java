@@ -40,22 +40,24 @@ import com.me.tiledMapGame.pathing.PathFinder;
 
 public class GameScreen implements Screen {
 	
-	private OrthogonalTiledMapRenderer renderer;
-	public static OrthographicCamera camera;
-	private TiledMapTileLayer layer;
 	protected Level level;
 	
-	Vector2 cVel = new Vector2();
-	
-	private int towerChoice = 1;
-	private int unitChoice = 1;
-	boolean usingTower = false;
-	boolean usingUnit = false;
-	
+	public static OrthographicCamera camera;
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
 	public static boolean openTowerMenu = false;
 	public static boolean openUnitMenu = false;
+	
+	private int towerChoice = 1;
+	private int unitChoice = 1;
+	
+	private OrthogonalTiledMapRenderer renderer;
+	private TiledMapTileLayer layer;
+	
+	boolean usingTower = false;
+	boolean usingUnit = false;
+	
+	Vector2 cVel = new Vector2();
 	
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	

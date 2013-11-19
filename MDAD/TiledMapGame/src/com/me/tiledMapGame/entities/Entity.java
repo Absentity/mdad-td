@@ -21,10 +21,10 @@ public abstract class Entity extends Sprite {
 	protected int health;
 	protected float stateTime;
 	
-	private Animation animation;
-    private static TextureRegion currentFrame;
+	private static TextureRegion currentFrame;
 	private int index = 0;
-	
+	private Animation animation;
+
 	public Entity(Texture texture, int health) {
 		super(texture);
 		this.health = health;

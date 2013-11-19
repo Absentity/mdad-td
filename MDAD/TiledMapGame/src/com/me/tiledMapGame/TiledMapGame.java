@@ -24,19 +24,20 @@ public class TiledMapGame extends Game {
 	public final static int screenWidth = 32*16;
 	public final static int screenHeight = 32*16;
 	
-	boolean mainScreen = true;
 	public static MainMenuScreen M;
 	public static Splash S;
 	public static LevelSelectScreen L;
-	GameScreen P;
-	
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
 	public static ObjectMap<String, Texture> textureLibrary;
 	public static ObjectMap<String, Music> musicLibrary;
 	public static ObjectMap<String, Sound> soundLibrary;
-
+	
 	public ClickListener listener = new ClickListener();
+	
+	boolean mainScreen = true;
+	
+	GameScreen P;
 	
 	@Override
 	public void create() {

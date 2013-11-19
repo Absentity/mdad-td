@@ -11,8 +11,8 @@ public class EnemyType {
 	
 	Texture texture;
 	int health;
-	float maxVelocity;
 	int attackStrength;
+	float maxVelocity;
 	
 	public EnemyType(Texture texture, int health, float maxVelocity) {
 		this.texture = texture;

@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class UnitType {
 	
 	Texture texture;
-	int health;
 	float maxVelocity;
+	int health;
 	
 	public UnitType(Texture texture, int health, float maxVelocity, int unit) {
 		this.texture = texture;
