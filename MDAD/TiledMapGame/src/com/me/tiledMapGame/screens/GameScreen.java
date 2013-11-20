@@ -1,7 +1,5 @@
 package com.me.tiledMapGame.screens;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -30,7 +28,7 @@ import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.levelSaver;
 import com.me.tiledMapGame.entities.Enemy;
-import com.me.tiledMapGame.entities.EnemyType;
+import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.Unit;
@@ -144,6 +142,7 @@ public class GameScreen implements Screen {
 		tx = camera.position.x;
 		ty = camera.position.y;
 		
+		// Clamping
 		if(tx + cVel.x*Gdx.graphics.getDeltaTime()-(TiledMapGame.screenWidth/2) > 0 && tx + (cVel.x*Gdx.graphics.getDeltaTime()+(TiledMapGame.screenWidth/2)) < TiledMapGame.screenWidth){ // Bound x 
 			camera.position.x += cVel.x*Gdx.graphics.getDeltaTime();
 		}
@@ -157,9 +156,9 @@ public class GameScreen implements Screen {
 		renderer.setView(camera);
 		renderer.render();
 		
+		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
-		
 		
 		if(showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
@@ -196,6 +195,10 @@ public class GameScreen implements Screen {
 			if(e.getHealth() >= 0){
 				e.draw(renderer.getSpriteBatch());
 			}
+		}
+		
+		for (Projectile p : ObjectGrid.projectileList()) {
+			p.draw(renderer.getSpriteBatch());
 		}
 		
 		renderer.getSpriteBatch().end();

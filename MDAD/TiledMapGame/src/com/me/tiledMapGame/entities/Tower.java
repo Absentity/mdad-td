@@ -42,16 +42,15 @@ public class Tower extends Entity {
 	private boolean placed = false;
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
 	
-	private ArrayList<Projectile> magazine = new ArrayList<>(); 
-	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
 		this.tower = tower;
-		range = new Circle(getX(), getY(), tower.sightRange);
 		towerType = tower.towerType;
+		range = new Circle(-1,-1,0);
 		if(tower.towerType == 0){
 			alpha = 1;
 		}
+		cooldown = tower.fireRate;
 	}
 	
 	/**
@@ -70,7 +69,7 @@ public class Tower extends Entity {
 			// Fire!!
 			if (enemyInRange != null) {
 				createProjectiles(enemyInRange);
-				cooldown = tower.projectileCooldown;
+				cooldown = tower.fireRate;
 			}
 		}
 	}
@@ -81,10 +80,10 @@ public class Tower extends Entity {
 	 * @param target
 	 */
 	public void createProjectiles(Enemy target) {
-		Projectile p = new Projectile(new ProjectileType(new Texture("img/possibleCresent.png"), 5), target);
+		Projectile p = Projectile.fireAt(new ProjectileType(new Texture("img/possibleCresent.png"), 5), this, target);
 		p.scale(-.5f);
 		p.setPosition(getX(), getY());
-		magazine.add(p);
+		ObjectGrid.projectiles.add(p);
 	}
 
 	/**
@@ -94,6 +93,7 @@ public class Tower extends Entity {
 	private Enemy detectFirstEnemy() {
 		for (Enemy e : ObjectGrid.enemyList()) {
 			if (Intersector.overlaps(range, e.getBoundingRectangle())) {
+				System.out.println("Enemy found!"); //TODO Remove line
 				return e;
 			}
 		}
@@ -121,6 +121,9 @@ public class Tower extends Entity {
 	
 	public void setPlaced(boolean placed){
 		this.placed = placed;
+		if (placed) {
+			range = new Circle(getX(), getY(), tower.sightRange);
+		}
 	}
 	
 	public float getAlpha(){
@@ -129,10 +132,6 @@ public class Tower extends Entity {
 	
 	public void setAlpha(float alpha){
 		this.alpha = alpha;
-	}
-	
-	public ArrayList<Projectile> getProjectiles(){
-		return magazine;
 	}
 	
 	public boolean getMoved(){

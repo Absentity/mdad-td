@@ -64,18 +64,17 @@ public class Projectile extends MobileEntity {
 		this.damage = damage;
 	}
 	
-	// TODO Change this to public static fireAt(Texture, Entity) ? to return new Projectile
 	/**
 	 * Fire a projectile at where we expect the target to be by the time the
 	 * projectile could hit it. Lots of fancy math here.
 	 * @param projectile Projectile type that defines this projectile
 	 * @param target     Predict this entity's next location.
 	 */
-	public Projectile(ProjectileType projectile, Entity target) {
-		super(projectile.texture, 1000000, 5);
-		// Project
-		this.target = target;
-		maxDistance = 300f;
+	public static Projectile fireAt(ProjectileType projectile, Entity source, Entity target) {
+		Vector2 sourceVector = new Vector2(source.getX(), source.getY());
+		Vector2 targetVector = new Vector2(target.getX(), target.getY());
+		Vector2 velocity = targetVector.sub(sourceVector).limit(projectile.maxVelocity);
+		return new Projectile(projectile, velocity, 300f, 50);
 	}
 	
 	/**
