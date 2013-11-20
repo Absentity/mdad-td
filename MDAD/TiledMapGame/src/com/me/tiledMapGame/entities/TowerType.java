@@ -11,13 +11,12 @@ public class TowerType {
 	private static final int DEFAULT_DAMAGE = 50;
 	
 	Texture texture;
-	
-	float sightRange;
-	float fireRate;
-	
-	int health;
-	int projectileDamage;
 	int towerType;
+	
+	ProjectileType projectileType;
+	float sightRange, fireRate;
+	int projectileDamage;	
+	int health;
 	
 	public TowerType(Texture texture, int health, float sightRange, int tower) {
 		this.texture = texture;
@@ -28,10 +27,12 @@ public class TowerType {
 		this.projectileDamage = DEFAULT_DAMAGE;
 	}
 	
-	public TowerType(Texture texture, int health, float sightRange, float fireRate, int projectileDamage, int tower) {
+	public TowerType(Texture texture, int health, float sightRange, ProjectileType projectileType,
+			float fireRate, int projectileDamage, int tower) {
 		this.texture = texture;
 		this.health = health;
 		this.sightRange = sightRange;
+		this.projectileType = projectileType;
 		this.towerType = tower;
 		this.fireRate = fireRate;
 		this.projectileDamage = projectileDamage;

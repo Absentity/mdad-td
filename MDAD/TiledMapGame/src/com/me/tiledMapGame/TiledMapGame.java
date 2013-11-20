@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.EnemyType;
+import com.me.tiledMapGame.entities.ProjectileType;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
@@ -29,6 +30,7 @@ public class TiledMapGame extends Game {
 	public static LevelSelectScreen L;
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
+	public static ObjectMap<String, ProjectileType> projectileTypeLibrary;
 	public static ObjectMap<String, Texture> textureLibrary;
 	public static ObjectMap<String, Music> musicLibrary;
 	public static ObjectMap<String, Sound> soundLibrary;
@@ -91,18 +93,27 @@ public class TiledMapGame extends Game {
 	private void loadEntities() {
 		enemyTypeLibrary = new ObjectMap<String, EnemyType>();
 		towerTypeLibrary = new ObjectMap<String, TowerType>();
+		projectileTypeLibrary = new ObjectMap<String, ProjectileType>();
 		
 		// Projectiles
+		projectileTypeLibrary.put("Crescent", new ProjectileType(new Texture("img/possibleCresent.png"), 5));
+		projectileTypeLibrary.put("Fireball", new ProjectileType(new Texture("img/fireball.png"), 5));
+		projectileTypeLibrary.put("Canon", new ProjectileType(new Texture("img/fireball.png"), 3));
 		
 		// Towers
-		towerTypeLibrary.put("Crescent", new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 0.2f, 10, 1));
-		towerTypeLibrary.put("Bomb", new TowerType(new Texture("img/bombTower.png"), 100, 70f, 1.2f, 60, 2));
-		towerTypeLibrary.put("Amplify", new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 0f, 0, 3));
-		towerTypeLibrary.put("Fireball", new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 0.6f, 60, 4));
+		towerTypeLibrary.put("Crescent", new TowerType(new Texture("img/cresentTower.png"), 100, 70f,
+				projectileTypeLibrary.get("Crescent"), 0.2f, 10, 1));
+		towerTypeLibrary.put("Bomb", new TowerType(new Texture("img/bombTower.png"), 100, 70f,
+				projectileTypeLibrary.get("Canon"), 1.2f, 60, 2));
+		towerTypeLibrary.put("Amplify", new TowerType(new Texture("img/amplifyTower.png"), 100, 70f,
+				projectileTypeLibrary.get("Crescent"), 0f, 0, 3));
+		towerTypeLibrary.put("Fireball", new TowerType(new Texture("img/fireballTower.png"), 100, 70f,
+				projectileTypeLibrary.get("Fireball"), 0.6f, 60, 4));
 		
 		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f));
 		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f));
+		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 5000, .3f));
 	}
 
 	@Override

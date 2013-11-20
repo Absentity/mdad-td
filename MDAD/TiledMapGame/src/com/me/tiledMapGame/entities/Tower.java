@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -80,7 +81,7 @@ public class Tower extends Entity {
 	 * @param target
 	 */
 	public void createProjectiles(Enemy target) {
-		Projectile p = Projectile.fireAt(new ProjectileType(new Texture("img/possibleCresent.png"), 5), this, target);
+		Projectile p = Projectile.fireAt(tower.projectileType, this, target);
 		p.scale(-.5f);
 		p.setPosition(getX(), getY());
 		p.setDamage(tower.projectileDamage);
