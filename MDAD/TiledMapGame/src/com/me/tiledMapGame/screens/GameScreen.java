@@ -266,73 +266,48 @@ public class GameScreen implements Screen {
 		stage.draw();
 		
 		// Timer Stuff
-		if (current > 0) {
-			peaceTimer.setVisible(true);
-			current -= Gdx.graphics.getDeltaTime();
-			current = (float)(Math.floor(current * 1e2) / 1e2);
-			peaceTimer.setText( Float.toString(current));
-		} else {
+		
 			peaceTimer.setVisible(false);
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),10, 10);
 			
-			// TODO: Eventually remove the following section for natural level spawning
-			if(wave-1 == 0){
-				tbw = 0;
-			}
-			
-			if(wave <= level.getTotalWaves()){
-				if(tbw <= 0){
-					if(tbs <= 0){
-						tbs = level.getTimeBetSpawns(); // reset enemy spawn timer(within wave)
-						switch(level.getEnemyTypes((int)(wave-1))){
-							case 1:
-								level.generateSkeleton(); // create a skeleton
-								break;
-							case 2:
-								level.generateWight();
-								break;
-							default:
-								break;
-						}
-						eCounter++; // add to the counter
-						if(eCounter == level.getEnemiesPerWave()){
-							tbw = level.getTimeBetWaves(); // reset wave timer
-							eCounter = 0; // reset enemy counter
-							wave++; // wave complete
-						}
-					} else {
-						tbs -= Gdx.graphics.getDeltaTime(); // count down time since last enemy spawn
+		// Spawn enemies based on the text file(it is read in Level.java)
+		if(wave <= level.getTotalWaves()){
+			if(tbw <= 0){
+				if(tbs <= 0){
+					tbs = level.getTimeBetSpawns(); // reset enemy spawn timer(within wave)
+					switch(level.getEnemyTypes((int)(wave-1))){
+						case 1:
+							level.generateSkeleton(); // create a skeleton
+							break;
+						case 2:
+							level.generateWight();
+							break;
+						default:
+							break;
+					}
+					eCounter++; // add to the counter
+					if(eCounter == level.getEnemiesPerWave()){ // if true, wave has ended
+						tbw = level.getTimeBetWaves(); // reset wave timer
+						eCounter = 0; // reset enemy counter
+						wave++; // advance to next wave
 					}
 				} else {
-					tbw -= Gdx.graphics.getDeltaTime(); // count down time since start of last wave
+					tbs -= Gdx.graphics.getDeltaTime(); // count down time since last enemy spawn
 				}
 			} else {
-				// done
+				tbw -= Gdx.graphics.getDeltaTime(); // count down time since start of last wave
+				peaceTimer.setVisible(true);
+				current = tbw;
+				current = (float)(Math.floor(current * 1e2) / 1e2);
+				if(current > 0) {
+					peaceTimer.setText( Float.toString(current));
+				}
 			}
-			
-			
+		} else {
+			// done
 		}
-//			if(spawn > 0){
-//				spawn -= Gdx.graphics.getDeltaTime();
-//			} else {
-//				if(waveTimer > 0) {
-//					
-//					if(eCounter < 5) { // add 5 skeletons
-//						spawn = .4f;
-//						level.generateSkeleton();
-//						eCounter++;
-//					}
-//					
-//					waveTimer -= Gdx.graphics.getDeltaTime();
-//					
-//					
-//				}
-//			}
-			
-//			current = 5;
-			
-//		}
 		
+		// Draw tower range
 		for (Tower t: ObjectGrid.towerList()) {
 			if (t.getMoved()) {
 				if (!t.isPlaced()) {
@@ -402,7 +377,7 @@ public class GameScreen implements Screen {
 		ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
 		ObjectGrid.towerList().get(0).setPosition(320, 320);
 		
-		
+		current = level.getTimeBetWaves();
 		
 	}
 
@@ -599,7 +574,7 @@ public class GameScreen implements Screen {
 	    cresButton.addListener(new InputListener() {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        		System.out.println("Cresent Tower selected");
+	        		System.out.println("Crescent Tower selected");
 	        		thinking = true;
 	        		confirmSelection.setVisible(true);
 	            return true;
@@ -609,7 +584,7 @@ public class GameScreen implements Screen {
 	                int pointer, int button) {
 	        	towerChoice = 1;
 	        	usingTower = true;
-	        	nameLabel.setText("Cresent Tower");
+	        	nameLabel.setText("Crescent Tower");
 	        	damageLabel.setText("Damage: 50");
 	        	rangeLabel.setText("Range: 90");
 	        }
