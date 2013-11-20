@@ -66,9 +66,32 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="27" name="temp" tilewidth="32" tileheight="32">
+  <image source="temp.png" width="160" height="160"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJylkdkNwjAQRNdcSsgBShAfVOPSUkpKcSmUwhh7Yb3EJlI+nnzN7GVD5AwR5binZ6vep5I3+t+aOvUnceo/+XswLuscv2Xq837rNVcwCE0V1/57n61faSy8rhIxCj24OL/PjG+Ih7snwzWo/qTeST3Ocx1yU+yDuL9xwS9hrezFCP9Q8BqRU1OY4c9/aB5K1yJ/g7OnXeHXeQ6Yb4e1C/u1tdj4rz7/hNzUhH2i2wfmHVbmtJHjRs4ZLgp5L3Uv8YYbjQ==
+   eJylkcENgzAMRZ0buaAKqh7oueoaGY1RGMWjdJQ6rV2cEJsKDk8o8f+2fwgAGADA4laeU1WfPS/7P5pY+os+cWd+T4xtHUrN2C/7U9ZciEFpOv726725f6VJ5MVO9XAyIL/f742v1I/uXoLsUOXTetR6Oi/xOxs4B0i+seHXiFZnCco/ON6gZtY4b7j5Hwb/6s74m5pprSUrn8eTeBwke+8n4fl4hOx9A++bJ2M=
   </data>
  </layer>
 </map>

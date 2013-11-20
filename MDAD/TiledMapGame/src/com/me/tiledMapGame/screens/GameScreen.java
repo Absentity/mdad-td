@@ -347,7 +347,7 @@ public class GameScreen implements Screen {
 	public void show() {
 		
 		// TODO: Load level
-		level = new Level("MDADMap1v1");
+		level = new Level("MDADMap1v4");
 		tbw = level.getTimeBetWaves();
 		tbs = level.getTimeBetSpawns();
 		
@@ -830,7 +830,7 @@ public class GameScreen implements Screen {
 		
 		buttonTable = new Table();
 		
-		buttonTable.setPosition(TiledMapGame.screenWidth-94, 25);
+		buttonTable.setPosition(TiledMapGame.screenWidth-150, 50);
 		
 	    buttonTable.add(displayButton).pad(15);
 	    buttonTable.add(unitsButton).pad(15);
