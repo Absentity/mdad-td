@@ -93,6 +93,7 @@ public class TiledMapGame extends Game {
 		towerTypeLibrary = new ObjectMap<String, TowerType>();
 		
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f));
+		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f));
 	}
 
 	@Override

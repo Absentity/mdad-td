@@ -279,11 +279,24 @@ public class GameScreen implements Screen {
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),10, 10);
 			
 			// TODO: Eventually remove the following section for natural level spawning
+			if(wave-1 == 0){
+				tbw = 0;
+			}
+			
 			if(wave <= level.getTotalWaves()){
 				if(tbw <= 0){
 					if(tbs <= 0){
 						tbs = level.getTimeBetSpawns(); // reset enemy spawn timer(within wave)
-						level.generateSkeleton(); // create a skeleton
+						switch(level.getEnemyTypes((int)(wave-1))){
+							case 1:
+								level.generateSkeleton(); // create a skeleton
+								break;
+							case 2:
+								level.generateWight();
+								break;
+							default:
+								break;
+						}
 						eCounter++; // add to the counter
 						if(eCounter == level.getEnemiesPerWave()){
 							tbw = level.getTimeBetWaves(); // reset wave timer
