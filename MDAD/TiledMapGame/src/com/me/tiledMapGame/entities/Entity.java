@@ -20,6 +20,7 @@ public abstract class Entity extends Sprite {
 
 	protected int health;
 	protected float stateTime;
+	protected boolean disposeMe;
 	
 	private static TextureRegion currentFrame;
 	private int index = 0;
@@ -118,5 +119,7 @@ public abstract class Entity extends Sprite {
 	}
 
 	// TODO: Subclasses such as Tower could create some explosion effects on dispose!
-	public abstract void dispose();
+	public void dispose() {
+		ObjectGrid.disposeList.add(this);
+	}
 }

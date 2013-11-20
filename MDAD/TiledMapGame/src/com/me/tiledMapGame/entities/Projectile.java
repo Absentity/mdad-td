@@ -39,9 +39,6 @@ public class Projectile extends MobileEntity {
 	 * 
 	 */
 	
-	private Sprite target = new Sprite();
-	private float speed = 1.5f; // TODO: adjust for balance
-	private float distanceToTarget = 9000;
 	private float delX = 0, delY = 0, angle = 0;
 
 	private ProjectileType projectile;
@@ -57,7 +54,7 @@ public class Projectile extends MobileEntity {
 	 * @param projection  Initial velocity
 	 */
 	public Projectile(ProjectileType projectile, Vector2 projection, float maxDistance, int damage) {
-		super(projectile.texture, 1000000, projectile.maxVelocity);
+		super(projectile.texture, 1, projectile.maxVelocity);
 		this.projectile = projectile;
 		this.projection = projection;
 		this.maxDistance = maxDistance;
@@ -68,25 +65,36 @@ public class Projectile extends MobileEntity {
 	 * Fire a projectile at where we expect the target to be by the time the
 	 * projectile could hit it. Lots of fancy math here.
 	 * @param projectile Projectile type that defines this projectile
+	 * @param source     Tower that's firing this projectile
 	 * @param target     Predict this entity's next location.
+	 *                   (currently fires where the enemy is. Probably won't need to change this)
 	 */
-	public static Projectile fireAt(ProjectileType projectile, Entity source, Entity target) {
+	public static Projectile fireAt(ProjectileType projectile, Tower source, Entity target) {
 		Vector2 sourceVector = new Vector2(source.getX(), source.getY());
 		Vector2 targetVector = new Vector2(target.getX(), target.getY());
 		Vector2 velocity = targetVector.sub(sourceVector).limit(projectile.maxVelocity);
-		return new Projectile(projectile, velocity, 300f, 50);
+		return new Projectile(projectile, velocity, source.getRange(), 50);
 	}
 	
 	/**
 	 * Update projectile traveling path
 	 */
 	public void update(float delta) {
+//		super.update(delta);
+		/* Because the super class Mobile Entity doesn't properly handle movement for
+		   projectiles, we handle it in this class. (Yes, there could've been a better
+		   way, we don't have time.) This means we don't call our super class, thus
+		   preventing the health update. So we do so here again. :( */
+		if (health <= 0) {
+			dispose();
+		}
+		
 		// Ignore path layer and follow direct projectile vector
 		// Has the projectile gone too far??
 		if (distanceTravelled >= maxDistance)
 			dispose();
 		
-		// Move
+		// Move the projectile
 		float dX = getX() + projection.x;
 		float dY = getY() + projection.y;
 		setPosition(dX, dY);
@@ -96,6 +104,7 @@ public class Projectile extends MobileEntity {
 		for (Enemy e : ObjectGrid.enemyList()) {
 			if (this.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
 				e.hurt(damage);
+				this.hurt(1);
 			}
 		}
 		
@@ -108,19 +117,7 @@ public class Projectile extends MobileEntity {
 		
 //		distanceToTarget = (float)Math.hypot(getX()-target.getX(), getY()-target.getY()); // can be used later to determine if in range to deal damage
 	}
-	
-	public Sprite getTarget(){
-		return target;
-	}
-		
-	/**
-	 * The distance to the target, in pixels
-	 * @return Distance to the target
-	 */
-	public float getDistance(){
-		return distanceToTarget;
-	}
-	
+
 	/**
 	 * Finds the difference in x and y distance from the
 	 * attacker to its target then calculates theta of
@@ -135,6 +132,7 @@ public class Projectile extends MobileEntity {
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		// Do nothing but stop rendering. Add to projectile pool if we have time to optimize?
 		// Hack currently to make it behave properly, but not animate properly
 		damage = 0;
