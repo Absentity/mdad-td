@@ -56,15 +56,8 @@ public class GameScreen implements Screen {
 	boolean usingTower = false;
 	boolean usingUnit = false;
 	
-<<<<<<< HEAD
-	Vector2 cVel = new Vector2();
-=======
-	public static boolean selectionConfirmed = false;
-	public static boolean thinking = false;
-	public static boolean openTowerMenu = false;
-	public static boolean openUnitMenu = false;
 	private boolean noLevel = true;
->>>>>>> Saving Works!
+
 	
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
@@ -135,34 +128,6 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
-		
-		// Camera panning
-		if(Gdx.input.isKeyPressed(Keys.A)){
-			cVel.x = -2*16*4;
-		}
-		if(Gdx.input.isKeyPressed(Keys.W)){
-			cVel.y = 2*16*4;
-		}
-		if(Gdx.input.isKeyPressed(Keys.S)){
-			cVel.y = -2*16*4;
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)){
-			cVel.x = 2*16*4;
-		}
-		
-		tx = camera.position.x;
-		ty = camera.position.y;
-		
-		// Clamping
-		if(tx + cVel.x*Gdx.graphics.getDeltaTime()-(TiledMapGame.screenWidth/2) > 0 && tx + (cVel.x*Gdx.graphics.getDeltaTime()+(TiledMapGame.screenWidth/2)) < TiledMapGame.screenWidth){ // Bound x 
-			camera.position.x += cVel.x*Gdx.graphics.getDeltaTime();
-		}
-		if(ty + cVel.y*Gdx.graphics.getDeltaTime()-(TiledMapGame.screenHeight/2) > 0 && ty + cVel.y*Gdx.graphics.getDeltaTime()+(TiledMapGame.screenHeight/2) < TiledMapGame.screenHeight){ // Bound y
-			camera.position.y += cVel.y*Gdx.graphics.getDeltaTime();
-		}
-		
-		cVel.x = 0;
-		cVel.y = 0;
 		
 		renderer.setView(camera);
 		renderer.render();
@@ -319,10 +284,7 @@ public class GameScreen implements Screen {
 		} else {
 			// done
 		}
-<<<<<<< HEAD
-=======
 
->>>>>>> Saving Works!
 		
 		// Show tower range
 		for (Tower t: ObjectGrid.towerList()) {
@@ -359,11 +321,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		
 		// TODO: Load level
-<<<<<<< HEAD
-		level = new Level("MDADMap1v4");
-=======
+
 		if(noLevel){
 			level = new Level("MDADMap1v1");
 			
@@ -371,7 +330,6 @@ public class GameScreen implements Screen {
 			ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
->>>>>>> Saving Works!
 		tbw = level.getTimeBetWaves();
 		tbs = level.getTimeBetSpawns();
 		
@@ -411,15 +369,7 @@ public class GameScreen implements Screen {
 		stage.addActor(infoTable);
 		stage.addActor(unitTable);
 		
-<<<<<<< HEAD
-		// TEMPORARY KINGDOM
-		ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
-		ObjectGrid.towerList().get(0).setPosition(320, 320);
-		
 		current = level.getTimeBetWaves();
-		
-=======
->>>>>>> Saving Works!
 	}
 
 	
