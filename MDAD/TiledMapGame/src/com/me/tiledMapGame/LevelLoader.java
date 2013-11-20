@@ -18,12 +18,12 @@ import com.me.tiledMapGame.pathing.PathFinder;
  *
  */
 public class LevelLoader {
-	private Level l;
-	private String checkSum; //Used to make sure that the save file is not tampered with.
-	private Scanner sc;
-	private int n;
+	private static Level l;
+	private static String checkSum; //Used to make sure that the save file is not tampered with.
+	private static Scanner sc;
+	private static int n;
 	
-	public LevelLoader(){
+	private LevelLoader(){
 		l = null;
 	}
 	
@@ -34,7 +34,8 @@ public class LevelLoader {
 	 * @param loadFile Name of file to be loaded in form 'name.txt'.
 	 * @return True if succesful; false if the level is not found or the 'checkSum' is not valid.
 	 */
-	public boolean loadLevel(String loadFile){
+	public static boolean loadLevel(String loadFile){
+		l = new Level("MDADMap1v1");
 		try {
 			sc = new Scanner(new File(loadFile));
 		} catch (FileNotFoundException e) {
@@ -48,13 +49,16 @@ public class LevelLoader {
 		l.setWave(sc.nextInt());
 		n = sc.nextInt();
 		
-		/*Set each tower (skip the 1st one -- the castle)*/
+		/*Set each tower*/
 		for(int i = 0; i < n; ++i){
-			int  x = sc.nextInt();
-			int y = sc.nextInt();
+			int x = (int) sc.nextFloat();
+			int y = (int) sc.nextFloat();
 			int t = sc.nextInt();
 			
 			switch(t){
+			case 0:
+				ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
+				break;
     		case 1:
     			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
     			break;
@@ -69,13 +73,12 @@ public class LevelLoader {
     		default:
     			break;
 			}
-			l.getNode(x/32, 15-(y)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
-			System.out.println(x/32 + " " + (16-(y/32)));
+			l.getNode((int)x/32, ((int)y)/32).markTower();
 			l.getObjectGrid().clearAllVisited();
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(), 10, 10);
 			
 			List<Tower> towers = ObjectGrid.towers;
-			towers.get(towers.size()-1).setPosition(x, TiledMapGame.screenHeight - y); // FOR TESTING
+			towers.get(towers.size()-1).setPosition(x, y); // FOR TESTING
 			towers.get(towers.size()-1).setAlpha(.65f); // FOR TESTING
 			towers.get(towers.size()-1).setMoved(true);
 			towers.get(towers.size()-1).setAlpha(1);
@@ -91,7 +94,7 @@ public class LevelLoader {
 	 * Retrieves the level created by 'loadLevel()'. Assumes 'loadLevel()' returned true and was previously ran.
 	 * @return The level created by 'loadLevel()'.
 	 */
-	public Level getLevel(){
+	public static Level getLevel(){
 		return l;
 	}
 

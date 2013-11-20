@@ -56,7 +56,15 @@ public class GameScreen implements Screen {
 	boolean usingTower = false;
 	boolean usingUnit = false;
 	
+<<<<<<< HEAD
 	Vector2 cVel = new Vector2();
+=======
+	public static boolean selectionConfirmed = false;
+	public static boolean thinking = false;
+	public static boolean openTowerMenu = false;
+	public static boolean openUnitMenu = false;
+	private boolean noLevel = true;
+>>>>>>> Saving Works!
 	
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
 	
@@ -113,6 +121,8 @@ public class GameScreen implements Screen {
 	 */
 	public GameScreen(Level level) {
 		this.level = level;
+		if(level != null)
+			noLevel = false;
 	}
 	
 	/**
@@ -309,6 +319,10 @@ public class GameScreen implements Screen {
 		} else {
 			// done
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> Saving Works!
 		
 		// Show tower range
 		for (Tower t: ObjectGrid.towerList()) {
@@ -347,7 +361,17 @@ public class GameScreen implements Screen {
 	public void show() {
 		
 		// TODO: Load level
+<<<<<<< HEAD
 		level = new Level("MDADMap1v4");
+=======
+		if(noLevel){
+			level = new Level("MDADMap1v1");
+			
+			//Create Kingdom if making new level
+			ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
+			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
+		}
+>>>>>>> Saving Works!
 		tbw = level.getTimeBetWaves();
 		tbs = level.getTimeBetSpawns();
 		
@@ -387,12 +411,15 @@ public class GameScreen implements Screen {
 		stage.addActor(infoTable);
 		stage.addActor(unitTable);
 		
+<<<<<<< HEAD
 		// TEMPORARY KINGDOM
 		ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
 		ObjectGrid.towerList().get(0).setPosition(320, 320);
 		
 		current = level.getTimeBetWaves();
 		
+=======
+>>>>>>> Saving Works!
 	}
 
 	

@@ -119,14 +119,19 @@ public class TiledMapGame extends Game {
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
 			M.dispose();
-			L = new LevelSelectScreen();
-			this.setScreen(L);
+			//L = new LevelSelectScreen();
+			//this.setScreen(L);
+			P = new GameScreen(null);
+			this.setScreen(P);
 		}
 		
 		//Set the screen to a level screen, TODO load level info
 		if(M.levelLoadListener.isPressed()){
 			M.dispose();
-			P = new GameScreen(null);
+			Level L;
+			LevelLoader.loadLevel("testSaveFile.txt");
+			L = LevelLoader.getLevel();
+			P = new GameScreen(L);
 			musicLibrary.get("titleSong").stop();
 			musicLibrary.get("worldOne").play();
 			this.setScreen(P);

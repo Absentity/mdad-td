@@ -22,6 +22,8 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
 public class Level {
 
 	public int levelId = 1;			// For levelSaver
+	public int castleX = 10;
+	public int castleY = 10;
 	private TiledMap map;
 	private ObjectGrid objectGrid;
 	private int gold;				// Example resource
