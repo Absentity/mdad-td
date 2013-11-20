@@ -28,6 +28,7 @@ public class Level {
 	private int wave = 1;				// Indicates what wave of enemies is attacking
 	private int totalWaves, enemPerWave;
 	private float timeBetweenWaves, timeBetweenSpawns;
+	int enemyTypes[];
 	
 	Vector2 spawnPoint = new Vector2();
 	
@@ -69,7 +70,14 @@ public class Level {
 			Scanner sc = new Scanner(new File("levelOneInfo.txt"));
 			
 			totalWaves = sc.nextInt();
+			enemyTypes = new int[totalWaves];
+			
+			for(int i=0 ; i<totalWaves ; i++) {
+				enemyTypes[i] = sc.nextInt();
+			}
+			
 			enemPerWave = sc.nextInt();
+			
 			timeBetweenWaves = sc.nextFloat();
 			timeBetweenSpawns = sc.nextFloat();
 			
@@ -81,6 +89,11 @@ public class Level {
 	
 	public void generateSkeleton() {
 		ObjectGrid.enemyList().add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
+		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
+	}
+	
+	public void generateWight() {
+		ObjectGrid.enemyList().add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Wight")));
 		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
 	}
 	
@@ -166,6 +179,10 @@ public class Level {
 	
 	public float getTimeBetSpawns(){
 		return this.timeBetweenSpawns;
+	}
+	
+	public int getEnemyTypes(int pos){
+		return this.enemyTypes[pos];
 	}
 	
 	public void setGold(int gold){
