@@ -233,7 +233,7 @@ public class GameScreen implements Screen {
 			}
 			
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-			towerNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight()); 
+			towerNinePatch.draw(stage.getSpriteBatch(), 0, Gdx.graphics.getHeight()/2, 120, Gdx.graphics.getHeight()/2); 
 			
 			stage.getSpriteBatch().end();
 			
@@ -735,7 +735,7 @@ public class GameScreen implements Screen {
 	        		
 	        }
 	    });
-	    closeMenu.setPosition(75, 5);
+	    closeMenu.setPosition(75, 5+256);
 	    closeMenu.setVisible(false);
 	    
 	    confirmSelection = new TextButton("Confirm", style);
@@ -783,7 +783,7 @@ public class GameScreen implements Screen {
 	        	
 	        }
 	    });
-	    confirmSelection.setPosition(10, 5);
+	    confirmSelection.setPosition(10, 5+256);
 	    confirmSelection.setVisible(false);
 	}
 	
