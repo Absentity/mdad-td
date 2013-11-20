@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class TowerType {
 	
+	private static final float DEFAULT_COOLDOWN = 0.25f;
+	
 	Texture texture;
 	
 	float sightRange;
-	float projectileCooldown;
+	float fireRate;
 	
 	int health;
 	int projectileDamage;
@@ -21,5 +23,6 @@ public class TowerType {
 		this.health = health;
 		this.sightRange = sightRange;
 		this.towerType = tower;
+		this.fireRate = DEFAULT_COOLDOWN;
 	}
 }
