@@ -49,7 +49,7 @@ public class Tower extends Entity {
 		// Since a tower is created before it's set in the ground,
 		// we have to pretend it has no range at first and edit it
 		// later.
-		range = new Circle(-1,-1,0);
+		range = new Circle(-1000, -1000, tower.sightRange);
 		if(tower.towerType == 0){
 			alpha = 1;
 		}

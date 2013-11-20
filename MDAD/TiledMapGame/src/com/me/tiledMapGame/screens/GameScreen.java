@@ -343,7 +343,7 @@ public class GameScreen implements Screen {
 				if (!t.isPlaced()) {
 					sr.begin(ShapeType.Line);
 					sr.setColor(Color.BLACK);
-					sr.circle(t.getX()+16, t.getY()+16, 90);
+					sr.circle(t.getX()+16, t.getY()+16, t.getRange());
 					sr.end();
 				}
 			}
