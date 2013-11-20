@@ -92,6 +92,15 @@ public class TiledMapGame extends Game {
 		enemyTypeLibrary = new ObjectMap<String, EnemyType>();
 		towerTypeLibrary = new ObjectMap<String, TowerType>();
 		
+		// Projectiles
+		
+		// Towers
+		towerTypeLibrary.put("Crescent", new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 0.2f, 10, 1));
+		towerTypeLibrary.put("Bomb", new TowerType(new Texture("img/bombTower.png"), 100, 70f, 1.2f, 60, 2));
+		towerTypeLibrary.put("Amplify", new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 0f, 0, 3));
+		towerTypeLibrary.put("Fireball", new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 0.6f, 60, 4));
+		
+		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f));
 		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f));
 	}

@@ -19,19 +19,13 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
  */
 public class Tower extends Entity {
 
-	@Deprecated
 	public final int PORTAL = 0;
-	@Deprecated
 	public final int CRESENT = 1;
-	@Deprecated
 	public final int BOMB = 2;
-	@Deprecated
 	public final int AMPLIFIER = 3;
-	@Deprecated
 	public final int FIREBALL = 4;
 	
 	// DEFAULT
-	@Deprecated
 	public int towerType = 1;
 	
 	private boolean moved = false;
@@ -46,9 +40,9 @@ public class Tower extends Entity {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 		towerType = tower.towerType;
-		// Since a tower is created before it's set in the ground,
-		// we have to pretend it has no range at first and edit it
-		// later.
+		/* Since a tower is created before it's set in the ground,
+		   we have to pretend it has no range at first and edit it
+		   later. */
 		range = new Circle(-1000, -1000, tower.sightRange);
 		if(tower.towerType == 0){
 			alpha = 1;
@@ -64,15 +58,18 @@ public class Tower extends Entity {
 	public void update(float delta) {
 		super.update(delta);
 		
-		cooldown -= delta;
-		if (cooldown <= 0) {
-			// The enemy detection method can be easily changed
-			Enemy enemyInRange = detectFirstEnemy();
-			
-			// Fire!!
-			if (enemyInRange != null) {
-				createProjectiles(enemyInRange);
-				cooldown = tower.fireRate;
+		// Non-projectile towers such as Amplifier don't attack!
+		if (tower.fireRate != 0f) {
+			cooldown -= delta;
+			if (cooldown <= 0) {
+				// The enemy detection method can be easily changed
+				Enemy enemyInRange = detectFirstEnemy();
+				
+				// Fire!!
+				if (enemyInRange != null) {
+					createProjectiles(enemyInRange);
+					cooldown = tower.fireRate;
+				}
 			}
 		}
 	}
@@ -86,6 +83,7 @@ public class Tower extends Entity {
 		Projectile p = Projectile.fireAt(new ProjectileType(new Texture("img/possibleCresent.png"), 5), this, target);
 		p.scale(-.5f);
 		p.setPosition(getX(), getY());
+		p.setDamage(tower.projectileDamage);
 		ObjectGrid.projectiles.add(p);
 	}
 
@@ -96,7 +94,6 @@ public class Tower extends Entity {
 	private Enemy detectFirstEnemy() {
 		for (Enemy e : ObjectGrid.enemyList()) {
 			if (Intersector.overlaps(range, e.getBoundingRectangle())) {
-				System.out.println("Enemy found!"); //TODO Remove line
 				return e;
 			}
 		}

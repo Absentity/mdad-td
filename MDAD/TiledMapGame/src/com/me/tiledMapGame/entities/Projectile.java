@@ -133,8 +133,9 @@ public class Projectile extends MobileEntity {
 	@Override
 	public void dispose() {
 		super.dispose();
-		// Do nothing but stop rendering. Add to projectile pool if we have time to optimize?
-		// Hack currently to make it behave properly, but not animate properly
-		damage = 0;
+	}
+
+	public void setDamage(int projectileDamage) {
+		this.damage = projectileDamage;
 	}
 }
