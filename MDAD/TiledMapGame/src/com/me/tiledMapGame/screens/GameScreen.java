@@ -310,9 +310,6 @@ public class GameScreen implements Screen {
 			// done
 		}
 		
-		// Draw tower range
-		// TODO Move this with other tower rendering code, or keeping separate from spritebatch?
-		// This must remain out of spritebatch
 		// Show tower range
 		for (Tower t: ObjectGrid.towerList()) {
 			if (t.getMoved()) {
