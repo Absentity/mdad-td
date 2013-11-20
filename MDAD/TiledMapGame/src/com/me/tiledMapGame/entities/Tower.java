@@ -46,6 +46,9 @@ public class Tower extends Entity {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 		towerType = tower.towerType;
+		// Since a tower is created before it's set in the ground,
+		// we have to pretend it has no range at first and edit it
+		// later.
 		range = new Circle(-1,-1,0);
 		if(tower.towerType == 0){
 			alpha = 1;
@@ -144,5 +147,13 @@ public class Tower extends Entity {
 	
 	public int getTowerType(){
 		return this.tower.towerType;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public float getRange() {
+		return range.radius;
 	}
 }

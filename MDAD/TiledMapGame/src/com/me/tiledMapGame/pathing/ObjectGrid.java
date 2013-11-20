@@ -28,6 +28,9 @@ public class ObjectGrid {
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	
+	// Entities in here will be erased
+	public static ArrayList<Entity> disposeList = new ArrayList<Entity>();
+	
     private int length;
     private int width;
     

@@ -28,6 +28,7 @@ import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.levelSaver;
 import com.me.tiledMapGame.entities.Enemy;
+import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
@@ -160,6 +161,7 @@ public class GameScreen implements Screen {
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
 		
+		
 		if(showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
 				
@@ -170,6 +172,7 @@ public class GameScreen implements Screen {
 				}
 			}
 		}
+		
 	
 		// Draw towers
 		for(Tower t: ObjectGrid.towerList()){ // FOR TESTING
@@ -191,8 +194,8 @@ public class GameScreen implements Screen {
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1);
 		
-		for(Enemy e: ObjectGrid.enemyList()){
-			if(e.getHealth() >= 0){
+		for (Enemy e : ObjectGrid.enemyList()) {
+			if (e.getHealth() >= 0) {
 				e.draw(renderer.getSpriteBatch());
 			}
 		}
@@ -308,6 +311,9 @@ public class GameScreen implements Screen {
 		}
 		
 		// Draw tower range
+		// TODO Move this with other tower rendering code, or keeping separate from spritebatch?
+		// This must remain out of spritebatch
+		// Show tower range
 		for (Tower t: ObjectGrid.towerList()) {
 			if (t.getMoved()) {
 				if (!t.isPlaced()) {
@@ -317,6 +323,17 @@ public class GameScreen implements Screen {
 					sr.end();
 				}
 			}
+		}
+		
+		// Dispose of garbage
+		for (Entity e : ObjectGrid.disposeList) {
+			if (e instanceof Enemy) {
+				ObjectGrid.enemies.remove(e);
+			}
+			if (e instanceof Projectile) {
+				ObjectGrid.projectiles.remove(e);
+			}
+			e = null;
 		}
 				
 	}
