@@ -18,6 +18,7 @@ public class TowerType {
 	int projectileDamage;	
 	int health;
 	
+	@Deprecated
 	public TowerType(Texture texture, int health, float sightRange, int tower) {
 		this.texture = texture;
 		this.health = health;

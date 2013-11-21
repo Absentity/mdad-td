@@ -30,6 +30,7 @@ public abstract class MobileEntity extends Entity {
 		this.maxVelocity = maxVelocity;
 	}
 	
+	// TODO Should this method be in Entity?
 	public void draw(SpriteBatch spriteBatch) {
 		update(Gdx.graphics.getDeltaTime());
 		super.draw(spriteBatch);
@@ -57,5 +58,9 @@ public abstract class MobileEntity extends Entity {
 		//TODO: if enemy has reached destination, attack.
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
+	}
+	
+	public void dispose() {
+		super.dispose();
 	}
 }

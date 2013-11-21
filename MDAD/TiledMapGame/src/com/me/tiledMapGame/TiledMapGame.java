@@ -30,6 +30,7 @@ public class TiledMapGame extends Game {
 	public static LevelSelectScreen L;
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
+	public static ObjectMap<String, TowerType> structureTypeLibrary;
 	public static ObjectMap<String, ProjectileType> projectileTypeLibrary;
 	public static ObjectMap<String, Texture> textureLibrary;
 	public static ObjectMap<String, Music> musicLibrary;
@@ -93,6 +94,7 @@ public class TiledMapGame extends Game {
 	private void loadEntities() {
 		enemyTypeLibrary = new ObjectMap<String, EnemyType>();
 		towerTypeLibrary = new ObjectMap<String, TowerType>();
+		structureTypeLibrary = new ObjectMap<String, TowerType>();
 		projectileTypeLibrary = new ObjectMap<String, ProjectileType>();
 		
 		// Projectiles
@@ -109,6 +111,14 @@ public class TiledMapGame extends Game {
 				projectileTypeLibrary.get("Crescent"), 0f, 0, 3));
 		towerTypeLibrary.put("Fireball", new TowerType(new Texture("img/fireballTower.png"), 100, 70f,
 				projectileTypeLibrary.get("Fireball"), 0.6f, 60, 4));
+		towerTypeLibrary.put("Portal", new TowerType(new Texture("img/portalTower.png"), 100, 70f,
+				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
+		
+		// Structures //TODO TEMPORARILY USING TOWERS
+//		structureTypeLibrary.put("Kingdom", new TowerType(new Texture("img/Castle.png"), 1000, 70f,
+//				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
+//		structureTypeLibrary.put("Farm", new TowerType(new Texture("img/Castle.png"), 1000, 70f,
+//				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
 		
 		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f));

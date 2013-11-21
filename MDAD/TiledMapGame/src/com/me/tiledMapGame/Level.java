@@ -90,12 +90,12 @@ public class Level {
 	}
 	
 	public void generateSkeleton() {
-		ObjectGrid.enemyList().add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
+		ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
 		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
 	}
 	
 	public void generateWight() {
-		ObjectGrid.enemyList().add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Wight")));
+		ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Wight")));
 		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
 	}
 	

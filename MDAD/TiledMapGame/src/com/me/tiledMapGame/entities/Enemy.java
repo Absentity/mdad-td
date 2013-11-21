@@ -1,10 +1,5 @@
 package com.me.tiledMapGame.entities;
 
-import com.me.tiledMapGame.Level;
-import com.me.tiledMapGame.pathing.ObjectGrid;
-
-
-
 
 public class Enemy extends MobileEntity {
 	
@@ -21,15 +16,6 @@ public class Enemy extends MobileEntity {
 		// TODO Reward player with gold and XP
 //		Game.gold += enemy.goldReward;
 //		Game.xp += enemy.xpReward;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public String showHealth() {
-		//TODO: Draw bar?
-		return "HP: " + Integer.toString(health);
 	}
 
 }

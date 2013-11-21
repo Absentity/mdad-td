@@ -57,19 +57,19 @@ public class LevelLoader {
 			
 			switch(t){
 			case 0:
-				ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
+    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal")));
 				break;
     		case 1:
-    			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
+    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Crescent")));
     			break;
     		case 2:
-    			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
+    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Bomb")));
     			break;
     		case 3:
-    			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
+    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Amplify")));
     			break;
     		case 4:
-    			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
+    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Fireball")));
     		default:
     			break;
 			}

@@ -170,6 +170,7 @@ public class GameScreen implements Screen {
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1);
 		
 		for (Enemy e : ObjectGrid.enemyList()) {
+			e.update(Gdx.graphics.getDeltaTime());
 			if (e.getHealth() >= 0) {
 				e.draw(renderer.getSpriteBatch());
 			}
@@ -298,7 +299,7 @@ public class GameScreen implements Screen {
 			}
 		}
 		
-		// Dispose of garbage
+		// Remove diposed objects
 		for (Entity e : ObjectGrid.disposeList) {
 			if (e instanceof Enemy) {
 				ObjectGrid.enemies.remove(e);
@@ -308,7 +309,7 @@ public class GameScreen implements Screen {
 			}
 			e = null;
 		}
-				
+		ObjectGrid.disposeList.clear();
 	}
 
 	@Override
@@ -327,7 +328,7 @@ public class GameScreen implements Screen {
 			level = new Level("MDADMap1v1");
 			
 			//Create Kingdom if making new level
-			ObjectGrid.towerList().add(new Tower(new TowerType(new Texture("img/portalTower.png"), 100, 70f, 0)));
+			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
 		tbw = level.getTimeBetWaves();
@@ -732,16 +733,16 @@ public class GameScreen implements Screen {
 	        		
 		        	switch(towerChoice){
 		        		case 1:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/cresentTower.png"), 100, 70f, 1)));
+		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Crescent")));
 		        			break;
 		        		case 2:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/bombTower.png"), 100, 70f, 2)));
+		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Bomb")));
 		        			break;
 		        		case 3:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/amplifyTower.png"), 100, 70f, 3)));
+		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Amplify")));
 		        			break;
 		        		case 4:
-		        			ObjectGrid.towers.add(new Tower(new TowerType(new Texture("img/fireballTower.png"), 100, 70f, 4)));
+		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Fireball")));
 		        		default:
 		        			break;
 		        	}

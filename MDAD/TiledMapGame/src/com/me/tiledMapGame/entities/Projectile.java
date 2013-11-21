@@ -106,6 +106,8 @@ public class Projectile extends MobileEntity {
 				e.hurt(damage);
 				this.hurt(1);
 			}
+			if (health <= 0)
+				break;
 		}
 		
 		// Animation

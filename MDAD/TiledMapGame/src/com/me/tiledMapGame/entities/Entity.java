@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
@@ -20,7 +19,6 @@ public abstract class Entity extends Sprite {
 
 	protected int health;
 	protected float stateTime;
-	protected boolean disposeMe;
 	
 	private static TextureRegion currentFrame;
 	private int index = 0;
@@ -70,7 +68,7 @@ public abstract class Entity extends Sprite {
 	public void update(float stateTime) {
 		currentFrame = animation.getKeyFrame(this.stateTime, true);
 		this.stateTime += stateTime;
-		
+
 		if (health <= 0) {
 			dispose();
 		}
@@ -90,6 +88,16 @@ public abstract class Entity extends Sprite {
 	 */
 	public void hurt(int damageAmount) {
 		health -= damageAmount;
+	}
+
+
+	public int getHealth() {
+		return health;
+	}
+
+	public String showHealth() {
+		//TODO: Draw bar?
+		return "HP: " + Integer.toString(health);
 	}
 	
 	public void drawHealthBar(float healthRatio) {
