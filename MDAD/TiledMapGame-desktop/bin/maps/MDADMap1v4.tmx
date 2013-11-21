@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="16" height="16" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="TileSet1" tilewidth="32" tileheight="32">
+  <image source="TileSet1.png" width="160" height="160"/>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="blocked" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="blocked" value="blocked"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="solid" value=""/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="26" name="spawnPoint" tilewidth="32" tileheight="32">
+  <image source="../img/spawnPoint.png" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="spawn" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="27" name="testui" tilewidth="32" tileheight="32">
+  <image source="temp.png" width="160" height="160"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJylk8ENwzAIRYnkgyW3C7Tn7OFRPEpH8SiMVqyCTAimVXp4Qkr4H3/ibACwfQdNFV6R7kb9CaBRbawVfV34HygAfdQ0e2wfOr6o5vfyqSfvPM+Ajo+XX6jGw+r1fKT5yPmjvO7cxM9TsOMc6Ed+0nYvf/B9Pa/lfgpn9JDccg80Zicr76b3YHYjPUskt+xBI+8e897U/Nu/cOBO7BcZ2uef8Hy8wtC+ARwmQdE=
+  </data>
+ </layer>
+</map>
