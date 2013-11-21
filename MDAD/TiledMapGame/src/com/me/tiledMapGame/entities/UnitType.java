@@ -2,7 +2,7 @@ package com.me.tiledMapGame.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class UnitType {
+public class UnitType implements EntityDefinition {
 	
 	Texture texture;
 	float maxVelocity;
@@ -13,4 +13,11 @@ public class UnitType {
 		this.health = health;
 		this.maxVelocity = maxVelocity;
 	}
+
+	@Override
+	public Unit createInstance() {
+		return new Unit(this);
+	}
+	
+	
 }

@@ -2,7 +2,7 @@ package com.me.tiledMapGame.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class ProjectileType {
+public class ProjectileType /*implements EntityDefinition*/ {
 	
 	float maxVelocity;
 	Texture texture;
@@ -11,4 +11,9 @@ public class ProjectileType {
 		this.texture = texture;
 		this.maxVelocity = maxVelocity;
 	}
+//
+//	@Override
+//	public Projectile createInstance() {
+//		return new Projectile(this);
+//	}
 }

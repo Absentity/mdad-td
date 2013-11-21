@@ -2,7 +2,6 @@ package com.me.tiledMapGame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -89,14 +88,18 @@ public class Level {
 		
 	}
 	
-	public void generateSkeleton() {
-		ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Skeleton")));
-		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
-	}
-	
-	public void generateWight() {
-		ObjectGrid.enemies.add(new Enemy(TiledMapGame.enemyTypeLibrary.get("Wight")));
-		ObjectGrid.enemyList().get(ObjectGrid.enemyList().size()-1).setPosition(spawnPoint.x,spawnPoint.y+8);
+	/**
+	 * Retrieve an enemy from the game's library and add it onto the grid.
+	 * @param enemyName
+	 */
+	public void generateEnemy(String enemyName) {
+		if (TiledMapGame.enemyTypeLibrary.containsKey(enemyName)) {
+			Enemy e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			e.setPosition(spawnPoint.x, spawnPoint.y);
+			ObjectGrid.enemies.add(e);
+		} else {
+			System.err.println("[Level] no enemy named " + enemyName + " found in library.");
+		}
 	}
 	
 	/**
@@ -155,6 +158,7 @@ public class Level {
 	 * Removes the enemy from the enemies ArrayList. To be called upon enemy death.
 	 * @param position The place in the ArrayList.
 	 */
+	@Deprecated
 	public void removeEnemy(int position){
 		ObjectGrid.enemies.remove(position);
 	}

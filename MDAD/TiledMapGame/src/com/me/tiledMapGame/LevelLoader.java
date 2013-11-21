@@ -57,19 +57,19 @@ public class LevelLoader {
 			
 			switch(t){
 			case 0:
-    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal")));
+    			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Portal").createInstance());
 				break;
     		case 1:
-    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Crescent")));
+    			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Crescent").createInstance());
     			break;
     		case 2:
-    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Bomb")));
+    			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Bomb").createInstance());
     			break;
     		case 3:
-    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Amplify")));
+    			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Amplify").createInstance());
     			break;
     		case 4:
-    			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Fireball")));
+    			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Fireball").createInstance());
     		default:
     			break;
 			}

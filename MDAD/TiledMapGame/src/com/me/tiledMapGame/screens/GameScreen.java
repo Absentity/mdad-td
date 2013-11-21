@@ -253,10 +253,10 @@ public class GameScreen implements Screen {
 					tbs = level.getTimeBetSpawns(); // reset enemy spawn timer(within wave)
 					switch(level.getEnemyTypes((int)(wave-1))){
 						case 1:
-							level.generateSkeleton(); // create a skeleton
+							level.generateEnemy("Skeleton"); // create a skeleton
 							break;
 						case 2:
-							level.generateWight();
+							level.generateEnemy("Wight");
 							break;
 						default:
 							break;
@@ -325,7 +325,7 @@ public class GameScreen implements Screen {
 			level = new Level("MDADMap1v1");
 			
 			//Create Kingdom if making new level
-			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+			ObjectGrid.towerList().add(TiledMapGame.towerTypeLibrary.get("Portal").createInstance()); //TODO Change to Kingdom
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
 		tbw = level.getTimeBetWaves();
@@ -730,16 +730,16 @@ public class GameScreen implements Screen {
 	        		
 		        	switch(towerChoice){
 		        		case 1:
-		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Crescent")));
+		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Crescent").createInstance());
 		        			break;
 		        		case 2:
-		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Bomb")));
+		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Bomb").createInstance());
 		        			break;
 		        		case 3:
-		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Amplify")));
+		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Amplify").createInstance());
 		        			break;
 		        		case 4:
-		        			ObjectGrid.towers.add(new Tower(TiledMapGame.towerTypeLibrary.get("Fireball")));
+		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Fireball").createInstance());
 		        		default:
 		        			break;
 		        	}

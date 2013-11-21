@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 /**
  * This class defines a tower's basics
  */
-public class TowerType {
+public class TowerType implements EntityDefinition {
 	
 	private static final float DEFAULT_COOLDOWN = 0.6f;
 	private static final int DEFAULT_DAMAGE = 50;

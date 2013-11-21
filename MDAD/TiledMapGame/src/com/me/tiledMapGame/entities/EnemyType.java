@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 /**
  * This class allows us to define types of enemies and their basics
  */
-public class EnemyType {
+public class EnemyType implements EntityDefinition {
 	
 	private static final int DEFAULT_ATTACK_STRENGTH = 10;
 	private static final int DEFAULT_GOLD_REWARD = 10;
@@ -24,5 +24,9 @@ public class EnemyType {
 		this.attackStrength = DEFAULT_ATTACK_STRENGTH;
 		this.goldReward = DEFAULT_GOLD_REWARD;
 		this.xpReward = DEFAULT_XP_REWARD;
+	}
+
+	public Enemy createInstance() {
+		return new Enemy(this);
 	}
 }
