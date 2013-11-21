@@ -18,16 +18,6 @@ public class TowerType {
 	int projectileDamage;	
 	int health;
 	
-	@Deprecated
-	public TowerType(Texture texture, int health, float sightRange, int tower) {
-		this.texture = texture;
-		this.health = health;
-		this.sightRange = sightRange;
-		this.towerType = tower;
-		this.fireRate = DEFAULT_COOLDOWN;
-		this.projectileDamage = DEFAULT_DAMAGE;
-	}
-	
 	public TowerType(Texture texture, int health, float sightRange, ProjectileType projectileType,
 			float fireRate, int projectileDamage, int tower) {
 		this.texture = texture;

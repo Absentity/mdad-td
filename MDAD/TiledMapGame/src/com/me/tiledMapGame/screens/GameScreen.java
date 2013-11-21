@@ -1,7 +1,6 @@
 package com.me.tiledMapGame.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,13 +23,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
+import com.me.tiledMapGame.LevelSaver;
 import com.me.tiledMapGame.TiledMapGame;
-import com.me.tiledMapGame.levelSaver;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
-import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.Unit;
 import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -393,7 +390,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		//TEST SAVE
-		levelSaver save = new levelSaver("testSaveFile.txt");
+		LevelSaver save = new LevelSaver("testSaveFile.txt");
 		save.saveLevel(level);
 		renderer.getSpriteBatch().dispose();
 //		renderer.dispose(); Leave out until there is another screen to switch to

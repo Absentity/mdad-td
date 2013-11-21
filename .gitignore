@@ -1,22 +1,22 @@
-*/bin/*
+**/assets/**
 *.class
 *.DS_Store
 
 ### From https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
 *.pydevproject
-.project
-.metadata
-bin/**
-tmp/**
-tmp/**/*
+**/.project
+**/.metadata
+**/bin/**
+**/tmp/**
+**/tmp/**/*
 *.tmp
 *.bak
 *.swp
 *~.nib
 local.properties
-.classpath
-.settings/
-.loadpath
+**/.classpath
+**/.settings/
+**/.loadpath
 
 # External tool builders
 .externalToolBuilders/
@@ -28,4 +28,4 @@ local.properties
 .cproject
 
 # PDT-specific
-.buildpath
+**/.buildpath

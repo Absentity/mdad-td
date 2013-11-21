@@ -7,12 +7,12 @@ import java.io.IOException;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
-public class levelSaver {
+public class LevelSaver {
 	
 	private String checkSum;
 	private FileWriter fw;
 	
-	public levelSaver(String saveFile){
+	public LevelSaver(String saveFile){
 		checkSum = "";
 		try {
 			fw = new FileWriter(new File(saveFile));
