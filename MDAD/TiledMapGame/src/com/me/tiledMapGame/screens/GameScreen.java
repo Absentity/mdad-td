@@ -227,9 +227,11 @@ public class GameScreen implements Screen, InputProcessor {
 		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
 
 			if(t.isSelected()) {
-				drawUpgradeOrSell(t);
-				upgrade.setVisible(true);
-				sell.setVisible(true);
+				if(t.getTowerType() != 0) {
+					drawUpgradeOrSell(t);
+					upgrade.setVisible(true);
+					sell.setVisible(true);
+				}
 			}
 			
 		} 
@@ -946,13 +948,6 @@ public class GameScreen implements Screen, InputProcessor {
 			sell.setVisible(false);
 		}
 		
-		for(Unit u : ObjectGrid.unitList()) {
-			if(u.isSelected()) {
-				u.setDestination(screenX, screenY);
-				u.setSelected(false);
-			}
-		}
-			
 		return false;
 	}
 
@@ -960,6 +955,17 @@ public class GameScreen implements Screen, InputProcessor {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		screenY = TiledMapGame.screenHeight - screenY;
 //		System.out.println("[GameScreen] Clicked " + screenX + " " + screenY);
+		
+		
+		// Move
+		for(Unit u : ObjectGrid.unitList()) {
+			if(u.isSelected()) {
+				u.setDestination(screenX, screenY);
+				u.setSelected(false);
+			}
+		}
+		
+		// Select
 		for (Tower t : ObjectGrid.towerList()) {
 			if (t.getBoundingRectangle().contains(screenX, screenY)) {
 				System.out.println("[GameScreen] Clicked tower " + t);
@@ -967,20 +973,25 @@ public class GameScreen implements Screen, InputProcessor {
 				t.setSelected(true);
 				
 				return true;
+			} else {
+				t.setSelected(false);
 			}
 		}
 		
+		// Select
 		for(Unit u : ObjectGrid.unitList()) {
 			if(u.getBoundingRectangle().contains(screenX, screenY)) {
 				System.out.println("[GameScreen] Clicked unit " + u);
 				
 				u.setSelected(true);
 				
-				// TODO: make sure more than one aren't selected... or are. 
-				
 				return true;
 				
-			}
+			 } else {
+				 u.setSelected(false);
+			 }
+			
+			
 		}
 		// Following Aaron's idea
 //		level.generateEnemy("Skeleton"); // Taking this out for final design

@@ -17,7 +17,6 @@ public class Unit extends MobileEntity {
 		this.unit = unit;
 		
 		personalLayer = new GridLayer(TiledMapGame.screenWidth/32, TiledMapGame.screenHeight/32);
-		ObjectGrid.gridLayers.add(personalLayer);
 	}
 
 	public void update(float stateTime){
@@ -25,7 +24,7 @@ public class Unit extends MobileEntity {
 		
 		float toMoveX = getTile().dir.x * maxVelocity;
 		float toMoveY = getTile().dir.y * maxVelocity;
-
+		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}
 	
@@ -60,8 +59,8 @@ public class Unit extends MobileEntity {
 	}
 	
 	public void setDestination(int x, int y) {
+		personalLayer = new GridLayer(TiledMapGame.screenWidth/32, TiledMapGame.screenHeight/32);
 		PathFinder.find_path(personalLayer.getGrid(), (x/32), (y/32));
-		System.out.println("set");
 	}
 	
 }
