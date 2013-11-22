@@ -1,5 +1,6 @@
 #**/assets/**
 *.class
+**/*.class
 *.DS_Store
 *.cache
 
