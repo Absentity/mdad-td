@@ -130,7 +130,8 @@ public class GameScreen implements Screen, InputProcessor {
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
-		
+		ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+		ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 	}
 	

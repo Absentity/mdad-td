@@ -149,12 +149,12 @@ public class TiledMapGame extends Game {
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
 			M.dispose();
-			//L = new LevelSelectScreen();
-			//this.setScreen(L);
+			L = new LevelSelectScreen();
+			this.setScreen(L);
 			musicLibrary.get("titleSong").stop();
 			musicLibrary.get("worldOne").play();
-			P = new GameScreen(null);
-			this.setScreen(P);
+			//P = new GameScreen(null);
+			//this.setScreen(P);
 		}
 		
 		//Set the screen to a level screen, TODO load level info
@@ -173,8 +173,48 @@ public class TiledMapGame extends Game {
 			M = new MainMenuScreen();
 			this.setScreen(M);
 		}
+	
+	if(L != null && L.level1Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v1");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
 	}
-
+	if(L != null && L.level2Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v2");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level3Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v3");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level4Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v4");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level5Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v5");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+}
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
