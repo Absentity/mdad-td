@@ -94,7 +94,7 @@ public class Input implements InputProcessor {
 //			GameScreen.chose = false; //temporary fix
 //			GameScreen.openTowerMenu = false;
 			
-			Gdx.input.setInputProcessor(GameScreen.stage);
+			Gdx.input.setInputProcessor(GameScreen.im);
 		}
 		
 		

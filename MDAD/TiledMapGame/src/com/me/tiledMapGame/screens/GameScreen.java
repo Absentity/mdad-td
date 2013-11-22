@@ -50,7 +50,7 @@ public class GameScreen implements Screen, InputProcessor {
 	private int towerChoice = 1;
 	private int unitChoice = 1;
 	
-	private InputMultiplexer im;
+	public static InputMultiplexer im;
 	private OrthogonalTiledMapRenderer renderer;
 	private TiledMapTileLayer layer;
 	
@@ -209,7 +209,7 @@ public class GameScreen implements Screen, InputProcessor {
 			if(selectionConfirmed){
 				selectionConfirmed = false;
 				
-				if(usingTower){
+				if (usingTower) {
 					Gdx.input.setInputProcessor(i);
 				}
 				
