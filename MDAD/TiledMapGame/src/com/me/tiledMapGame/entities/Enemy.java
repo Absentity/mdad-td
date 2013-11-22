@@ -1,5 +1,6 @@
 package com.me.tiledMapGame.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -9,10 +10,20 @@ public class Enemy extends MobileEntity {
 	
 	private EnemyType enemy;
 	private float attackRate;
+	public int destX;
+	public int destY;
+	public boolean flying;
 	
 	public Enemy(EnemyType enemy) {
 		super(enemy.texture, enemy.health, enemy.maxVelocity);
 		this.enemy = enemy;
+		flying = false;
+	}
+	
+	public Enemy(EnemyType enemy, boolean flying) {
+		super(enemy.texture, enemy.health, enemy.maxVelocity);
+		this.enemy = enemy;
+		this.flying = flying;
 	}
 	
 	public void update(float delta) {
@@ -29,9 +40,17 @@ public class Enemy extends MobileEntity {
 			}
 		}
 		
-		// Requires Entity.java's getTile() method to work!
-		float toMoveX = getTile().dir.x * maxVelocity;
-		float toMoveY = getTile().dir.y * maxVelocity;
+		// Requires Enemy.java's getTile() method to work!
+		float toMoveX;
+		float toMoveY;
+		if(this.flying){
+			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getX(), getY())).limit(1);
+			toMoveX = dest.x * maxVelocity;
+			toMoveY = dest.y * maxVelocity;
+		} else {
+			toMoveX = getTile().dir.x * maxVelocity;
+			toMoveY = getTile().dir.y * maxVelocity;
+		}
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}

@@ -38,14 +38,12 @@ public abstract class Entity extends Sprite {
 			animation = createAnimation(texture, 9, 3, 27);
 		} else if (texture.getHeight() == 48) {
 			animation = createAnimation(texture, 4, 3, 12);
-		} else if (texture.getHeight() == 16) {
+		} else {
 //			animation = createAnimation(texture, numTilesWide, numTilesTall, numFramesTotal);
 			TextureRegion[] frames = new TextureRegion[1];
 			animation = new Animation(.05f, frames);
 	        stateTime = 0f;
-		}/* else {
-		// TODO Make everything have some kind of animation...
-		}*/
+		}
 		stateTime = 0f;
 	}
 

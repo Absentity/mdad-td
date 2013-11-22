@@ -313,6 +313,10 @@ public class GameScreen implements Screen, InputProcessor {
 						case 2:
 							level.generateEnemy("Wight");
 							break;
+						case 3:
+							level.generateEnemy("Wyvern");
+							System.out.println("Ka KAAA!!!!!!!");
+							break;
 						default:
 							break;
 					}

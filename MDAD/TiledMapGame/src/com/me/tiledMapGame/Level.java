@@ -97,9 +97,17 @@ public class Level {
 	 */
 	public void generateEnemy(String enemyName) {
 		if (TiledMapGame.enemyTypeLibrary.containsKey(enemyName)) {
-			Enemy e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			Enemy e;
+			if(enemyName.equals("Wyvern")){
+				e = new Enemy(TiledMapGame.enemyTypeLibrary.get(enemyName), true);
+				//e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			} else {
+				e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			}
 			e.setPosition(spawnPoint.x, spawnPoint.y);
 			ObjectGrid.enemies.add(e);
+			e.destX = this.castleX;
+			e.destY = this.castleY;
 		} else {
 			System.err.println("[Level] no enemy named " + enemyName + " found in library.");
 		}
