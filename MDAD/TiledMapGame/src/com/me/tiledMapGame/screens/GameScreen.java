@@ -1,6 +1,8 @@
 package com.me.tiledMapGame.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -34,7 +37,7 @@ import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 import com.me.tiledMapGame.pathing.PathFinder;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, InputProcessor {
 	
 	protected Level level;
 	
@@ -47,6 +50,7 @@ public class GameScreen implements Screen {
 	private int towerChoice = 1;
 	private int unitChoice = 1;
 	
+	private InputMultiplexer im;
 	private OrthogonalTiledMapRenderer renderer;
 	private TiledMapTileLayer layer;
 	
@@ -306,6 +310,16 @@ public class GameScreen implements Screen {
 			}
 		}
 		
+		// I WILL FIND YOU
+		Rectangle r;
+		for (Tower t : ObjectGrid.towerList()) {
+			r = t.getBoundingRectangle();
+			sr.begin(ShapeType.Line);
+			sr.setColor(Color.YELLOW);
+			sr.rect(r.x, r.y, r.width, r.height);
+			sr.end();
+		}
+		
 		// Remove diposed objects
 		for (Entity e : ObjectGrid.disposeList) {
 			if (e instanceof Enemy) {
@@ -350,7 +364,10 @@ public class GameScreen implements Screen {
 		
 		stage = new Stage();
 		
-		Gdx.input.setInputProcessor(stage);
+		im = new InputMultiplexer(stage, this);
+//		Gdx.input.setInputProcessor(this);
+//		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setInputProcessor(im);
 		
 		setupSkin();
 		createUIButtons();
@@ -573,6 +590,7 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        	usingUnit = false;
 	        	towerChoice = 1;
 	        	usingTower = true;
 	        	nameLabel.setText("Crescent Tower");
@@ -597,6 +615,7 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        	usingUnit = false;
 	        	towerChoice = 2;
 	        	usingTower = true;
 	        	nameLabel.setText("Bomb Tower");
@@ -621,6 +640,7 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        	usingUnit = false;
 	        	towerChoice = 3;
 	        	usingTower = true;
 	        	nameLabel.setText("Amplifier Tower");
@@ -645,6 +665,7 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        	usingUnit = false;
 	        	towerChoice = 4;
 	        	usingTower = true;
 	        	nameLabel.setText("Fireball Tower");
@@ -674,6 +695,7 @@ public class GameScreen implements Screen {
 
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
+	        	usingTower = false;
 	        	openTowerMenu = false;
 	        	usingUnit = true;
 	        	unitChoice = 1;
@@ -818,5 +840,57 @@ public class GameScreen implements Screen {
 	
 	public int getTowerChoice(){
 		return towerChoice;
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		screenY = TiledMapGame.screenHeight - screenY;
+//		System.out.println("[GameScreen] Clicked " + screenX + " " + screenY);
+		for (Tower t : ObjectGrid.towerList()) {
+			if (t.getBoundingRectangle().contains(screenX, screenY)) {
+//				System.out.println("[GameScreen] Clicked tower " + t);
+				return true;
+			}
+		}
+		// Following Aaron's idea
+		level.generateEnemy("Skeleton");
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+//		System.out.println("[GameScreen] " + screenX + " " + screenY);
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 }

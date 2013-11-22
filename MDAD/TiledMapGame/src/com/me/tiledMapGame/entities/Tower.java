@@ -45,6 +45,7 @@ public class Tower extends Entity {
 			alpha = 1;
 		}
 		cooldown = tower.fireRate;
+		this.setBounds(getBoundingRectangle().x, getBoundingRectangle().y, 32, 32);
 	}
 	
 	/**
