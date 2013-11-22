@@ -31,14 +31,14 @@ public class LevelSaver {
 		checkSum += (char) ('A' + l.levelId - 1);		//Begin calculating checkSum
 		try {
 			fw.write(l.levelId + "\n");
-			fw.write(l.getGold() + "\n");
+			fw.write(l.getResource("Gold") + "\n");
 			fw.write(l.getWave() + "\n");
 			fw.write(ObjectGrid.towers.size()+ "\n");
 			
 			/*Finish Calculating Check Sum*/
 			checkSum += ObjectGrid.towers.size() % 100;
 			checkSum += (char) ('e' + ObjectGrid.towers.size() % 5);
-			checkSum += (l.getGold() + 67 + (ObjectGrid.towers.size() % 5) * 2);
+			checkSum += (l.getResource("Gold") + 67 + (ObjectGrid.towers.size() % 5) * 2);
 			
 			/*Write down each Tower*/
 			for(Tower t: ObjectGrid.towers){			//Save info for each tower

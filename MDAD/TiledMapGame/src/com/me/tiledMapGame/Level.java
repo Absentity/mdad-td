@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ObjectIntMap;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -25,11 +26,12 @@ public class Level {
 	public int castleY = 10;
 	private TiledMap map;
 	private ObjectGrid objectGrid;
-	private int gold;				// Example resource
 	private int wave = 1;				// Indicates what wave of enemies is attacking
 	private int totalWaves, enemPerWave;
 	private float timeBetweenWaves, timeBetweenSpawns;
 	int enemyTypes[];
+	
+	private static ObjectIntMap<String> resources;
 	
 	Vector2 spawnPoint = new Vector2();
 	
@@ -38,7 +40,6 @@ public class Level {
 	 * @param name Name of a map, not a path
 	 */
 	public Level(String name) {
-		gold = 100;
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
 		
 		objectGrid = new ObjectGrid(16,16);
@@ -86,6 +87,8 @@ public class Level {
 			e.printStackTrace();
 		}
 		
+		resources = new ObjectIntMap<String>();
+		setResource("Gold", 100);
 	}
 	
 	/**
@@ -163,8 +166,16 @@ public class Level {
 		ObjectGrid.enemies.remove(position);
 	}
 
-	public int getGold(){
-		return this.gold;
+	public static int getResource(String resourceName){
+		return resources.get(resourceName, 0);
+	}
+	
+	public void setResource(String resourceName, int amount){
+		resources.put(resourceName, amount);
+	}
+	
+	public static void gainResource(String resourceName, int amount){
+		resources.getAndIncrement(resourceName, 0, amount);
 	}
 	
 	public int getWave(){
@@ -189,10 +200,6 @@ public class Level {
 	
 	public int getEnemyTypes(int pos){
 		return this.enemyTypes[pos];
-	}
-	
-	public void setGold(int gold){
-		this.gold = gold;
 	}
 	
 	public void setWave(int wave){

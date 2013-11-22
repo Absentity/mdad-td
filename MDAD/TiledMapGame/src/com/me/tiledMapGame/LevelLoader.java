@@ -45,7 +45,7 @@ public class LevelLoader {
 		
 		/*Begin Reading File*/
 		l.levelId = sc.nextInt();
-		l.setGold(sc.nextInt());
+		l.setResource("Gold", sc.nextInt());
 		l.setWave(sc.nextInt());
 		n = sc.nextInt();
 		

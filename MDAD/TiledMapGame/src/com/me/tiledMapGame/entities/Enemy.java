@@ -1,5 +1,6 @@
 package com.me.tiledMapGame.entities;
 
+import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 
@@ -31,9 +32,8 @@ public class Enemy extends MobileEntity {
 	@Override
 	public void dispose() {
 		super.dispose();
-		// TODO Reward player with gold and XP
-//		Game.gold += enemy.goldReward;
-//		Game.xp += enemy.xpReward;
+		Level.gainResource("Gold", enemy.goldReward);
+		Level.gainResource("XP", enemy.xpReward);
 	}
 
 }

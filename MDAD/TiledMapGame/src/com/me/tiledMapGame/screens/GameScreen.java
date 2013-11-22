@@ -106,6 +106,10 @@ public class GameScreen implements Screen, InputProcessor {
 	private Input i;
 	
 	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS
+
+	private TextButton goldCounter;
+
+	private TextButton xpCounter;
 	
 	/**
 	 * 
@@ -139,11 +143,21 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.render();
 		
 		
+		
+		// I WILL FIND YOU
+		Rectangle r;
+		for (Tower t : ObjectGrid.towerList()) {
+			r = t.getBoundingRectangle();
+			sr.begin(ShapeType.Line);
+			sr.setColor(Color.YELLOW);
+			sr.rect(r.x, r.y, r.width, r.height);
+			sr.end();
+		}
+		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
-		
-		
-		if(showHealth) {
+				
+		if (showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
@@ -160,13 +174,13 @@ public class GameScreen implements Screen, InputProcessor {
 		
 	
 		// Draw towers
-		for(Tower t: ObjectGrid.towerList()){ // FOR TESTING
+		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
-			/////// Huh???? how are towers still rendering?
-			if(t.towerType == 0) {
+			
+			if (t.towerType == 0) {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
-			} else if(t.getMoved()){
+			} else if (t.getMoved()){
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 			
@@ -297,6 +311,9 @@ public class GameScreen implements Screen, InputProcessor {
 			// done
 		}
 
+		// Show resources
+		goldCounter.setText("Gold: " + Level.getResource("Gold"));
+		xpCounter.setText("XP: " + Level.getResource("XP"));
 		
 		// Show tower range
 		for (Tower t: ObjectGrid.towerList()) {
@@ -308,16 +325,6 @@ public class GameScreen implements Screen, InputProcessor {
 					sr.end();
 				}
 			}
-		}
-		
-		// I WILL FIND YOU
-		Rectangle r;
-		for (Tower t : ObjectGrid.towerList()) {
-			r = t.getBoundingRectangle();
-			sr.begin(ShapeType.Line);
-			sr.setColor(Color.YELLOW);
-			sr.rect(r.x, r.y, r.width, r.height);
-			sr.end();
 		}
 		
 		// Remove diposed objects
@@ -568,6 +575,19 @@ public class GameScreen implements Screen, InputProcessor {
 		peaceTimer.setPosition((TiledMapGame.screenWidth/2)-10, TiledMapGame.screenHeight-20-5); // offset by 5 for visual appearance
 		stage.addActor(peaceTimer);
 		
+		goldCounter = new TextButton("20", infoStyle);
+		goldCounter.setWidth(20f);
+		goldCounter.setHeight(12f);
+		goldCounter.setPosition(5+20+16, 20+16+8+8);
+		stage.addActor(goldCounter);
+		goldCounter.setVisible(true);
+		
+		xpCounter = new TextButton("20", infoStyle);
+		xpCounter.setWidth(20f);
+		xpCounter.setHeight(12f);
+		xpCounter.setPosition(5+20+16, 16+8);
+		stage.addActor(xpCounter);
+		xpCounter.setVisible(true);
 	}
 	
 	private void setupTowerOptions(){
@@ -869,7 +889,7 @@ public class GameScreen implements Screen, InputProcessor {
 //		System.out.println("[GameScreen] Clicked " + screenX + " " + screenY);
 		for (Tower t : ObjectGrid.towerList()) {
 			if (t.getBoundingRectangle().contains(screenX, screenY)) {
-//				System.out.println("[GameScreen] Clicked tower " + t);
+				System.out.println("[GameScreen] Clicked tower " + t);
 				return true;
 			}
 		}
