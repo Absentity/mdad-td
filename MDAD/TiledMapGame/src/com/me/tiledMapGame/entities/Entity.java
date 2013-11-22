@@ -50,25 +50,15 @@ public abstract class Entity extends Sprite {
 	/**
 	 * Chain Entity updating in each draw.
 	 */
-	public void draw(SpriteBatch spriteBatch) {
-		float delta = Gdx.graphics.getDeltaTime();
-		stateTime += delta;
-		
-		update(delta);
-		
-		currentFrame = animation.getKeyFrame(stateTime, true);
-		super.draw(spriteBatch);
-	}
-	
-	/**
-	 * Manage health-related responsibilities
-	 * @param stateTime
-	 */
-	public void update(float delta) {
-		if (health <= 0) {
-			dispose();
-		}
-	}
+//	public void draw(SpriteBatch spriteBatch) {
+//		float delta = Gdx.graphics.getDeltaTime();
+//		stateTime += delta;
+//		
+//		update(delta);
+//		
+//		currentFrame = animation.getKeyFrame(stateTime, true);
+//		super.draw(spriteBatch);
+//	}
 	
 	/**
 	 * Create an animation object from a texture and some given constraints.
@@ -89,6 +79,15 @@ public abstract class Entity extends Sprite {
 		}
 		Animation animation = new Animation(.05f, frames);
 		return animation;
+	}
+
+	public void update(float stateTime) {
+		currentFrame = animation.getKeyFrame(this.stateTime, true);
+		this.stateTime += stateTime;
+
+		if (health <= 0) {
+			dispose();
+		}
 	}
 	
 	public TextureRegion getCurrentFrame() {
