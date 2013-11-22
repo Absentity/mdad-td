@@ -27,6 +27,12 @@ public class Enemy extends MobileEntity {
 				}
 			}
 		}
+		
+		// Requires Entity.java's getTile() method to work!
+		float toMoveX = getTile().dir.x * maxVelocity;
+		float toMoveY = getTile().dir.y * maxVelocity;
+		
+		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}
 
 	@Override

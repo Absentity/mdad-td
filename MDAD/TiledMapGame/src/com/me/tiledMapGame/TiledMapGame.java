@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.ProjectileType;
 import com.me.tiledMapGame.entities.TowerType;
+import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
@@ -32,6 +33,7 @@ public class TiledMapGame extends Game {
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
 	public static ObjectMap<String, TowerType> structureTypeLibrary;
 	public static ObjectMap<String, ProjectileType> projectileTypeLibrary;
+	public static ObjectMap<String, UnitType> unitTypeLibrary;
 	public static ObjectMap<String, Texture> textureLibrary;
 	public static ObjectMap<String, Music> musicLibrary;
 	public static ObjectMap<String, Sound> soundLibrary;
@@ -96,6 +98,7 @@ public class TiledMapGame extends Game {
 		towerTypeLibrary = new ObjectMap<String, TowerType>();
 		structureTypeLibrary = new ObjectMap<String, TowerType>();
 		projectileTypeLibrary = new ObjectMap<String, ProjectileType>();
+		unitTypeLibrary = new ObjectMap<String, UnitType>();
 		
 		// Projectiles
 		projectileTypeLibrary.put("Crescent", new ProjectileType(new Texture("img/possibleCresent.png"), 5));
@@ -124,6 +127,10 @@ public class TiledMapGame extends Game {
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f, 1, 1f, 10, 10));
 		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f, 1, .6f, 10, 10));
 		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 5000, .3f, 15, 1f, 10, 10));
+		
+		// Units
+		unitTypeLibrary.put("Mage", new UnitType(new Texture("img/mage.png"), 100, .6f, 1));
+		
 	}
 
 	@Override
@@ -142,6 +149,8 @@ public class TiledMapGame extends Game {
 			M.dispose();
 			//L = new LevelSelectScreen();
 			//this.setScreen(L);
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldOne").play();
 			P = new GameScreen(null);
 			this.setScreen(P);
 		}

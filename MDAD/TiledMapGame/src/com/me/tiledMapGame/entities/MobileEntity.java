@@ -51,11 +51,11 @@ public abstract class MobileEntity extends Entity {
 //		Vector2 dir = new Vector2(dX,dY).limit(maxVelocity);
 //		this.setX()
 		
-		// Requires Entity.java's getTile() method to work!
-		float toMoveX = getTile().dir.x * maxVelocity;
-		float toMoveY = getTile().dir.y * maxVelocity;
-		
-		setPosition(getX() + toMoveX, getY() + toMoveY);
+//		// Requires Entity.java's getTile() method to work!
+//		float toMoveX = getTile().dir.x * maxVelocity;
+//		float toMoveY = getTile().dir.y * maxVelocity;
+//		
+//		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}
 	
 //	protected abstract void updateVelocity();

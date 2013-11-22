@@ -32,6 +32,7 @@ public class Tower extends Entity {
 	private float cooldown;
 	private boolean placed = false;
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
+	private boolean selected = false;
 	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
@@ -135,5 +136,13 @@ public class Tower extends Entity {
 	 */
 	public float getRange() {
 		return range.radius;
+	}
+
+	public boolean isSelected() {
+		return this.selected;
+	}
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

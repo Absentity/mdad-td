@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -75,7 +76,6 @@ public class GameScreen implements Screen, InputProcessor {
 	Skin skin;
 	public static Stage stage;
 	Table buttonTable;
-//	ScrollPane scrollPane;
 	MenuNinePatch towerNinePatch;
 	MenuNinePatch infoNinePatch;
 	MenuNinePatch unitNinePatch;
@@ -88,6 +88,10 @@ public class GameScreen implements Screen, InputProcessor {
 	TextButton damageLabel; // Button without a listener
 	TextButton rangeLabel; // Button without a listener
 	TextButton peaceTimer; // Button without a listener
+	MenuNinePatch uSMenu;
+	Table uSTable;
+	TextButton upgrade;
+	TextButton sell;
 
 	Button displayButton;
 	boolean showHealth = false;
@@ -153,6 +157,13 @@ public class GameScreen implements Screen, InputProcessor {
 			sr.rect(r.x, r.y, r.width, r.height);
 			sr.end();
 		}
+		for (Unit u : ObjectGrid.unitList()) {
+			r = u.getBoundingRectangle();
+			sr.begin(ShapeType.Line);
+			sr.setColor(Color.YELLOW);
+			sr.rect(r.x, r.y, r.width/4, r.height/3);
+			sr.end();
+		}
 		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
@@ -184,12 +195,13 @@ public class GameScreen implements Screen, InputProcessor {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 			
+			
 		} // FOR TESTING
 		
 		for(Unit u: ObjectGrid.unitList()){
 			u.update(Gdx.graphics.getDeltaTime());
 			renderer.getSpriteBatch().setColor(1,1,1,1);
-			renderer.getSpriteBatch().draw(u.getCurrentFrame(), 398, 398);
+			renderer.getSpriteBatch().draw(u.getCurrentFrame(), u.getX(), u.getY());
 		}
 		
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1);
@@ -204,6 +216,16 @@ public class GameScreen implements Screen, InputProcessor {
 		for (Projectile p : ObjectGrid.projectileList()) {
 			p.draw(renderer.getSpriteBatch());
 		}
+		
+		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
+
+			if(t.isSelected()) {
+				drawUpgradeOrSell(t);
+				upgrade.setVisible(true);
+				sell.setVisible(true);
+			}
+			
+		} 
 		
 		renderer.getSpriteBatch().end();
 		
@@ -252,7 +274,7 @@ public class GameScreen implements Screen, InputProcessor {
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
 			}
-			unitNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight());
+			unitNinePatch.draw(stage.getSpriteBatch(), 0, Gdx.graphics.getHeight()/2, 120, Gdx.graphics.getHeight()/2);
 			
 			stage.getSpriteBatch().end();
 			
@@ -385,6 +407,7 @@ public class GameScreen implements Screen, InputProcessor {
 	    setupTowerTable();
 		setupUnitOptions();		
 		setupUnitTable();
+		createUpgradeOrSell();
 		
 		stage.addActor(buttonTable);		
 		stage.addActor(closeMenu);
@@ -392,6 +415,7 @@ public class GameScreen implements Screen, InputProcessor {
 		stage.addActor(towerTable);
 		stage.addActor(infoTable);
 		stage.addActor(unitTable);
+		stage.addActor(uSTable);
 		
 		current = level.getTimeBetWaves();
 	}
@@ -793,7 +817,8 @@ public class GameScreen implements Screen, InputProcessor {
 	        		
 		        	switch(unitChoice){
 		        		case 1:
-		        			ObjectGrid.units.add(new Unit(new UnitType(new Texture("img/mage.png"), 100, 2f, 1)));
+		        			ObjectGrid.units.add(TiledMapGame.unitTypeLibrary.get("Mage").createInstance());
+		        			ObjectGrid.units.get(ObjectGrid.unitList().size()-1).setPosition(320-16,320);
 		        			break;
 		        		default:
 		        			break;
@@ -879,7 +904,20 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		screenY = TiledMapGame.screenHeight - screenY;
+		
+		for(Tower t : ObjectGrid.towerList()) {
+			t.setSelected(false);
+			upgrade.setVisible(false);
+			sell.setVisible(false);
+		}
+		
+		for(Unit u : ObjectGrid.unitList()) {
+			if(u.isSelected()) {
+				System.out.println("here I am");
+			}
+		}
+			
 		return false;
 	}
 
@@ -890,14 +928,96 @@ public class GameScreen implements Screen, InputProcessor {
 		for (Tower t : ObjectGrid.towerList()) {
 			if (t.getBoundingRectangle().contains(screenX, screenY)) {
 				System.out.println("[GameScreen] Clicked tower " + t);
+				
+				t.setSelected(true);
+				
 				return true;
 			}
 		}
+		
+		for(Unit u : ObjectGrid.unitList()) {
+			if(u.getBoundingRectangle().contains(screenX, screenY)) {
+				System.out.println("[GameScreen] Clicked unit " + u);
+				
+				u.setSelected(true);
+				
+				for(Unit uOther : ObjectGrid.unitList()) {
+					uOther.setSelected(false);
+				}
+				
+				return true;
+				
+			}
+		}
 		// Following Aaron's idea
-		level.generateEnemy("Skeleton");
+//		level.generateEnemy("Skeleton"); // Taking this out for final design
 		return false;
 	}
+	
+	private void createUpgradeOrSell(){
+		
+		uSMenu = new MenuNinePatch();
+		uSTable = new Table();
+		
+		uSTable.setBounds(0 , 0, 125, 50);
+		uSTable.pad(5);
+		uSTable.top();
+		
+		TextButton.TextButtonStyle uSStyle = new TextButton.TextButtonStyle();
+		uSStyle.font = new BitmapFont();
+		uSStyle.fontColor = new Color(0,255,255,.7f);
+		uSStyle.pressedOffsetX = 2;
+	    uSStyle.pressedOffsetY = -2;
+	    
+		upgrade = new TextButton("Upgrade (PRICE)", uSStyle);
+		upgrade.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        			
+	            return true;
+	        }
 
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Powering up!");
+	        }
+	    });
+		
+		sell = new TextButton("Sell (PRICE)", uSStyle);
+		sell.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        			
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Bye. D:");
+	        }
+	    });
+		
+		upgrade.setVisible(false);
+		sell.setVisible(false);
+		
+		uSTable.add(upgrade);
+		uSTable.row();
+		uSTable.add(sell);
+		
+	}
+	
+	private void drawUpgradeOrSell(Tower tower){
+		
+		upgrade.setPosition(tower.getX()+40, tower.getY()+70);
+		sell.setPosition(tower.getX()+40, tower.getY()+45);
+		
+		uSMenu.draw(renderer.getSpriteBatch(), tower.getX()+35 , tower.getY()+40, 125, 55);
+		upgrade.draw(renderer.getSpriteBatch(), .8f);
+		sell.draw(renderer.getSpriteBatch(), .8f);
+		
+	}
+	
+	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		return false;
