@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.ProjectileType;
+import com.me.tiledMapGame.entities.Structure;
+import com.me.tiledMapGame.entities.StructureType;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.screens.GameScreen;
@@ -31,7 +33,7 @@ public class TiledMapGame extends Game {
 	public static LevelSelectScreen L;
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
-	public static ObjectMap<String, TowerType> structureTypeLibrary;
+	public static ObjectMap<String, StructureType> structureTypeLibrary;
 	public static ObjectMap<String, ProjectileType> projectileTypeLibrary;
 	public static ObjectMap<String, UnitType> unitTypeLibrary;
 	public static ObjectMap<String, Texture> textureLibrary;
@@ -96,7 +98,7 @@ public class TiledMapGame extends Game {
 	private void loadEntities() {
 		enemyTypeLibrary = new ObjectMap<String, EnemyType>();
 		towerTypeLibrary = new ObjectMap<String, TowerType>();
-		structureTypeLibrary = new ObjectMap<String, TowerType>();
+		structureTypeLibrary = new ObjectMap<String, StructureType>();
 		projectileTypeLibrary = new ObjectMap<String, ProjectileType>();
 		unitTypeLibrary = new ObjectMap<String, UnitType>();
 		
@@ -117,11 +119,11 @@ public class TiledMapGame extends Game {
 		towerTypeLibrary.put("Portal", new TowerType(new Texture("img/portalTower.png"), 100, 70f,
 				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
 		
-		// Structures //TODO TEMPORARILY USING TOWERS
-//		structureTypeLibrary.put("Kingdom", new TowerType(new Texture("img/Castle.png"), 1000, 70f,
-//				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
-//		structureTypeLibrary.put("Farm", new TowerType(new Texture("img/Castle.png"), 1000, 70f,
-//				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
+		// Structures
+//		structureTypeLibrary.put("Kingdom", new StructureType(new Texture("img/Kingdom.png"),
+//				1000, 0f, 0, "Gold"));
+		structureTypeLibrary.put("Farm", new StructureType(new Texture("img/sheetStructureFarm.png"),
+				100, 1f, 20, "Gold"));
 		
 		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f, 1, 1f, 10, 10));

@@ -18,11 +18,12 @@ public class StructureType implements EntityDefinition {
 	 * @param earnRate   Seconds-long for a cycle
 	 * @param earnAmount Integer value. Narrow minded?
 	 */
-	public StructureType(Texture texture, int health, float earnRate, int earnAmount) {
+	public StructureType(Texture texture, int health, float earnRate, int earnAmount, String resourceType) {
 		this.texture = texture;
 		this.health = health;
 		this.earnRate = earnRate;
 		this.earnAmount = earnAmount;
+		this.resourceType = resourceType;
 	}
 	
 	public Structure createInstance() {

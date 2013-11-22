@@ -32,6 +32,7 @@ import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.entities.Projectile;
+import com.me.tiledMapGame.entities.Structure;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.Unit;
 import com.me.tiledMapGame.entities.UnitType;
@@ -195,11 +196,15 @@ public class GameScreen implements Screen, InputProcessor {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 			
-			
-		} // FOR TESTING
+		}
 		
-		for(Unit u: ObjectGrid.unitList()){
-			u.update(Gdx.graphics.getDeltaTime());
+		for (Structure s : ObjectGrid.structureList()) {
+			s.update(Gdx.graphics.getDeltaTime());
+			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY());
+		}
+		
+		for (Unit u : ObjectGrid.unitList()) {
+			u.update(Gdx.graphics.getDeltaTime()); // Might not need this, as Unit is MobileEntity
 			renderer.getSpriteBatch().setColor(1,1,1,1);
 			renderer.getSpriteBatch().draw(u.getCurrentFrame(), u.getX(), u.getY());
 		}
