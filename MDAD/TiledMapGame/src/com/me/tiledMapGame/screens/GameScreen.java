@@ -93,6 +93,7 @@ public class GameScreen implements Screen, InputProcessor {
 	Table uSTable;
 	TextButton upgrade;
 	TextButton sell;
+	MenuNinePatch box;
 
 	Button displayButton;
 	boolean showHealth = false;
@@ -147,8 +148,6 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.setView(camera);
 		renderer.render();
 		
-		
-		
 		// I WILL FIND YOU
 		Rectangle r;
 		for (Tower t : ObjectGrid.towerList()) {
@@ -168,7 +167,9 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
-				
+		
+		drawGoldXPBox(); // draw gold and exp box
+		
 		if (showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
@@ -363,6 +364,10 @@ public class GameScreen implements Screen, InputProcessor {
 				ObjectGrid.projectiles.remove(e);
 			}
 			if (e instanceof Tower) {
+				if(((Tower) e).isSelected()) {
+					upgrade.setVisible(false);
+					sell.setVisible(false);
+				}
 				ObjectGrid.towers.remove(e);
 			}
 			e = null;
@@ -413,6 +418,7 @@ public class GameScreen implements Screen, InputProcessor {
 		setupUnitOptions();		
 		setupUnitTable();
 		createUpgradeOrSell();
+		createGoldXPBox();
 		
 		stage.addActor(buttonTable);		
 		stage.addActor(closeMenu);
@@ -583,7 +589,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		TextButton.TextButtonStyle infoStyle = new TextButton.TextButtonStyle();
 		infoStyle.font = new BitmapFont();
-		infoStyle.fontColor = new Color(255,0,0,.7f);
+		infoStyle.fontColor = new Color(255,215,0,.7f);
 		
 		nameLabel = new TextButton("Tower Name", infoStyle);
 		damageLabel = new TextButton("Tower Damage", infoStyle);
@@ -607,16 +613,32 @@ public class GameScreen implements Screen, InputProcessor {
 		goldCounter = new TextButton("20", infoStyle);
 		goldCounter.setWidth(20f);
 		goldCounter.setHeight(12f);
-		goldCounter.setPosition(5+20+16, 20+16+8+8);
+		goldCounter.setPosition(75, 20+16+8+8);
 		stage.addActor(goldCounter);
 		goldCounter.setVisible(true);
 		
 		xpCounter = new TextButton("20", infoStyle);
 		xpCounter.setWidth(20f);
 		xpCounter.setHeight(12f);
-		xpCounter.setPosition(5+20+16, 16+8);
+		xpCounter.setPosition(75, 16+8);
 		stage.addActor(xpCounter);
 		xpCounter.setVisible(true);
+		
+	}		
+		
+	
+	private void createGoldXPBox() {
+		
+		box = new MenuNinePatch();
+		
+	}
+	
+	private void drawGoldXPBox() {
+		
+		renderer.getSpriteBatch().setColor(renderer.getSpriteBatch().getColor().r, renderer.getSpriteBatch().getColor().g, renderer.getSpriteBatch().getColor().b, .7f);
+		box.draw(renderer.getSpriteBatch(), 45, 19, 85, 50);
+		renderer.getSpriteBatch().setColor(renderer.getSpriteBatch().getColor().r, renderer.getSpriteBatch().getColor().g, renderer.getSpriteBatch().getColor().b, 1);
+		
 	}
 	
 	private void setupTowerOptions(){
@@ -920,6 +942,7 @@ public class GameScreen implements Screen, InputProcessor {
 		for(Unit u : ObjectGrid.unitList()) {
 			if(u.isSelected()) {
 				u.setDestination(screenX, screenY);
+				u.setSelected(false);
 			}
 		}
 			
@@ -1019,7 +1042,6 @@ public class GameScreen implements Screen, InputProcessor {
 		sell.draw(renderer.getSpriteBatch(), .8f);
 		
 	}
-	
 	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {

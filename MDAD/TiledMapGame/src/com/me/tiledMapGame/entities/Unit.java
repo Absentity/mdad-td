@@ -25,7 +25,7 @@ public class Unit extends MobileEntity {
 		
 		float toMoveX = getTile().dir.x * maxVelocity;
 		float toMoveY = getTile().dir.y * maxVelocity;
-		System.out.println(toMoveX + " " + toMoveY);
+
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}
 	
