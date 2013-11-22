@@ -141,11 +141,15 @@ public class GameScreen implements Screen {
 		
 		if(showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
-				
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
 				} else if(e.getX()+10 <= 512 && e.getY()-35 >= 0) { // bound lower right
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()+10, e.getY()-30);
+				}
+			}
+			for (Tower t : ObjectGrid.towerList()) {
+				if (t.getHealth() < 100) {
+					font.draw(renderer.getSpriteBatch(), t.showHealth(), t.getX(), t.getY());
 				}
 			}
 		}
@@ -309,6 +313,9 @@ public class GameScreen implements Screen {
 			}
 			if (e instanceof Projectile) {
 				ObjectGrid.projectiles.remove(e);
+			}
+			if (e instanceof Tower) {
+				ObjectGrid.towers.remove(e);
 			}
 			e = null;
 		}

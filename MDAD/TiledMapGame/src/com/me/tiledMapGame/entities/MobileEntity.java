@@ -54,8 +54,6 @@ public abstract class MobileEntity extends Entity {
 		// Requires Entity.java's getTile() method to work!
 		float toMoveX = getTile().dir.x * maxVelocity;
 		float toMoveY = getTile().dir.y * maxVelocity;
-
-		//TODO: if enemy has reached destination, attack.
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}

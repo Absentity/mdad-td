@@ -43,7 +43,9 @@ public abstract class Entity extends Sprite {
 			TextureRegion[] frames = new TextureRegion[1];
 			animation = new Animation(.05f, frames);
 	        stateTime = 0f;
-		}
+		}/* else {
+		// TODO Make everything have some kind of animation...
+		}*/
 		stateTime = 0f;
 	}
 

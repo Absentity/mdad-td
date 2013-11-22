@@ -14,16 +14,18 @@ public class EnemyType implements EntityDefinition {
 	Texture texture;
 	int health;
 	int attackStrength;
+	float attackRate;
 	int goldReward, xpReward;
 	float maxVelocity;
 	
-	public EnemyType(Texture texture, int health, float maxVelocity/*, int goldReward, int xpReward*/) {
+	public EnemyType(Texture texture, int health, float maxVelocity, int attackStrength, float attackRate, int goldReward, int xpReward) {
 		this.texture = texture;
 		this.health = health;
 		this.maxVelocity = maxVelocity;
-		this.attackStrength = DEFAULT_ATTACK_STRENGTH;
-		this.goldReward = DEFAULT_GOLD_REWARD;
-		this.xpReward = DEFAULT_XP_REWARD;
+		this.attackStrength = attackStrength;
+		this.attackRate = attackRate;
+		this.goldReward = goldReward;
+		this.xpReward = xpReward;
 	}
 
 	public Enemy createInstance() {

@@ -110,7 +110,7 @@ public class TiledMapGame extends Game {
 		towerTypeLibrary.put("Amplify", new TowerType(new Texture("img/amplifyTower.png"), 100, 70f,
 				projectileTypeLibrary.get("Crescent"), 0f, 0, 3));
 		towerTypeLibrary.put("Fireball", new TowerType(new Texture("img/fireballTower.png"), 100, 70f,
-				projectileTypeLibrary.get("Fireball"), 0.6f, 60, 4));
+				projectileTypeLibrary.get("Fireball"), 0.6f, 6, 4));
 		towerTypeLibrary.put("Portal", new TowerType(new Texture("img/portalTower.png"), 100, 70f,
 				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
 		
@@ -121,9 +121,9 @@ public class TiledMapGame extends Game {
 //				projectileTypeLibrary.get("Crescent"), 0f, 0, 0));
 		
 		// Enemies
-		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f));
-		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f));
-		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 5000, .3f));
+		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f, 4, 1f, 10, 10));
+		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f, 4, .6f, 10, 10));
+		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 5000, .3f, 15, 1f, 10, 10));
 	}
 
 	@Override

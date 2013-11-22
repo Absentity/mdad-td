@@ -96,11 +96,6 @@ public class Tower extends Entity {
 		}
 		return null;
 	}
-
-	@Override
-	public void dispose() {
-		// TODO Create nifty explosion? ~LOWPRIORITY
-	}
 	
 	public boolean isPlaced(){
 		return placed;
