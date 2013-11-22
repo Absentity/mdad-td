@@ -919,7 +919,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		for(Unit u : ObjectGrid.unitList()) {
 			if(u.isSelected()) {
-				System.out.println("here I am");
+				u.setDestination(screenX, screenY);
 			}
 		}
 			
@@ -946,9 +946,7 @@ public class GameScreen implements Screen, InputProcessor {
 				
 				u.setSelected(true);
 				
-				for(Unit uOther : ObjectGrid.unitList()) {
-					uOther.setSelected(false);
-				}
+				// TODO: make sure more than one aren't selected... or are. 
 				
 				return true;
 				

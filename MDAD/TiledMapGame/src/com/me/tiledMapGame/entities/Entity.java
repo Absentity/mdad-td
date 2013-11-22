@@ -123,22 +123,22 @@ public abstract class Entity extends Sprite {
 	 * direction from the tile for MobileEntities.
 	 * @return
 	 */
-	public Node getTile() {
-		int[] tile = ObjectGrid.worldToTileCoordinates(getX(), getY());
-		int x = tile[0];
-		int y = tile[1];
-		
-		Node node;
-		try {
-			node = ObjectGrid.gridLayer(0).getNodeInGrid(x, y);
-		} catch (IndexOutOfBoundsException e) {
-			// Handle properly? Use logs? At least give more info.
-//			e.printStackTrace();
-			System.err.println("Off the map!");
-			return Node.SENTINEL;
-		}
-		return node;
-	}
+//	public Node getTile() {
+//		int[] tile = ObjectGrid.worldToTileCoordinates(getX(), getY());
+//		int x = tile[0];
+//		int y = tile[1];
+//		
+//		Node node;
+//		try {
+//			node = ObjectGrid.gridLayer(0).getNodeInGrid(x, y);
+//		} catch (IndexOutOfBoundsException e) {
+//			// Handle properly? Use logs? At least give more info.
+////			e.printStackTrace();
+//			System.err.println("Off the map!");
+//			return Node.SENTINEL;
+//		}
+//		return node;
+//	}
 
 	public void dispose() {
 		ObjectGrid.disposeList.add(this);
