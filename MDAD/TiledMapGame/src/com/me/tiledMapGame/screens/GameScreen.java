@@ -140,7 +140,8 @@ public class GameScreen implements Screen {
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
 			/////// Huh???? how are towers still rendering?
 			if(t.towerType == 0 || t.getMoved()) {
-				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+//				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+				t.draw(renderer.getSpriteBatch());
 			}
 		} // FOR TESTING
 		

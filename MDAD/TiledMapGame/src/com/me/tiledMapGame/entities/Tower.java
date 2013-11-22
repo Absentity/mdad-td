@@ -3,13 +3,9 @@
  */
 package com.me.tiledMapGame.entities;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
-import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**

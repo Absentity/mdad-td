@@ -1,6 +1,8 @@
-**/assets/**
+#**/assets/**
 *.class
 *.DS_Store
+*.cache
+
 
 ### From https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
 *.pydevproject

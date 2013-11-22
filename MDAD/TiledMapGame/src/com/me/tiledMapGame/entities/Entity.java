@@ -22,7 +22,7 @@ public abstract class Entity extends Sprite {
 	protected int health;
 	protected float stateTime;
 	
-	private static TextureRegion currentFrame;
+	private TextureRegion currentFrame;
 	private int index = 0;
 	private Animation animation;
 
@@ -51,9 +51,12 @@ public abstract class Entity extends Sprite {
 	 * Chain Entity updating in each draw.
 	 */
 	public void draw(SpriteBatch spriteBatch) {
-		update(Gdx.graphics.getDeltaTime());
-		currentFrame = animation.getKeyFrame(this.stateTime, true);
-		this.stateTime += stateTime;
+		float delta = Gdx.graphics.getDeltaTime();
+		stateTime += delta;
+		
+		update(delta);
+		
+		currentFrame = animation.getKeyFrame(stateTime, true);
 		super.draw(spriteBatch);
 	}
 	
@@ -61,7 +64,7 @@ public abstract class Entity extends Sprite {
 	 * Manage health-related responsibilities
 	 * @param stateTime
 	 */
-	public void update(float stateTime) {
+	public void update(float delta) {
 		if (health <= 0) {
 			dispose();
 		}
@@ -84,7 +87,8 @@ public abstract class Entity extends Sprite {
             	frames[index++] = tempTexReg[i][j];
             }
 		}
-		return new Animation(.05f, frames);
+		Animation animation = new Animation(.05f, frames);
+		return animation;
 	}
 	
 	public TextureRegion getCurrentFrame() {
