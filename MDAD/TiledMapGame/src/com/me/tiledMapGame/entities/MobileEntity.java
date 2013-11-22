@@ -3,37 +3,24 @@
  */
 package com.me.tiledMapGame.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.me.tiledMapGame.pathing.GridLayer;
-import com.me.tiledMapGame.pathing.Node;
-import com.me.tiledMapGame.pathing.ObjectGrid;
-import com.me.tiledMapGame.pathing.PathFinder;
 
 /**
- * @author Bret
- *
+ * Mobile Entities add autonomous movement based on their current velocity.
+ * Extend Mobile Entities when you want your Entity to move on its own logic.
+ * This requires updating its current velocity on update() calls. (Planned)
  */
 public abstract class MobileEntity extends Entity {
 
-	protected Vector2 velocity;
-	
 	public static final float FRICTION = 0.7f;
 	
+	protected Vector2 velocity;	
 	float maxVelocity;
 	
 	public MobileEntity(Texture texture, int health, float maxVelocity){
 		super(texture, health);
 		this.maxVelocity = maxVelocity;
-	}
-	
-	// TODO Should this method be in Entity?
-	public void draw(SpriteBatch spriteBatch) {
-		update(Gdx.graphics.getDeltaTime());
-		super.draw(spriteBatch);
 	}
 	
 	/**
@@ -59,6 +46,8 @@ public abstract class MobileEntity extends Entity {
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 	}
+	
+//	protected abstract void updateVelocity();
 	
 	public void dispose() {
 		super.dispose();

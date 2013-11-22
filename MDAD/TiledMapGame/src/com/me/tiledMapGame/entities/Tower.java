@@ -100,16 +100,6 @@ public class Tower extends Entity {
 		}
 		return null;
 	}
-	
-	@Deprecated
-	public float getStateTime(){
-		return super.getStatetime();
-	}
-
-	@Deprecated
-	public TextureRegion getCurrentFrame(){
-		return super.getCurrentFrame();
-	}
 
 	@Override
 	public void dispose() {

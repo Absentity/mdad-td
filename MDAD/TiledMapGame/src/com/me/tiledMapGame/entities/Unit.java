@@ -16,14 +16,6 @@ public class Unit extends MobileEntity {
 		super.update(stateTime);
 	}
 	
-	public float getStateTime(){
-		return super.getStatetime();
-	}
-	
-	public TextureRegion getCurrentFrame(){
-		return super.getCurrentFrame();
-	}
-	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub

@@ -29,6 +29,7 @@ import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Tower;
+import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.Unit;
 import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -116,27 +117,14 @@ public class GameScreen implements Screen {
 	}
 	
 	/**
-	 * Render level.render() and all sprites. Use one SpriteBatch
+	 * Possibly temporary place to render all the entities. Separating it to make
+	 * it easier to find. Ideally, rendering entities belongs strictly in ObjectGrid
+	 * but we'll just make this work for now.
+	 * @param delta
 	 */
-	@Override
-	public void render(float delta) {
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		camera.update();
-		
-		renderer.setView(camera);
-		renderer.render();
-		
-		
-		// Draw
-		renderer.getSpriteBatch().begin(); // FOR TESTING
-		
-		
+	private void renderEntities(float delta) {
 		if(showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
-				
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
 				} else if(e.getX()+10 <= 512 && e.getY()-35 >= 0) { // bound lower right
@@ -148,14 +136,12 @@ public class GameScreen implements Screen {
 	
 		// Draw towers
 		for(Tower t: ObjectGrid.towerList()){ // FOR TESTING
-			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+//			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
-			if(t.towerType == 0) {
-				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
-			} else if(t.getMoved()){
+			/////// Huh???? how are towers still rendering?
+			if(t.towerType == 0 || t.getMoved()) {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
-			
 		} // FOR TESTING
 		
 		for(Unit u: ObjectGrid.unitList()){
@@ -167,24 +153,28 @@ public class GameScreen implements Screen {
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1);
 		
 		for (Enemy e : ObjectGrid.enemyList()) {
-			e.update(Gdx.graphics.getDeltaTime());
-			if (e.getHealth() >= 0) {
+//			if (e.getHealth() >= 0) {
 				e.draw(renderer.getSpriteBatch());
-			}
+//			}
 		}
 		
 		for (Projectile p : ObjectGrid.projectileList()) {
 			p.draw(renderer.getSpriteBatch());
 		}
-		
-		renderer.getSpriteBatch().end();
-		
+	}
+	
+	/**
+	 * Possibly temporary place to render any of the menus.
+	 * @param delta
+	 */
+	private void renderMenus(float delta) {
 		// Determine whether or not to draw menu and draw/don't
 		if(openTowerMenu){
 			towerTable.setVisible(true);
 			closeMenu.setVisible(true);
-			
+
 			stage.getSpriteBatch().begin();
+			
 			if(thinking) {
 				nameLabel.setVisible(true);
 				damageLabel.setVisible(true);
@@ -227,8 +217,33 @@ public class GameScreen implements Screen {
 			unitNinePatch.draw(stage.getSpriteBatch(), 0, 0, 120, Gdx.graphics.getHeight());
 			
 			stage.getSpriteBatch().end();
-			
-			
+		}
+		
+		stage.draw();
+	}
+	
+	/**
+	 * Render level.render() and all sprites. Use one SpriteBatch
+	 */
+	@Override
+	public void render(float delta) {
+		
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		camera.update();
+		
+		renderer.setView(camera);
+		renderer.render();
+		
+		
+		// Draw
+		renderer.getSpriteBatch().begin(); // FOR TESTING
+		renderEntities(delta);
+		renderer.getSpriteBatch().end();
+		
+		if (openTowerMenu || openUnitMenu) { 
+			renderMenus(delta);
 		} else {
 			confirmSelection.setVisible(false);
 			nameLabel.setVisible(false);
@@ -238,8 +253,6 @@ public class GameScreen implements Screen {
 			unitTable.setVisible(false);
 			closeMenu.setVisible(false);
 		}
-		
-		stage.draw();
 		
 		// Timer Stuff
 		
@@ -296,7 +309,7 @@ public class GameScreen implements Screen {
 			}
 		}
 		
-		// Remove diposed objects
+		// Remove diposed objects in the lack of an update function
 		for (Entity e : ObjectGrid.disposeList) {
 			if (e instanceof Enemy) {
 				ObjectGrid.enemies.remove(e);
@@ -369,8 +382,6 @@ public class GameScreen implements Screen {
 		
 		current = level.getTimeBetWaves();
 	}
-
-	
 
 	@Override
 	public void hide() {
@@ -555,6 +566,14 @@ public class GameScreen implements Screen {
 		
 		towerNinePatch = new MenuNinePatch();
 
+		/* TODO ~LOWPRIORITY Proposed new menu buliding system
+		 * WIP HIGH-EFFORT TARGET avoiding for now. Requires InputListener Generator.
+		 * 
+		 for (TowerType t : TiledMapGame.towerTypeLibrary.values()) {
+			 TextButtonStyle buttonStyle = new TextButtonStyle();
+			 buttonStyle.up = skin
+		 } 
+		 */
 		TextButtonStyle cresButtonStyle = new TextButtonStyle();
 	    cresButtonStyle.up = skin.getDrawable("cresUp");
 	    cresButtonStyle.down = skin.getDrawable("cresDown");

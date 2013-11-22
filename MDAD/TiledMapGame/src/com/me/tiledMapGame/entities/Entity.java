@@ -3,9 +3,11 @@
  */
 package com.me.tiledMapGame.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
@@ -44,6 +46,26 @@ public abstract class Entity extends Sprite {
 		}
 		stateTime = 0f;
 	}
+
+	/**
+	 * Chain Entity updating in each draw.
+	 */
+	public void draw(SpriteBatch spriteBatch) {
+		update(Gdx.graphics.getDeltaTime());
+		currentFrame = animation.getKeyFrame(this.stateTime, true);
+		this.stateTime += stateTime;
+		super.draw(spriteBatch);
+	}
+	
+	/**
+	 * Manage health-related responsibilities
+	 * @param stateTime
+	 */
+	public void update(float stateTime) {
+		if (health <= 0) {
+			dispose();
+		}
+	}
 	
 	/**
 	 * Create an animation object from a texture and some given constraints.
@@ -63,19 +85,6 @@ public abstract class Entity extends Sprite {
             }
 		}
 		return new Animation(.05f, frames);
-	}
-
-	public void update(float stateTime) {
-		currentFrame = animation.getKeyFrame(this.stateTime, true);
-		this.stateTime += stateTime;
-
-		if (health <= 0) {
-			dispose();
-		}
-	}
-	
-	public float getStatetime() {
-		return stateTime;
 	}
 	
 	public TextureRegion getCurrentFrame() {
@@ -126,8 +135,8 @@ public abstract class Entity extends Sprite {
 		return node;
 	}
 
-	// TODO: Subclasses such as Tower could create some explosion effects on dispose!
 	public void dispose() {
 		ObjectGrid.disposeList.add(this);
+		// TODO ~LOWPRIORITY asplodey effektz
 	}
 }
