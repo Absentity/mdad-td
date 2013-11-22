@@ -29,6 +29,7 @@ public class Level {
 	private int wave = 1;				// Indicates what wave of enemies is attacking
 	private int totalWaves, enemPerWave;
 	private float timeBetweenWaves, timeBetweenSpawns;
+	private boolean won;
 	int enemyTypes[];
 	
 	private static ObjectIntMap<String> resources;
@@ -212,5 +213,9 @@ public class Level {
 	
 	public void setWave(int wave){
 		this.wave = wave;
+	}
+	
+	public void setWon(){
+		won = true;
 	}
 }

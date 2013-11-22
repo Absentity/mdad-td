@@ -128,7 +128,7 @@ public class TiledMapGame extends Game {
 		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f, 1, 1f, 10, 10));
 		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f, 1, .6f, 10, 10));
-		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 5000, .3f, 15, 1f, 10, 10));
+		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 250, .3f, 15, 1f, 10, 10));
 		
 		// Units
 		unitTypeLibrary.put("Mage", new UnitType(new Texture("img/mage.png"), 100, .6f, 1));

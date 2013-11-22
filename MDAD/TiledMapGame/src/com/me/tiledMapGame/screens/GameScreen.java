@@ -340,7 +340,9 @@ public class GameScreen implements Screen, InputProcessor {
 				}
 			}
 		} else {
-			// done
+			if(level.getObjectGrid().enemies.size() == 0){
+				System.out.println("You Won!");
+			}
 		}
 
 		// Show resources
