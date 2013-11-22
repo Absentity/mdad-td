@@ -195,7 +195,7 @@ public class GameScreen implements Screen, InputProcessor {
 			} else if (t.getMoved()){
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
-			
+
 		}
 		
 		for (Structure s : ObjectGrid.structureList()) {
