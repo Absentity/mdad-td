@@ -53,8 +53,6 @@ public class GameScreen implements Screen {
 	
 	boolean usingTower = false;
 	boolean usingUnit = false;
-	
-	private boolean noLevel = true;
 
 	
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
@@ -110,10 +108,17 @@ public class GameScreen implements Screen {
 	 * 
 	 * @param level
 	 */
-	public GameScreen(Level level) {
-		this.level = level;
-		if(level != null)
-			noLevel = false;
+	public GameScreen(Level l) {
+		this.level = l;
+		if(level == null){
+			this.level = new Level("MDADMap1v1");
+			
+			//Create Kingdom if making new level
+			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
+		}
+		
+		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 	}
 	
 	/**
@@ -139,9 +144,10 @@ public class GameScreen implements Screen {
 //			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
 			/////// Huh???? how are towers still rendering?
-			if(t.towerType == 0 || t.getMoved()) {
-				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
-			}
+			//TODO testing
+//			if(t.towerType == 0 || t.getMoved()) {
+//				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+//			}
 		} // FOR TESTING
 		
 		for(Unit u: ObjectGrid.unitList()){
@@ -332,19 +338,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		// TODO: Load level
-
-		if(noLevel){
-			level = new Level("MDADMap1v1");
-			
-			//Create Kingdom if making new level
-			ObjectGrid.towerList().add(TiledMapGame.towerTypeLibrary.get("Portal").createInstance()); //TODO Change to Kingdom
-			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
-		}
 		tbw = level.getTimeBetWaves();
 		tbs = level.getTimeBetSpawns();
-		
-		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 		
 		camera = new OrthographicCamera();
 		
