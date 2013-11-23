@@ -3,13 +3,10 @@
  */
 package com.me.tiledMapGame.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -22,12 +19,13 @@ public abstract class Entity extends Sprite {
 	protected int health;
 	protected float stateTime;
 	
-	private static TextureRegion currentFrame;
-	private int index = 0;
-	private Animation animation;
+	protected static TextureRegion currentFrame;
+	protected Animation animation;
+	protected Texture texture;
 
 	public Entity(Texture texture, int health) {
 		super(texture);
+		this.texture = texture;
 		this.health = health;
 		
 		if (texture.getHeight() == 96) {
@@ -70,10 +68,10 @@ public abstract class Entity extends Sprite {
 	 * @param numFrames    Number of frames total to generate
 	 * @return
 	 */
-	private Animation createAnimation(Texture texture, int widthBounds, int heightBounds, int numFrames) {
+	protected Animation createAnimation(Texture texture, int widthBounds, int heightBounds, int numFrames) {
 		TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/widthBounds, texture.getHeight()/heightBounds);
 		TextureRegion[] frames = new TextureRegion[numFrames];
-		index = 0;
+		int index = 0;
 		for (int i = 0; i < heightBounds; i++) {
             for (int j = 0; j < widthBounds; j++) {
             	frames[index++] = tempTexReg[i][j];

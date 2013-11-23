@@ -6,6 +6,7 @@ package com.me.tiledMapGame.pathing;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.entities.Projectile;
@@ -23,12 +24,12 @@ import com.me.tiledMapGame.entities.Unit;
 public class ObjectGrid {
 	
 	public static List<GridLayer> gridLayers;
-//  private static List<Entity> entities;
 	public static ArrayList<Tower> towers = new ArrayList<Tower>();
 	public static ArrayList<Structure> structures = new ArrayList<Structure>();
 	public static ArrayList<Unit> units = new ArrayList<Unit>();
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	public static ArrayList<AnimationEntity> animations = new ArrayList<AnimationEntity>();
 	
 	// Entities in here will be erased
 	public static ArrayList<Entity> disposeList = new ArrayList<Entity>();

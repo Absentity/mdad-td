@@ -5,12 +5,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.ProjectileType;
-import com.me.tiledMapGame.entities.Structure;
 import com.me.tiledMapGame.entities.StructureType;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.UnitType;
@@ -31,6 +33,7 @@ public class TiledMapGame extends Game {
 	public static MainMenuScreen M;
 	public static Splash S;
 	public static LevelSelectScreen L;
+	public static ObjectMap<String, AnimationEntity> animationLibrary;
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
 	public static ObjectMap<String, StructureType> structureTypeLibrary;
@@ -51,9 +54,9 @@ public class TiledMapGame extends Game {
 		S = new Splash(this);
 		
 		// Start up the game
-		loadEntities();
-		loadAudio();
 		loadTextures();
+		loadAudio();
+		loadEntities();
 
 		M = new MainMenuScreen();
 		this.setScreen(S);
@@ -74,6 +77,9 @@ public class TiledMapGame extends Game {
 	 */
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
+		
+		// http://www.codeproject.com/KB/game/677417/Explosion2.png
+		textureLibrary.put("Explosion", new Texture("img/Explosion2.png"));
 	}
 
 	private void loadAudio() {
@@ -101,11 +107,15 @@ public class TiledMapGame extends Game {
 		structureTypeLibrary = new ObjectMap<String, StructureType>();
 		projectileTypeLibrary = new ObjectMap<String, ProjectileType>();
 		unitTypeLibrary = new ObjectMap<String, UnitType>();
+		animationLibrary = new ObjectMap<String, AnimationEntity>();
+		
+		// Animations
+		animationLibrary.put("Explosion", new AnimationEntity(textureLibrary.get("Explosion")));
 		
 		// Projectiles
 		projectileTypeLibrary.put("Crescent", new ProjectileType(new Texture("img/possibleCresent.png"), 5));
 		projectileTypeLibrary.put("Fireball", new ProjectileType(new Texture("img/fireball.png"), 5));
-		projectileTypeLibrary.put("Canon", new ProjectileType(new Texture("img/fireball.png"), 3));
+		projectileTypeLibrary.put("Canon", new ProjectileType(new Texture("img/fireball.png"), 3, 30f, 30));
 		
 		// Towers
 		towerTypeLibrary.put("Crescent", new TowerType(new Texture("img/cresentTower.png"), 100, 70f,

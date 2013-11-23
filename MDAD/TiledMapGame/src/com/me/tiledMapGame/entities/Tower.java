@@ -3,9 +3,11 @@
  */
 package com.me.tiledMapGame.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -71,6 +73,13 @@ public class Tower extends Entity {
 				}
 			}
 		}
+	}
+	
+	public void dispose() {
+		super.dispose();
+		AnimationEntity ae = TiledMapGame.animationLibrary.get("Explosion").createInstance(getX(), getY(), getWidth()*2.2f, getHeight()*2.2f);
+		ae.setColor(Color.CYAN);
+		ObjectGrid.animations.add(ae);
 	}
 
 	/**

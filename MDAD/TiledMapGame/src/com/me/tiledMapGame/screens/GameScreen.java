@@ -29,6 +29,7 @@ import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.LevelSaver;
 import com.me.tiledMapGame.TiledMapGame;
+import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.entities.Projectile;
@@ -150,21 +151,28 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		
 		// I WILL FIND YOU
+		sr.begin(ShapeType.Line);
+		sr.setColor(Color.YELLOW);
 		Rectangle r;
 		for (Tower t : ObjectGrid.towerList()) {
 			r = t.getBoundingRectangle();
-			sr.begin(ShapeType.Line);
-			sr.setColor(Color.YELLOW);
 			sr.rect(r.x, r.y, r.width, r.height);
-			sr.end();
 		}
 		for (Unit u : ObjectGrid.unitList()) {
 			r = u.getBoundingRectangle();
-			sr.begin(ShapeType.Line);
-			sr.setColor(Color.YELLOW);
-			sr.rect(r.x, r.y, r.width/4, r.height/3);
-			sr.end();
+			sr.rect(r.x, r.y, r.width/4, r.height/3); //TODO set bounds on units! Important for collision
 		}
+		sr.setColor(Color.RED);
+		for (Projectile p : ObjectGrid.projectileList()) {
+			r = p.getBoundingRectangle();
+			sr.rect(r.x, r.y, r.width, r.height);
+		}
+		sr.setColor(Color.CYAN);
+		for (AnimationEntity ae : ObjectGrid.animations) {
+			r = ae.getBoundingRectangle();
+			sr.rect(r.x, r.y, r.width/5, r.height/4);
+		}
+		sr.end();
 		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
@@ -223,14 +231,23 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
-
 			if(t.isSelected()) {
 				drawUpgradeOrSell(t);
 				upgrade.setVisible(true);
 				sell.setVisible(true);
-			}
-			
-		} 
+			}	
+		}
+		
+		for (AnimationEntity ae : ObjectGrid.animations) {
+			ae.update(Gdx.graphics.getDeltaTime());
+			// Use this to test epicenter alignment
+//			renderer.getSpriteBatch().setColor(Color.GREEN);
+//			renderer.getSpriteBatch().draw(ae.getCurrentFrame(), ae.getX(), ae.getY());
+			renderer.getSpriteBatch().setColor(ae.getColor());
+			renderer.getSpriteBatch().draw(ae.getCurrentFrame(), ae.getX(), ae.getY(), ae.getWidth()/2, ae.getHeight()/2,
+					ae.getWidth(), ae.getHeight(), ae.getScaleX(), ae.getScaleY(), ae.getRotation());
+		}
+		renderer.getSpriteBatch().setColor(1,1,1,1);
 		
 		renderer.getSpriteBatch().end();
 		
@@ -364,6 +381,9 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 			if (e instanceof Tower) {
 				ObjectGrid.towers.remove(e);
+			}
+			if (e instanceof AnimationEntity) {
+				ObjectGrid.animations.remove(e);
 			}
 			e = null;
 		}
@@ -904,6 +924,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
+		level.generateEnemy("Wight"); // TODO take this out for final design
 		return false;
 	}
 
@@ -953,7 +974,7 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 		}
 		// Following Aaron's idea
-//		level.generateEnemy("Skeleton"); // Taking this out for final design
+		level.generateEnemy("Skeleton"); // TODO take this out for final design
 		return false;
 	}
 	
@@ -1028,7 +1049,6 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-//		System.out.println("[GameScreen] " + screenX + " " + screenY);
 		return false;
 	}
 
