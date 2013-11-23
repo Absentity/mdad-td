@@ -29,6 +29,7 @@ public class Level {
 	private int wave = 1;				// Indicates what wave of enemies is attacking
 	private int totalWaves, enemPerWave;
 	private float timeBetweenWaves, timeBetweenSpawns;
+	private boolean won;
 	int enemyTypes[];
 	
 	private static ObjectIntMap<String> resources;
@@ -97,9 +98,17 @@ public class Level {
 	 */
 	public void generateEnemy(String enemyName) {
 		if (TiledMapGame.enemyTypeLibrary.containsKey(enemyName)) {
-			Enemy e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			Enemy e;
+			if(enemyName.equals("Wyvern")){
+				e = new Enemy(TiledMapGame.enemyTypeLibrary.get(enemyName), true);
+				//e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			} else {
+				e = TiledMapGame.enemyTypeLibrary.get(enemyName).createInstance();
+			}
 			e.setPosition(spawnPoint.x, spawnPoint.y);
 			ObjectGrid.enemies.add(e);
+			e.destX = this.castleX;
+			e.destY = this.castleY;
 		} else {
 			System.err.println("[Level] no enemy named " + enemyName + " found in library.");
 		}
@@ -204,5 +213,9 @@ public class Level {
 	
 	public void setWave(int wave){
 		this.wave = wave;
+	}
+	
+	public void setWon(){
+		won = true;
 	}
 }

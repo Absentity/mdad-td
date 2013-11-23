@@ -94,6 +94,7 @@ public class GameScreen implements Screen, InputProcessor {
 	Table uSTable;
 	TextButton upgrade;
 	TextButton sell;
+	MenuNinePatch box;
 
 	Button displayButton;
 	boolean showHealth = false;
@@ -130,7 +131,8 @@ public class GameScreen implements Screen, InputProcessor {
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
-		
+		ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+		ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 	}
 	
@@ -147,8 +149,6 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		renderer.setView(camera);
 		renderer.render();
-		
-		
 		
 		// I WILL FIND YOU
 		sr.begin(ShapeType.Line);
@@ -176,7 +176,9 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
-				
+		
+		drawGoldXPBox(); // draw gold and exp box
+		
 		if (showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
 				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
@@ -231,11 +233,11 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
-			if(t.isSelected()) {
+			if(t.isSelected() && t.getTowerType() != 0) {
 				drawUpgradeOrSell(t);
 				upgrade.setVisible(true);
 				sell.setVisible(true);
-			}	
+			}
 		}
 		
 		for (AnimationEntity ae : ObjectGrid.animations) {
@@ -330,6 +332,10 @@ public class GameScreen implements Screen, InputProcessor {
 						case 2:
 							level.generateEnemy("Wight");
 							break;
+						case 3:
+							level.generateEnemy("Wyvern");
+							System.out.println("Ka KAAA!!!!!!!");
+							break;
 						default:
 							break;
 					}
@@ -352,7 +358,9 @@ public class GameScreen implements Screen, InputProcessor {
 				}
 			}
 		} else {
-			// done
+			if(level.getObjectGrid().enemies.size() == 0){
+				System.out.println("You Won!");
+			}
 		}
 
 		// Show resources
@@ -380,6 +388,10 @@ public class GameScreen implements Screen, InputProcessor {
 				ObjectGrid.projectiles.remove(e);
 			}
 			if (e instanceof Tower) {
+				if(((Tower) e).isSelected()) {
+					upgrade.setVisible(false);
+					sell.setVisible(false);
+				}
 				ObjectGrid.towers.remove(e);
 			}
 			if (e instanceof AnimationEntity) {
@@ -433,6 +445,7 @@ public class GameScreen implements Screen, InputProcessor {
 		setupUnitOptions();		
 		setupUnitTable();
 		createUpgradeOrSell();
+		createGoldXPBox();
 		
 		stage.addActor(buttonTable);		
 		stage.addActor(closeMenu);
@@ -603,7 +616,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		TextButton.TextButtonStyle infoStyle = new TextButton.TextButtonStyle();
 		infoStyle.font = new BitmapFont();
-		infoStyle.fontColor = new Color(255,0,0,.7f);
+		infoStyle.fontColor = new Color(255,215,0,.7f);
 		
 		nameLabel = new TextButton("Tower Name", infoStyle);
 		damageLabel = new TextButton("Tower Damage", infoStyle);
@@ -627,16 +640,32 @@ public class GameScreen implements Screen, InputProcessor {
 		goldCounter = new TextButton("20", infoStyle);
 		goldCounter.setWidth(20f);
 		goldCounter.setHeight(12f);
-		goldCounter.setPosition(5+20+16, 20+16+8+8);
+		goldCounter.setPosition(75, 20+16+8+8);
 		stage.addActor(goldCounter);
 		goldCounter.setVisible(true);
 		
 		xpCounter = new TextButton("20", infoStyle);
 		xpCounter.setWidth(20f);
 		xpCounter.setHeight(12f);
-		xpCounter.setPosition(5+20+16, 16+8);
+		xpCounter.setPosition(75, 16+8);
 		stage.addActor(xpCounter);
 		xpCounter.setVisible(true);
+		
+	}		
+		
+	
+	private void createGoldXPBox() {
+		
+		box = new MenuNinePatch();
+		
+	}
+	
+	private void drawGoldXPBox() {
+		
+		renderer.getSpriteBatch().setColor(renderer.getSpriteBatch().getColor().r, renderer.getSpriteBatch().getColor().g, renderer.getSpriteBatch().getColor().b, .7f);
+		box.draw(renderer.getSpriteBatch(), 45, 19, 85, 50);
+		renderer.getSpriteBatch().setColor(renderer.getSpriteBatch().getColor().r, renderer.getSpriteBatch().getColor().g, renderer.getSpriteBatch().getColor().b, 1);
+		
 	}
 	
 	private void setupTowerOptions(){
@@ -938,12 +967,6 @@ public class GameScreen implements Screen, InputProcessor {
 			sell.setVisible(false);
 		}
 		
-		for(Unit u : ObjectGrid.unitList()) {
-			if(u.isSelected()) {
-				u.setDestination(screenX, screenY);
-			}
-		}
-			
 		return false;
 	}
 
@@ -951,6 +974,17 @@ public class GameScreen implements Screen, InputProcessor {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		screenY = TiledMapGame.screenHeight - screenY;
 //		System.out.println("[GameScreen] Clicked " + screenX + " " + screenY);
+		
+		
+		// Move
+		for(Unit u : ObjectGrid.unitList()) {
+			if(u.isSelected()) {
+				u.setDestination(screenX, screenY);
+				u.setSelected(false);
+			}
+		}
+		
+		// Select
 		for (Tower t : ObjectGrid.towerList()) {
 			if (t.getBoundingRectangle().contains(screenX, screenY)) {
 				System.out.println("[GameScreen] Clicked tower " + t);
@@ -958,20 +992,25 @@ public class GameScreen implements Screen, InputProcessor {
 				t.setSelected(true);
 				
 				return true;
+			} else {
+				t.setSelected(false);
 			}
 		}
 		
+		// Select
 		for(Unit u : ObjectGrid.unitList()) {
 			if(u.getBoundingRectangle().contains(screenX, screenY)) {
 				System.out.println("[GameScreen] Clicked unit " + u);
 				
 				u.setSelected(true);
 				
-				// TODO: make sure more than one aren't selected... or are. 
-				
 				return true;
 				
-			}
+			 } else {
+				 u.setSelected(false);
+			 }
+			
+			
 		}
 		// Following Aaron's idea
 		level.generateEnemy("Skeleton"); // TODO take this out for final design
@@ -1040,7 +1079,6 @@ public class GameScreen implements Screen, InputProcessor {
 		sell.draw(renderer.getSpriteBatch(), .8f);
 		
 	}
-	
 	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {

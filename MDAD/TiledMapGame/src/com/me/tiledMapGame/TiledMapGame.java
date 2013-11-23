@@ -138,7 +138,7 @@ public class TiledMapGame extends Game {
 		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType(new Texture("img/Skeleton.png"), 100, .5f, 1, 1f, 10, 10));
 		enemyTypeLibrary.put("Wight", new EnemyType(new Texture("img/wight.png"), 100, 1f, 1, .6f, 10, 10));
-		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 5000, .3f, 15, 1f, 10, 10));
+		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 250, .3f, 15, 1f, 10, 10));
 		
 		// Units
 		unitTypeLibrary.put("Mage", new UnitType(new Texture("img/mage.png"), 100, .6f, 1));
@@ -159,12 +159,12 @@ public class TiledMapGame extends Game {
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
 			M.dispose();
-			//L = new LevelSelectScreen();
-			//this.setScreen(L);
+			L = new LevelSelectScreen();
+			this.setScreen(L);
 			musicLibrary.get("titleSong").stop();
 			musicLibrary.get("worldOne").play();
-			P = new GameScreen(null);
-			this.setScreen(P);
+			//P = new GameScreen(null);
+			//this.setScreen(P);
 		}
 		
 		//Set the screen to a level screen, TODO load level info
@@ -183,8 +183,48 @@ public class TiledMapGame extends Game {
 			M = new MainMenuScreen();
 			this.setScreen(M);
 		}
+	
+	if(L != null && L.level1Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v1");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
 	}
-
+	if(L != null && L.level2Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v2");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level3Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v3");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level4Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v4");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level5Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v5");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+}
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
