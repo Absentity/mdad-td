@@ -4,7 +4,10 @@
 package com.me.tiledMapGame.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
+import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -41,10 +44,11 @@ public class Projectile extends MobileEntity {
 	
 	private float delX = 0, delY = 0, angle = 0;
 
-	private ProjectileType projectile;
-	private float distanceTravelled;
-	private float maxDistance;
+	final private ProjectileType projectile;
+	final private float maxDistance;
 	private int damage;
+	
+	private float distanceTravelled;
 
 	/**
 	 * Use this constructor to create projectiles that don't aim for targets.
@@ -54,7 +58,7 @@ public class Projectile extends MobileEntity {
 	 * @param projection  Initial velocity
 	 */
 	public Projectile(ProjectileType projectile, Vector2 projection, float maxDistance, int damage) {
-		super(projectile.texture, 1, projectile.maxVelocity);
+		super(projectile.texture, 1, projectile.maxSpeed);
 		this.projectile = projectile;
 		this.projection = projection;
 		this.maxDistance = maxDistance;
@@ -69,11 +73,11 @@ public class Projectile extends MobileEntity {
 	 * @param target     Predict this entity's next location.
 	 *                   (currently fires where the enemy is. Probably won't need to change this)
 	 */
-	public static Projectile fireAt(ProjectileType projectile, Tower source, Entity target) {
+	public static Projectile fireAt(ProjectileType projectile, Entity source, Entity target) {
 		Vector2 sourceVector = new Vector2(source.getX(), source.getY());
 		Vector2 targetVector = new Vector2(target.getX(), target.getY());
-		Vector2 velocity = targetVector.sub(sourceVector).limit(projectile.maxVelocity);
-		return new Projectile(projectile, velocity, source.getRange(), 50);
+		Vector2 velocity = targetVector.sub(sourceVector).limit(projectile.maxSpeed);
+		return new Projectile(projectile, velocity, source.getStat("Range"), 50);
 	}
 	
 	/**
@@ -134,10 +138,23 @@ public class Projectile extends MobileEntity {
 
 	@Override
 	public void dispose() {
+		if (projectile.explodes) {
+			explode();
+		}
 		super.dispose();
 	}
 
 	public void setDamage(int projectileDamage) {
 		this.damage = projectileDamage;
+	}
+	
+	public void explode() {
+		Circle aoe = new Circle(getX(), getY(), projectile.blastRadius);
+		ObjectGrid.animations.add(TiledMapGame.animationLibrary.get("Explosion").createInstance(getX(), getY(), aoe.radius*2.2f, aoe.radius*2.2f));
+		for (Enemy e : ObjectGrid.enemyList()) {
+			if (Intersector.overlaps(aoe, e.getBoundingRectangle())) {
+				e.hurt(projectile.blastDamage);
+			}
+		}
 	}
 }

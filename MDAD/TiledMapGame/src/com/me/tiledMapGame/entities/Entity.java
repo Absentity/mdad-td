@@ -3,13 +3,10 @@
  */
 package com.me.tiledMapGame.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
 /**
@@ -22,12 +19,13 @@ public abstract class Entity extends Sprite {
 	protected int health;
 	protected float stateTime;
 	
-	private static TextureRegion currentFrame;
-	private int index = 0;
-	private Animation animation;
+	protected static TextureRegion currentFrame;
+	protected Animation animation;
+	protected Texture texture;
 
 	public Entity(Texture texture, int health) {
 		super(texture);
+		this.texture = texture;
 		this.health = health;
 		
 		if (texture.getHeight() == 96) {
@@ -68,10 +66,10 @@ public abstract class Entity extends Sprite {
 	 * @param numFrames    Number of frames total to generate
 	 * @return
 	 */
-	private Animation createAnimation(Texture texture, int widthBounds, int heightBounds, int numFrames) {
+	protected Animation createAnimation(Texture texture, int widthBounds, int heightBounds, int numFrames) {
 		TextureRegion[][] tempTexReg = TextureRegion.split(texture, texture.getWidth()/widthBounds, texture.getHeight()/heightBounds);
 		TextureRegion[] frames = new TextureRegion[numFrames];
-		index = 0;
+		int index = 0;
 		for (int i = 0; i < heightBounds; i++) {
             for (int j = 0; j < widthBounds; j++) {
             	frames[index++] = tempTexReg[i][j];
@@ -141,5 +139,34 @@ public abstract class Entity extends Sprite {
 	public void dispose() {
 		ObjectGrid.disposeList.add(this);
 		// TODO ~LOWPRIORITY asplodey effektz
+	}
+	
+	/**
+	 * EXTREMELY TEMPORARY IN THIS STATE. Will actually utilize an
+	 * ObjectIntMap<String> or ObjectFloatMap<String> in the future
+	 * Buffs update.
+	 * @param statName Name of a status you'd from which you'd like to get the value
+	 * @return the value of statName
+	 */
+	public int getStat(String statName) {
+		// TODO expand in Buffs update
+		if ("Range".equals(statName)) {
+			// HACKTACULAR
+			if (this instanceof Tower)
+				return (int) ((Tower) this).getRange();
+			if (this instanceof Unit)
+				return (int) ((Unit) this).getRange();
+		}
+		return 0;
+	}
+
+	public float getMidpointX() {
+		// TODO Return actual midpoint x...
+		return this.getX();
+	}
+
+	public float getMidpointY() {
+		// TODO Return actual midpoint y...
+		return this.getY();
 	}
 }

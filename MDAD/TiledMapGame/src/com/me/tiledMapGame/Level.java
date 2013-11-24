@@ -62,8 +62,8 @@ public class Level {
 			}
 		}
 
-		System.out.println("spawn x = " + spawnPoint.x);
-		System.out.println("spawn y = " + spawnPoint.y);
+//		System.out.println("spawn x = " + spawnPoint.x);
+//		System.out.println("spawn y = " + spawnPoint.y);
 		
 		// TODO load enemy wave data file
 		
@@ -89,7 +89,7 @@ public class Level {
 		}
 		
 		resources = new ObjectIntMap<String>();
-		setResource("Gold", 100);
+		setResource("Gold", 9999);
 	}
 	
 	/**

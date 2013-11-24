@@ -70,14 +70,15 @@ public class Input implements InputProcessor {
 		if(MainMenuScreen.done){ // FOR TESTING
 			//make sure that the tower can be placed
 			if(level.getNode(screenX/32, 15-(screenY)/32).is_buildable){
-				towers.get(towers.size()-1).setAlpha(1);
-				towers.get(towers.size()-1).setPlaced(true);
-				//mark the spot as unbuildable for now TODO
-				level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
-				System.out.println(screenX/32 + " " + (16-(screenY/32)));
-				level.getObjectGrid().clearAllVisited();
-				PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(), 10, 10);
-				
+				if(ObjectGrid.towerList().size()-1 >= 0) {
+					towers.get(towers.size()-1).setAlpha(1);
+					towers.get(towers.size()-1).setPlaced(true);
+					//mark the spot as unbuildable for now TODO
+					level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
+					System.out.println(screenX/32 + " " + (16-(screenY/32)));
+					level.getObjectGrid().clearAllVisited();
+					PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(), 10, 10);
+				}
 				//Reset enemy grids
 				
 //				for(Enemy e: level.enemies){
@@ -86,9 +87,11 @@ public class Input implements InputProcessor {
 				
 			}
 			else{
-				towers.get(towers.size()-1).dispose();
-				towers.remove(towers.size()-1);
-				System.out.println("Can't build here!");//testing
+				if(ObjectGrid.towerList().size()-1 >= 0) {
+					towers.get(towers.size()-1).dispose();
+					towers.remove(towers.size()-1);
+					System.out.println("Can't build here!");//testing
+				}
 			}
 
 //			GameScreen.chose = false; //temporary fix
@@ -122,8 +125,10 @@ public class Input implements InputProcessor {
 		}
 		
 		
-		if(MainMenuScreen.done){ // FOR TESTING
-			ObjectGrid.towerList().get(ObjectGrid.towerList().size()-1).setPosition(x, y);
+		if(MainMenuScreen.done) {
+			if(ObjectGrid.towerList().size()-1 >= 0) {
+				ObjectGrid.towerList().get(ObjectGrid.towerList().size()-1).setPosition(x, y);
+			}
 		}
 		
 		

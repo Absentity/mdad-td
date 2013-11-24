@@ -5,12 +5,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.ProjectileType;
-import com.me.tiledMapGame.entities.Structure;
 import com.me.tiledMapGame.entities.StructureType;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.UnitType;
@@ -31,6 +33,7 @@ public class TiledMapGame extends Game {
 	public static MainMenuScreen M;
 	public static Splash S;
 	public static LevelSelectScreen L;
+	public static ObjectMap<String, AnimationEntity> animationLibrary;
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
 	public static ObjectMap<String, StructureType> structureTypeLibrary;
@@ -51,9 +54,9 @@ public class TiledMapGame extends Game {
 		S = new Splash(this);
 		
 		// Start up the game
-		loadEntities();
-		loadAudio();
 		loadTextures();
+		loadAudio();
+		loadEntities();
 
 		M = new MainMenuScreen();
 		this.setScreen(S);
@@ -74,6 +77,9 @@ public class TiledMapGame extends Game {
 	 */
 	private void loadTextures() {
 		textureLibrary = new ObjectMap<String, Texture>();
+		
+		// http://www.codeproject.com/KB/game/677417/Explosion2.png
+		textureLibrary.put("Explosion", new Texture("img/Explosion2.png"));
 	}
 
 	private void loadAudio() {
@@ -101,11 +107,15 @@ public class TiledMapGame extends Game {
 		structureTypeLibrary = new ObjectMap<String, StructureType>();
 		projectileTypeLibrary = new ObjectMap<String, ProjectileType>();
 		unitTypeLibrary = new ObjectMap<String, UnitType>();
+		animationLibrary = new ObjectMap<String, AnimationEntity>();
+		
+		// Animations
+		animationLibrary.put("Explosion", new AnimationEntity(textureLibrary.get("Explosion")));
 		
 		// Projectiles
 		projectileTypeLibrary.put("Crescent", new ProjectileType(new Texture("img/possibleCresent.png"), 5));
 		projectileTypeLibrary.put("Fireball", new ProjectileType(new Texture("img/fireball.png"), 5));
-		projectileTypeLibrary.put("Canon", new ProjectileType(new Texture("img/fireball.png"), 3));
+		projectileTypeLibrary.put("Canon", new ProjectileType(new Texture("img/fireball.png"), 3, 30f, 30));
 		
 		// Towers
 		towerTypeLibrary.put("Crescent", new TowerType(new Texture("img/cresentTower.png"), 100, 70f,
@@ -131,7 +141,8 @@ public class TiledMapGame extends Game {
 		enemyTypeLibrary.put("Wyvern", new EnemyType(new Texture("img/Wyvern2.png"), 250, .3f, 15, 1f, 10, 10));
 		
 		// Units
-		unitTypeLibrary.put("Mage", new UnitType(new Texture("img/mage.png"), 100, .6f, 1));
+		unitTypeLibrary.put("Mage", new UnitType(new Texture("img/mage.png"), 100, .6f, 70f,
+				projectileTypeLibrary.get("Fireball"), 0.6f, 12, 1));
 		
 	}
 
@@ -149,12 +160,12 @@ public class TiledMapGame extends Game {
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
 			M.dispose();
-			//L = new LevelSelectScreen();
-			//this.setScreen(L);
+			L = new LevelSelectScreen();
+			this.setScreen(L);
 			musicLibrary.get("titleSong").stop();
 			musicLibrary.get("worldOne").play();
-			P = new GameScreen(null);
-			this.setScreen(P);
+			//P = new GameScreen(null);
+			//this.setScreen(P);
 		}
 		
 		//Set the screen to a level screen, TODO load level info
@@ -173,8 +184,48 @@ public class TiledMapGame extends Game {
 			M = new MainMenuScreen();
 			this.setScreen(M);
 		}
+	
+	if(L != null && L.level1Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v1");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
 	}
-
+	if(L != null && L.level2Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v2");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level3Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v3");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level4Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v4");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+	if(L != null && L.level5Listener.isPressed()){
+		Level Levels;
+		L.dispose();
+		Levels= new Level("MDADMap1v5");
+		P = new GameScreen(Levels);
+		this.setScreen(P);
+		
+	}
+}
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);

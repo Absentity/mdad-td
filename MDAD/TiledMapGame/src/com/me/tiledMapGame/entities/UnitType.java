@@ -4,14 +4,31 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class UnitType implements EntityDefinition {
 	
-	Texture texture;
-	float maxVelocity;
-	int health;
+	final Texture texture;
+	final ProjectileType projectileType;
+	final float maxSpeed;
+	final float sightRange;
+	final float attackRate;
+	final int attackStrength;
+	final int health;
+	final int id;
 	
-	public UnitType(Texture texture, int health, float maxVelocity, int unit) {
+	public UnitType(final Texture texture,
+			final int health,
+			final float maxSpeed,
+			final float sightRange,
+			final ProjectileType projectileType,
+			final float attackRate,
+			final int attackStrength,
+			final int unit) {
 		this.texture = texture;
 		this.health = health;
-		this.maxVelocity = maxVelocity;
+		this.maxSpeed = maxSpeed;
+		this.sightRange = sightRange;
+		this.projectileType = projectileType;
+		this.attackRate = attackRate;
+		this.attackStrength = attackStrength;
+		this.id = unit;
 	}
 
 	@Override
@@ -19,5 +36,8 @@ public class UnitType implements EntityDefinition {
 		return new Unit(this);
 	}
 	
+	public int getId(){
+		return this.id;
+	}
 	
 }

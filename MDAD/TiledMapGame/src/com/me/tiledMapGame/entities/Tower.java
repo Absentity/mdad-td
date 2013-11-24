@@ -3,10 +3,11 @@
  */
 package com.me.tiledMapGame.entities;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
+import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.ObjectGrid;
+import com.me.tiledMapGame.pathing.Targeting;
 
 /**
  * This is an instance of a Tower object. When the player places a tower
@@ -17,7 +18,7 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
 public class Tower extends Entity {
 
 	public final int PORTAL = 0;
-	public final int CRESENT = 1;
+	public final int CRESCENT = 1;
 	public final int BOMB = 2;
 	public final int AMPLIFIER = 3;
 	public final int FIREBALL = 4;
@@ -28,16 +29,36 @@ public class Tower extends Entity {
 	private boolean moved = false;
 	
 	private TowerType tower;
-	private Circle range;
 	private float cooldown;
 	private boolean placed = false;
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
 	private boolean selected = false;
 	
+	private int price;
+	private Circle range;
+	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 		towerType = tower.towerType;
+		
+		switch(towerType){
+			case CRESCENT:
+				price = 70;
+				break;
+			case BOMB:
+				price = 80;
+				break;
+			case AMPLIFIER:
+				price = 60;
+				break;
+			case FIREBALL:
+				price = 30;
+				break;
+			default:
+				break;
+		}
+		
 		/* Since a tower is created before it's set in the ground,
 		   we have to pretend it has no range at first and edit it
 		   later. */
@@ -62,7 +83,7 @@ public class Tower extends Entity {
 			cooldown -= delta;
 			if (cooldown <= 0) {
 				// The enemy detection method can be easily changed
-				Enemy enemyInRange = detectFirstEnemy();
+				Enemy enemyInRange = Targeting.detectFirstEnemyFrom(this);
 				
 				// Fire!!
 				if (enemyInRange != null) {
@@ -71,6 +92,13 @@ public class Tower extends Entity {
 				}
 			}
 		}
+	}
+	
+	public void dispose() {
+		super.dispose();
+		AnimationEntity ae = TiledMapGame.animationLibrary.get("Explosion").createInstance(getX(), getY(), getWidth()*2.2f, getHeight()*2.2f);
+		ae.setColor(Color.CYAN);
+		ObjectGrid.animations.add(ae);
 	}
 
 	/**
@@ -84,19 +112,6 @@ public class Tower extends Entity {
 		p.setPosition(getX(), getY());
 		p.setDamage(tower.projectileDamage);
 		ObjectGrid.projectiles.add(p);
-	}
-
-	/**
-	 * Seek out any enemies in the tower's range and return the first one it finds.
-	 * @return
-	 */
-	private Enemy detectFirstEnemy() {
-		for (Enemy e : ObjectGrid.enemyList()) {
-			if (Intersector.overlaps(range, e.getBoundingRectangle())) {
-				return e;
-			}
-		}
-		return null;
 	}
 	
 	public boolean isPlaced(){
@@ -144,5 +159,9 @@ public class Tower extends Entity {
 	
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	public int getPrice() {
+		return this.price;
 	}
 }
