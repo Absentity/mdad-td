@@ -42,7 +42,6 @@ public class Unit extends MobileEntity {
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 		
-		// Non-projectile towers such as Amplifier don't attack!
 		if (unit.attackRate != 0f) {
 			waitTime += delta;
 			if (waitTime >= unit.attackRate) {
@@ -52,7 +51,7 @@ public class Unit extends MobileEntity {
 				// Fire!!
 				if (enemyInRange != null) {
 					createProjectiles(enemyInRange);
-					waitTime -= unit.attackRate;
+					waitTime = 0;
 				}
 			}
 		}
