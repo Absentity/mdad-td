@@ -33,11 +33,15 @@ public class Enemy extends MobileEntity {
 		// If enemy has reached destination, attack.
 		if (attackRate >= enemy.attackRate) {
 			for (Tower t : ObjectGrid.towerList()) {
-				if (this.getBoundingRectangle().overlaps(t.getBoundingRectangle())) {
-					if(t.isPlaced()){
-						t.hurt(enemy.attackStrength);
-						attackRate = 0;
-					}
+				if (this.getBoundingRectangle().overlaps(t.getBoundingRectangle()) && t.isPlaced()){
+					t.hurt(enemy.attackStrength);
+					attackRate = 0;
+				}
+			}
+			for (Unit u : ObjectGrid.unitList()) {
+				if (this.getBoundingRectangle().overlaps(u.getBoundingRectangle())){
+					u.hurt(enemy.attackStrength);
+					attackRate = 0;
 				}
 			}
 		}

@@ -73,11 +73,11 @@ public class Projectile extends MobileEntity {
 	 * @param target     Predict this entity's next location.
 	 *                   (currently fires where the enemy is. Probably won't need to change this)
 	 */
-	public static Projectile fireAt(ProjectileType projectile, Tower source, Entity target) {
+	public static Projectile fireAt(ProjectileType projectile, Entity source, Entity target) {
 		Vector2 sourceVector = new Vector2(source.getX(), source.getY());
 		Vector2 targetVector = new Vector2(target.getX(), target.getY());
 		Vector2 velocity = targetVector.sub(sourceVector).limit(projectile.maxSpeed);
-		return new Projectile(projectile, velocity, source.getRange(), 50);
+		return new Projectile(projectile, velocity, source.getStat("Range"), 50);
 	}
 	
 	/**

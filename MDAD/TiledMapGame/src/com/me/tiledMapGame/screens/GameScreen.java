@@ -194,6 +194,11 @@ public class GameScreen implements Screen, InputProcessor {
 					font.draw(renderer.getSpriteBatch(), t.showHealth(), t.getX(), t.getY());
 				}
 			}
+			for (Unit u : ObjectGrid.unitList()) {
+				if (u.getHealth() < 100) {
+					font.draw(renderer.getSpriteBatch(), u.showHealth(), u.getX(), u.getY());
+				}
+			}
 		}
 		
 	
@@ -389,18 +394,17 @@ public class GameScreen implements Screen, InputProcessor {
 		for (Entity e : ObjectGrid.disposeList) {
 			if (e instanceof Enemy) {
 				ObjectGrid.enemies.remove(e);
-			}
-			if (e instanceof Projectile) {
+			} else if (e instanceof Projectile) {
 				ObjectGrid.projectiles.remove(e);
-			}
-			if (e instanceof Tower) {
+			} else if (e instanceof Tower) {
 				if(((Tower) e).isSelected()) {
 					upgrade.setVisible(false);
 					sell.setVisible(false);
 				}
 				ObjectGrid.towers.remove(e);
-			}
-			if (e instanceof AnimationEntity) {
+			} else if (e instanceof Unit) {
+				ObjectGrid.unitList().remove(e);
+			} else if (e instanceof AnimationEntity) {
 				ObjectGrid.animations.remove(e);
 			}
 			e = null;

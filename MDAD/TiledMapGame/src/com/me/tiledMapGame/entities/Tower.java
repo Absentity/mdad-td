@@ -4,11 +4,10 @@
 package com.me.tiledMapGame.entities;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.ObjectGrid;
+import com.me.tiledMapGame.pathing.Targeting;
 
 /**
  * This is an instance of a Tower object. When the player places a tower
@@ -30,13 +29,13 @@ public class Tower extends Entity {
 	private boolean moved = false;
 	
 	private TowerType tower;
-	private Circle range;
 	private float cooldown;
 	private boolean placed = false;
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
 	private boolean selected = false;
 	
 	private int price;
+	private Circle range;
 	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
@@ -84,7 +83,7 @@ public class Tower extends Entity {
 			cooldown -= delta;
 			if (cooldown <= 0) {
 				// The enemy detection method can be easily changed
-				Enemy enemyInRange = detectFirstEnemy();
+				Enemy enemyInRange = Targeting.detectFirstEnemyFrom(this);
 				
 				// Fire!!
 				if (enemyInRange != null) {
@@ -113,19 +112,6 @@ public class Tower extends Entity {
 		p.setPosition(getX(), getY());
 		p.setDamage(tower.projectileDamage);
 		ObjectGrid.projectiles.add(p);
-	}
-
-	/**
-	 * Seek out any enemies in the tower's range and return the first one it finds.
-	 * @return
-	 */
-	private Enemy detectFirstEnemy() {
-		for (Enemy e : ObjectGrid.enemyList()) {
-			if (Intersector.overlaps(range, e.getBoundingRectangle())) {
-				return e;
-			}
-		}
-		return null;
 	}
 	
 	public boolean isPlaced(){

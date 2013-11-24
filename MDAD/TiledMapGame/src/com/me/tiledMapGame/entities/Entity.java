@@ -140,4 +140,33 @@ public abstract class Entity extends Sprite {
 		ObjectGrid.disposeList.add(this);
 		// TODO ~LOWPRIORITY asplodey effektz
 	}
+	
+	/**
+	 * EXTREMELY TEMPORARY IN THIS STATE. Will actually utilize an
+	 * ObjectIntMap<String> or ObjectFloatMap<String> in the future
+	 * Buffs update.
+	 * @param statName Name of a status you'd from which you'd like to get the value
+	 * @return the value of statName
+	 */
+	public int getStat(String statName) {
+		// TODO expand in Buffs update
+		if ("Range".equals(statName)) {
+			// HACKTACULAR
+			if (this instanceof Tower)
+				return (int) ((Tower) this).getRange();
+			if (this instanceof Unit)
+				return (int) ((Unit) this).getRange();
+		}
+		return 0;
+	}
+
+	public float getMidpointX() {
+		// TODO Return actual midpoint x...
+		return this.getX();
+	}
+
+	public float getMidpointY() {
+		// TODO Return actual midpoint y...
+		return this.getY();
+	}
 }

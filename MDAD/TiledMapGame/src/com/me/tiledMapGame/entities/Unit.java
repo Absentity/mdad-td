@@ -1,10 +1,13 @@
 package com.me.tiledMapGame.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Circle;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.pathing.GridLayer;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 import com.me.tiledMapGame.pathing.PathFinder;
+import com.me.tiledMapGame.pathing.Targeting;
 
 public class Unit extends MobileEntity {
 
@@ -12,27 +15,61 @@ public class Unit extends MobileEntity {
 	private boolean selected;
 	private GridLayer personalLayer;
 	private int price;
+	private Circle range;
 	
+	private float waitTime;
 	
 	public Unit(UnitType unit) {
-		super(unit.texture, unit.health, unit.maxVelocity);
+		super(unit.texture, unit.health, unit.maxSpeed);
 		this.unit = unit;
 		this.setBounds(getX(), getY(), 16, 16);
 		
-		if(this.unit.getId() == 1){
+		if (this.unit.getId() == 1) {
 			price = 10;
 		}
+		
+		range = new Circle(this.getMidpointX(), this.getMidpointY(), unit.sightRange);
 		
 		personalLayer = new GridLayer(TiledMapGame.screenWidth/32, TiledMapGame.screenHeight/32);
 	}
 
-	public void update(float stateTime){
-		super.update(stateTime);
+	public void update(float delta) {
+		super.update(delta);
 		
+		// Handle movement first
 		float toMoveX = getTile().dir.x * maxVelocity;
 		float toMoveY = getTile().dir.y * maxVelocity;
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
+		
+		// Non-projectile towers such as Amplifier don't attack!
+		if (unit.attackRate != 0f) {
+			waitTime += delta;
+			if (waitTime >= unit.attackRate) {
+				// The enemy detection method can be easily changed
+				Enemy enemyInRange = Targeting.detectFirstEnemyFrom(this);
+				
+				// Fire!!
+				if (enemyInRange != null) {
+					createProjectiles(enemyInRange);
+					waitTime -= unit.attackRate;
+				}
+			}
+		}
+	}
+
+	/**
+	 * TODO: Does this fire at enemies? Or is something else controlling
+	 * when the projectiles come out?
+	 * TODO "THIS IS REPEATED CODE AAAAAAAAAAAGH" -Bret
+	 * @param target
+	 */
+	public void createProjectiles(Enemy target) {
+		Projectile p = Projectile.fireAt(unit.projectileType, this, target);
+		p.scale(-.5f);
+		p.setPosition(getX(), getY());
+		p.setDamage(unit.attackStrength);
+		ObjectGrid.projectiles.add(p);
 	}
 	
 	public Node getTile() {
@@ -54,7 +91,11 @@ public class Unit extends MobileEntity {
 	
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		super.dispose();
+		
+		AnimationEntity ae = TiledMapGame.animationLibrary.get("Explosion").createInstance(getX(), getY(), getWidth()*2.2f, getHeight()*2.2f);
+		ae.setColor(Color.RED);
+		ObjectGrid.animations.add(ae);
 	}
 	
 	public boolean isSelected() {
@@ -72,6 +113,10 @@ public class Unit extends MobileEntity {
 	
 	public int getPrice() {
 		return this.price;
+	}
+	
+	public float getRange() {
+		return range.radius;
 	}
 	
 }
