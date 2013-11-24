@@ -409,6 +409,8 @@ public class GameScreen implements Screen, InputProcessor {
 					upgrade.setVisible(false);
 					sell.setVisible(false);
 				}
+				ObjectGrid.gridLayer(0).getGrid()[(int) (e.getY()/32)][(int) (e.getX()/32)].is_buildable = true;
+				ObjectGrid.gridLayer(0).getGrid()[(int) (e.getY()/32)][(int) (e.getX()/32)].is_passable = true;
 				ObjectGrid.towers.remove(e);
 			} else if (e instanceof Unit) {
 				ObjectGrid.unitList().remove(e);
@@ -424,6 +426,11 @@ public class GameScreen implements Screen, InputProcessor {
 			e = null;
 		}
 		ObjectGrid.disposeList.clear();
+		
+		/*Check if the Player Lost*/
+		if(ObjectGrid.towers.get(0).getTowerType() != 0){
+			System.out.println("You are not doing so good!");
+		}
 	}
 
 	@Override
