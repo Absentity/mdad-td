@@ -22,11 +22,21 @@ public abstract class Entity extends Sprite {
 	protected static TextureRegion currentFrame;
 	protected Animation animation;
 	protected Texture texture;
+	
+	final protected String name;
+	final protected int price;
 
-	public Entity(Texture texture, int health) {
+	private boolean selected;
+	protected float alpha; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
+	private boolean moved = false;
+	private boolean placed = false;
+
+	public Entity(final String name, Texture texture, int health, final int price) {
 		super(texture);
+		this.name = name;
 		this.texture = texture;
 		this.health = health;
+		this.price = price;
 		
 		if (texture.getHeight() == 96) {
 			animation = createAnimation(texture, 4, 3, 12);
@@ -144,7 +154,7 @@ public abstract class Entity extends Sprite {
 	/**
 	 * EXTREMELY TEMPORARY IN THIS STATE. Will actually utilize an
 	 * ObjectIntMap<String> or ObjectFloatMap<String> in the future
-	 * Buffs update.
+	 * Buffs update instead of an annoying if-sandwich.
 	 * @param statName Name of a status you'd from which you'd like to get the value
 	 * @return the value of statName
 	 */
@@ -156,8 +166,14 @@ public abstract class Entity extends Sprite {
 				return (int) ((Tower) this).getRange();
 			if (this instanceof Unit)
 				return (int) ((Unit) this).getRange();
+		} else if ("Price".equals(statName)) {
+			return this.price;
 		}
 		return 0;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	public float getMidpointX() {
@@ -168,5 +184,38 @@ public abstract class Entity extends Sprite {
 	public float getMidpointY() {
 		// TODO Return actual midpoint y...
 		return this.getY();
+	}
+
+	// Copied from Tower
+	public boolean isSelected() {
+		return this.selected;
+	}
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	public float getAlpha(){
+		return alpha;
+	}
+	
+	public void setAlpha(float alpha){
+		this.alpha = alpha;
+	}
+	
+	public boolean isPlaced(){
+		return placed;
+	}
+	
+	public void setPlaced(boolean placed){
+		this.placed = placed;
+	}
+	
+	public boolean getMoved(){
+		return moved;
+	}
+	
+	public void setMoved(boolean moved){
+		this.moved = moved;
 	}
 }

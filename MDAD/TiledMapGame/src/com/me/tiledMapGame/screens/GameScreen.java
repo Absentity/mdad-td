@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -36,7 +35,6 @@ import com.me.tiledMapGame.entities.Projectile;
 import com.me.tiledMapGame.entities.Structure;
 import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.Unit;
-import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 import com.me.tiledMapGame.pathing.PathFinder;
 
@@ -50,7 +48,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public static boolean openTowerMenu = false;
 	public static boolean openUnitMenu = false;
 	
-	private int towerChoice = 1;
+	private String entityChoice;
 	private int unitChoice = 1;
 	
 	public static InputMultiplexer im;
@@ -70,6 +68,7 @@ public class GameScreen implements Screen, InputProcessor {
 	Button bombButton;
 	Button ampButton;
 	Button fireballButton;
+	Button farmButton;
 	
 	Button mageButton;
 	
@@ -201,7 +200,7 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 		}
 		
-	
+
 		// Draw towers
 		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
 			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
@@ -213,6 +212,14 @@ public class GameScreen implements Screen, InputProcessor {
 				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
 			}
 
+		}
+		
+		// Draw towers
+		for (Structure s: ObjectGrid.structureList()) { // FOR TESTING
+			s.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+			renderer.getSpriteBatch().setColor(1,1,1,s.getAlpha()); // FOR TESTING
+			
+			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY()); // FOR TESTING
 		}
 		
 		for (Structure s : ObjectGrid.structureList()) {
@@ -369,7 +376,8 @@ public class GameScreen implements Screen, InputProcessor {
 				}
 			}
 		} else {
-			if(level.getObjectGrid().enemies.size() == 0){
+			if(level.getObjectGrid().enemies.size() == 0) {
+//				level.won = true;
 				System.out.println("You Won!");
 			}
 		}
@@ -406,6 +414,12 @@ public class GameScreen implements Screen, InputProcessor {
 				ObjectGrid.unitList().remove(e);
 			} else if (e instanceof AnimationEntity) {
 				ObjectGrid.animations.remove(e);
+			} else if (e instanceof Structure) {
+				if(((Structure) e).isSelected()) {
+					upgrade.setVisible(false);
+					sell.setVisible(false);
+				}
+				ObjectGrid.structures.remove(e);
 			}
 			e = null;
 		}
@@ -441,8 +455,6 @@ public class GameScreen implements Screen, InputProcessor {
 		stage = new Stage();
 		
 		im = new InputMultiplexer(stage, this);
-//		Gdx.input.setInputProcessor(this);
-//		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setInputProcessor(im);
 		
 		setupSkin();
@@ -530,10 +542,12 @@ public class GameScreen implements Screen, InputProcessor {
 	private void setupSkin() {
 		
 		skin = new Skin();
+		// Main UI
 		skin.add("up", new Sprite(new Texture("img/buttonUp.png")));
 		skin.add("down", new Sprite(new Texture("img/buttonDown.png")));
 		skin.add("uUp", new Sprite(new Texture("img/uButtonUp.png")));
 		skin.add("uDown", new Sprite(new Texture("img/uButtonDown.png")));
+		// Towers
 		skin.add("cresUp", new Sprite(new Texture("img/CresTow1.png")));
 		skin.add("cresDown", new Sprite(new Texture("img/CresTow8.png")));
 		skin.add("bombUp", new Sprite(new Texture("img/bombTowerUp.png")));
@@ -542,10 +556,13 @@ public class GameScreen implements Screen, InputProcessor {
 		skin.add("ampDown", new Sprite(new Texture("img/amplifyTowerDown.png")));
 		skin.add("fireballUp", new Sprite(new Texture("img/fireballTowerUp.png")));
 		skin.add("fireballDown", new Sprite(new Texture("img/fireballTowerDown.png")));
-		
+		// Structures
+		skin.add("farmUp", new Sprite(new Texture("img/buttonStructureFarmUpDown.png")));
+		skin.add("farmDown", new Sprite(new Texture("img/buttonStructureFarmUpDown.png")));
+		// Units
 		skin.add("mageUp", new Sprite(new Texture("img/mageUp.png")));
 		skin.add("mageDown", new Sprite(new Texture("img/mageDown.png")));
-		
+		// ?
 		skin.add("enemyDisplay", new Sprite(new Texture("img/enemyDisplay.png")));
 	}
 	
@@ -703,7 +720,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	usingUnit = false;
-	        	towerChoice = 1;
+	        	entityChoice = "Crescent";
 	        	usingTower = true;
 	        	nameLabel.setText("Crescent Tower");
 	        	damageLabel.setText("Damage: 50");
@@ -729,7 +746,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	usingUnit = false;
-	        	towerChoice = 2;
+	        	entityChoice = "Bomb";
 	        	usingTower = true;
 	        	nameLabel.setText("Bomb Tower");
 	        	damageLabel.setText("Damage: 80");
@@ -755,7 +772,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	usingUnit = false;
-	        	towerChoice = 3;
+	        	entityChoice = "Amplify";
 	        	usingTower = true;
 	        	nameLabel.setText("Amplifier Tower");
 	        	damageLabel.setText("Damage: 0");
@@ -781,7 +798,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	usingUnit = false;
-	        	towerChoice = 4;
+	        	entityChoice = "Fireball";
 	        	usingTower = true;
 	        	nameLabel.setText("Fireball Tower");
 	        	damageLabel.setText("Damage: 60");
@@ -789,9 +806,35 @@ public class GameScreen implements Screen, InputProcessor {
 	        	priceLabel.setText("Cost: 30G");
 	        }
 	    });
+	    
+	    TextButtonStyle farmButtonStyle = new TextButtonStyle();
+	    farmButtonStyle.up = skin.getDrawable("farmUp");
+	    farmButtonStyle.down = skin.getDrawable("farmDown");
+	    
+	    farmButton = new Button(farmButtonStyle);
+	    farmButton.addListener(new InputListener() {
+	        public boolean touchDown(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        		System.out.println("Farm Resource selected");
+	        		thinking = true;
+	        		confirmSelection.setVisible(true);
+	            return true;
+	        }
+
+	        public void touchUp(InputEvent event, float x, float y,
+	                int pointer, int button) {
+	        	usingUnit = false;
+	        	entityChoice = "Farm";
+	        	usingTower = true;
+	        	nameLabel.setText("Farm Resource");
+	        	damageLabel.setText("Earning: 20");
+	        	rangeLabel.setText("Freq: 3s");
+	        	priceLabel.setText("Cost: 20G");
+	        }
+	    });
 	}
 	
-	private void setupUnitOptions(){
+	private void setupUnitOptions() {
 		
 		unitNinePatch = new MenuNinePatch();
 		
@@ -815,6 +858,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	openTowerMenu = false;
 	        	usingUnit = true;
 	        	unitChoice = 1;
+	        	entityChoice = "Mage";
 	        	nameLabel.setText("Mage");
 	        	damageLabel.setText("Damage: 20");
 	        	rangeLabel.setText("Range: 90");
@@ -865,58 +909,38 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	selectionConfirmed = true;
-
-	        	boolean notBroke = false;
 	        	
-	        	if(usingTower) {
-	        		usingUnit = false;
-	        		
-		        	switch(towerChoice){
-		        		case 1:
-		        			if(Level.getResource("Gold") >= 70) {
-		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Crescent").createInstance());
-		        				notBroke = true;
-		        			}
-		        			break;
-		        		case 2:
-		        			if(Level.getResource("Gold") >= 80) {
-		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Bomb").createInstance());
-		        				notBroke = true;
-		        			}
-		        			break;
-		        		case 3:
-		        			if(Level.getResource("Gold") >= 60) {
-		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Amplify").createInstance());
-		        				notBroke = true;
-		        			}
-		        			break;
-		        		case 4:
-		        			if(Level.getResource("Gold") >= 30) {
-		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Fireball").createInstance());
-		        				notBroke = true;
-		        			}
-		        		default:
-		        			break;
-		        	}
-		        	if(notBroke){
-		        		Level.gainResource("Gold", -ObjectGrid.towers.get(ObjectGrid.towers.size()-1).getPrice());
+        		Entity entityToBuild;
+        		if ("Farm".equals(entityChoice)) {
+        			entityToBuild = TiledMapGame.structureTypeLibrary.get("Farm").createInstance();
+        		} else if ("Mage".equals(entityChoice)) {
+        			entityToBuild = TiledMapGame.unitTypeLibrary.get("Mage").createInstance();
+        		} else {
+        			entityToBuild = TiledMapGame.towerTypeLibrary.get(entityChoice).createInstance();
+        		}
+        		
+        		// Kinda hacky, doesn't account for cost type.....
+        		final int price = entityToBuild.getStat("Cost");
+        		if (Level.getResource("Gold") >= price) {
+        			Level.gainResource("Gold", -price);
+        			
+        			if (entityToBuild instanceof Tower) {
+        				usingUnit = false;
+        				ObjectGrid.towers.add((Tower) entityToBuild);
+		        		level.lastBuilt = entityToBuild;
 		        		Gdx.input.setInputProcessor(i);
-		        	}
-	        	}
-	        	else if(usingUnit) {
-	        		usingTower = false;
-	        		
-		        	switch(unitChoice){
-		        		case 1:
-		        			ObjectGrid.units.add(TiledMapGame.unitTypeLibrary.get("Mage").createInstance());
-		        			ObjectGrid.units.get(ObjectGrid.unitList().size()-1).setPosition(320-16,320);
-		        			break;
-		        		default:
-		        			break;
-		        	}
-		        	
-		        	Level.gainResource("Gold", -ObjectGrid.units.get(ObjectGrid.units.size()-1).getPrice());
-	        	}
+        			} else if (entityToBuild instanceof Structure) {
+        				usingUnit = false;
+        				ObjectGrid.structures.add((Structure) entityToBuild);
+		        		level.lastBuilt = entityToBuild;
+		        		Gdx.input.setInputProcessor(i);
+        			} else if (entityToBuild instanceof Unit) {
+        				usingTower = false;
+        				// Place next to kingdom instead of enable build mode
+        				entityToBuild.setPosition(320-16,320);
+        				ObjectGrid.units.add((Unit) entityToBuild);
+	    			}
+        		}
 	        	
 	        }
 	    });
@@ -938,6 +962,10 @@ public class GameScreen implements Screen, InputProcessor {
 		towerTable.add(ampButton).spaceRight(24);
 		towerTable.add(fireballButton).spaceBottom(5);
 		towerTable.row();
+		
+		 towerTable.add(farmButton).spaceRight(24).spaceBottom(5);
+//		 towerTable.add(NEXT NEW TOWER).spaceBottom(5);
+		 towerTable.row();
 		
 		// Follow this pattern to add two towers per line.
 		// towerTable.add(NEW TOWER).spaceRight(24).spaceBottom(5);
@@ -971,13 +999,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 	    buttonTable.add(displayButton).pad(15);
 	    buttonTable.add(unitsButton).pad(15);
-	    buttonTable.add(twrsButton).pad(15);
-	    
-	    
-	}
-	
-	public int getTowerChoice(){
-		return towerChoice;
+	    buttonTable.add(twrsButton).pad(15);   
 	}
 
 	@Override

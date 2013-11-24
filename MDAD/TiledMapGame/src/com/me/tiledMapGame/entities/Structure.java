@@ -8,7 +8,7 @@ public class Structure extends Entity {
 	private float waitTime;
 
 	public Structure(StructureType structure) {
-		super(structure.texture, structure.health);
+		super(structure.name, structure.texture, structure.health, structure.price);
 		this.structure = structure;
 	}
 	

@@ -23,11 +23,11 @@ public abstract class MobileEntity extends Entity {
 	public static final float FRICTION = 0.7f;
 
 	protected Vector2 velocity;	
-	float maxVelocity;
+	float maxSpeed;
 	
-	public MobileEntity(Texture texture, int health, float maxVelocity){
-		super(texture, health);
-		this.maxVelocity = maxVelocity;
+	public MobileEntity(final String name, final Texture texture, int health, final int price, final float maxVelocity){
+		super(name, texture, health, price);
+		this.maxSpeed = maxVelocity;
 	}
 	
 	// TODO Should this method be in Entity?
