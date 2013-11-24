@@ -412,6 +412,11 @@ public class GameScreen implements Screen, InputProcessor {
 			e = null;
 		}
 		ObjectGrid.disposeList.clear();
+		
+		/*Check if the Player Lost*/
+		if(ObjectGrid.towers.get(0).getTowerType() != 0){
+			System.out.println("You are not doing so good!");
+		}
 	}
 
 	@Override
