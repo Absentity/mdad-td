@@ -374,6 +374,8 @@ public class GameScreen implements Screen, InputProcessor {
 					upgrade.setVisible(false);
 					sell.setVisible(false);
 				}
+				ObjectGrid.gridLayer(0).getGrid()[(int) (e.getY()/32)][(int) (e.getX()/32)].is_buildable = true;
+				ObjectGrid.gridLayer(0).getGrid()[(int) (e.getY()/32)][(int) (e.getX()/32)].is_passable = true;
 				ObjectGrid.towers.remove(e);
 			}
 			e = null;
