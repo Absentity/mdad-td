@@ -11,10 +11,17 @@ public class Unit extends MobileEntity {
 	private UnitType unit;
 	private boolean selected;
 	private GridLayer personalLayer;
+	private int price;
+	
 	
 	public Unit(UnitType unit) {
 		super(unit.texture, unit.health, unit.maxVelocity);
 		this.unit = unit;
+		this.setBounds(getX(), getY(), 16, 16);
+		
+		if(this.unit.getId() == 1){
+			price = 10;
+		}
 		
 		personalLayer = new GridLayer(TiledMapGame.screenWidth/32, TiledMapGame.screenHeight/32);
 	}
@@ -61,6 +68,10 @@ public class Unit extends MobileEntity {
 	public void setDestination(int x, int y) {
 		personalLayer = new GridLayer(TiledMapGame.screenWidth/32, TiledMapGame.screenHeight/32);
 		PathFinder.find_path(personalLayer.getGrid(), (x/32), (y/32));
+	}
+	
+	public int getPrice() {
+		return this.price;
 	}
 	
 }

@@ -19,7 +19,7 @@ import com.me.tiledMapGame.pathing.ObjectGrid;
 public class Tower extends Entity {
 
 	public final int PORTAL = 0;
-	public final int CRESENT = 1;
+	public final int CRESCENT = 1;
 	public final int BOMB = 2;
 	public final int AMPLIFIER = 3;
 	public final int FIREBALL = 4;
@@ -36,10 +36,30 @@ public class Tower extends Entity {
 	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
 	private boolean selected = false;
 	
+	private int price;
+	
 	public Tower(TowerType tower) {
 		super(tower.texture, tower.health);
 		this.tower = tower;
 		towerType = tower.towerType;
+		
+		switch(towerType){
+			case CRESCENT:
+				price = 70;
+				break;
+			case BOMB:
+				price = 80;
+				break;
+			case AMPLIFIER:
+				price = 60;
+				break;
+			case FIREBALL:
+				price = 30;
+				break;
+			default:
+				break;
+		}
+		
 		/* Since a tower is created before it's set in the ground,
 		   we have to pretend it has no range at first and edit it
 		   later. */
@@ -153,5 +173,9 @@ public class Tower extends Entity {
 	
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	public int getPrice() {
+		return this.price;
 	}
 }

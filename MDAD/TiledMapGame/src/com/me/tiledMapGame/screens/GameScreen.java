@@ -89,6 +89,7 @@ public class GameScreen implements Screen, InputProcessor {
 	TextButton nameLabel; // Button without a listener
 	TextButton damageLabel; // Button without a listener
 	TextButton rangeLabel; // Button without a listener
+	TextButton priceLabel; // Button without a listener
 	TextButton peaceTimer; // Button without a listener
 	MenuNinePatch uSMenu;
 	Table uSTable;
@@ -133,6 +134,7 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 		ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
+		ObjectGrid.towerList().get(0).setPlaced(true);
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 	}
 	
@@ -263,24 +265,26 @@ public class GameScreen implements Screen, InputProcessor {
 				nameLabel.setVisible(true);
 				damageLabel.setVisible(true);
 				rangeLabel.setVisible(true);
+				priceLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
+				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-100, 110, 100);
 			}
 			if(selectionConfirmed){
 				selectionConfirmed = false;
 				
-				if (usingTower) {
-					Gdx.input.setInputProcessor(i);
-				}
+//				if (usingTower) {
+//					Gdx.input.setInputProcessor(i);
+//				}
 				
 				confirmSelection.setVisible(false);
 				nameLabel.setVisible(false);
 				damageLabel.setVisible(false);
 				rangeLabel.setVisible(false);
+				priceLabel.setVisible(false);
 			}
 			
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-			towerNinePatch.draw(stage.getSpriteBatch(), 0, Gdx.graphics.getHeight()/2, 120, Gdx.graphics.getHeight()/2); 
+			towerNinePatch.draw(stage.getSpriteBatch(), 0, 3*Gdx.graphics.getHeight()/4, 120, Gdx.graphics.getHeight()/4); 
 			
 			stage.getSpriteBatch().end();
 			
@@ -295,10 +299,11 @@ public class GameScreen implements Screen, InputProcessor {
 				nameLabel.setVisible(true);
 				damageLabel.setVisible(true);
 				rangeLabel.setVisible(true);
+				priceLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-80, 110, 80);
+				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-100, 110, 100);
 			}
-			unitNinePatch.draw(stage.getSpriteBatch(), 0, Gdx.graphics.getHeight()/2, 120, Gdx.graphics.getHeight()/2);
+			unitNinePatch.draw(stage.getSpriteBatch(), 0, 3*Gdx.graphics.getHeight()/4, 120, Gdx.graphics.getHeight()/4);
 			
 			stage.getSpriteBatch().end();
 			
@@ -308,6 +313,7 @@ public class GameScreen implements Screen, InputProcessor {
 			nameLabel.setVisible(false);
 			damageLabel.setVisible(false);
 			rangeLabel.setVisible(false);
+			priceLabel.setVisible(false);
 			towerTable.setVisible(false);
 			unitTable.setVisible(false);
 			closeMenu.setVisible(false);
@@ -621,15 +627,19 @@ public class GameScreen implements Screen, InputProcessor {
 		nameLabel = new TextButton("Tower Name", infoStyle);
 		damageLabel = new TextButton("Tower Damage", infoStyle);
 		rangeLabel = new TextButton("Tower Range", infoStyle);
+		priceLabel = new TextButton("Tower Price", infoStyle);
 		nameLabel.setVisible(false);
 		damageLabel.setVisible(false);
 		rangeLabel.setVisible(false);
+		priceLabel.setVisible(false);
 		
 		infoTable.add(nameLabel);
 		infoTable.row();
 		infoTable.add(damageLabel);
 		infoTable.row();
 		infoTable.add(rangeLabel);
+		infoTable.row();
+		infoTable.add(priceLabel);
 		
 		peaceTimer = new TextButton("20",infoStyle);
 		peaceTimer.setWidth(20f);
@@ -694,6 +704,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	nameLabel.setText("Crescent Tower");
 	        	damageLabel.setText("Damage: 50");
 	        	rangeLabel.setText("Range: 90");
+	        	priceLabel.setText("Cost: 70G");
 	        }
 	    });
 	    
@@ -719,6 +730,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	nameLabel.setText("Bomb Tower");
 	        	damageLabel.setText("Damage: 80");
 	        	rangeLabel.setText("Range: 50");
+	        	priceLabel.setText("Cost: 80G");
 	        }
 	    });
 		
@@ -744,6 +756,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	nameLabel.setText("Amplifier Tower");
 	        	damageLabel.setText("Damage: 0");
 	        	rangeLabel.setText("Range: 100");
+	        	priceLabel.setText("Cost: 60G");
 	        }
 	    });
 	    
@@ -769,6 +782,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	nameLabel.setText("Fireball Tower");
 	        	damageLabel.setText("Damage: 60");
 	        	rangeLabel.setText("Range: 90");
+	        	priceLabel.setText("Cost: 30G");
 	        }
 	    });
 	}
@@ -800,6 +814,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	nameLabel.setText("Mage");
 	        	damageLabel.setText("Damage: 20");
 	        	rangeLabel.setText("Range: 90");
+	        	priceLabel.setText("Price: 10G");
 	        }
 	    });
 		
@@ -832,7 +847,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        		
 	        }
 	    });
-	    closeMenu.setPosition(75, 5+256);
+	    closeMenu.setPosition(75, 5+384); // 3/4 of 512 + offset of 5
 	    closeMenu.setVisible(false);
 	    
 	    confirmSelection = new TextButton("Confirm", style);
@@ -846,24 +861,42 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	selectionConfirmed = true;
+
+	        	boolean notBroke = false;
 	        	
 	        	if(usingTower) {
 	        		usingUnit = false;
 	        		
 		        	switch(towerChoice){
 		        		case 1:
-		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Crescent").createInstance());
+		        			if(Level.getResource("Gold") >= 70) {
+		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Crescent").createInstance());
+		        				notBroke = true;
+		        			}
 		        			break;
 		        		case 2:
-		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Bomb").createInstance());
+		        			if(Level.getResource("Gold") >= 80) {
+		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Bomb").createInstance());
+		        				notBroke = true;
+		        			}
 		        			break;
 		        		case 3:
-		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Amplify").createInstance());
+		        			if(Level.getResource("Gold") >= 60) {
+		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Amplify").createInstance());
+		        				notBroke = true;
+		        			}
 		        			break;
 		        		case 4:
-		        			ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Fireball").createInstance());
+		        			if(Level.getResource("Gold") >= 30) {
+		        				ObjectGrid.towers.add(TiledMapGame.towerTypeLibrary.get("Fireball").createInstance());
+		        				notBroke = true;
+		        			}
 		        		default:
 		        			break;
+		        	}
+		        	if(notBroke){
+		        		Level.gainResource("Gold", -ObjectGrid.towers.get(ObjectGrid.towers.size()-1).getPrice());
+		        		Gdx.input.setInputProcessor(i);
 		        	}
 	        	}
 	        	else if(usingUnit) {
@@ -877,11 +910,13 @@ public class GameScreen implements Screen, InputProcessor {
 		        		default:
 		        			break;
 		        	}
+		        	
+		        	Level.gainResource("Gold", -ObjectGrid.units.get(ObjectGrid.units.size()-1).getPrice());
 	        	}
 	        	
 	        }
 	    });
-	    confirmSelection.setPosition(10, 5+256);
+	    confirmSelection.setPosition(10, 5+384);
 	    confirmSelection.setVisible(false);
 	}
 	
@@ -1017,6 +1052,13 @@ public class GameScreen implements Screen, InputProcessor {
 		return false;
 	}
 	
+	private void updateUorS(Entity e) {
+		
+		upgrade.setText("Uprade (" + (int)(((Tower)e).getPrice()*1.5) + "G)");
+		sell.setText("Sell (" + ((Tower)e).getPrice()/2 + "G)");
+		
+	}
+	
 	private void createUpgradeOrSell(){
 		
 		uSMenu = new MenuNinePatch();
@@ -1032,7 +1074,7 @@ public class GameScreen implements Screen, InputProcessor {
 		uSStyle.pressedOffsetX = 2;
 	    uSStyle.pressedOffsetY = -2;
 	    
-		upgrade = new TextButton("Upgrade (PRICE)", uSStyle);
+		upgrade = new TextButton("Upgrade (Price)", uSStyle);
 		upgrade.addListener(new InputListener() {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
@@ -1046,7 +1088,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        }
 	    });
 		
-		sell = new TextButton("Sell (PRICE)", uSStyle);
+		sell = new TextButton("Sell (Price)", uSStyle);
 		sell.addListener(new InputListener() {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
@@ -1069,7 +1111,13 @@ public class GameScreen implements Screen, InputProcessor {
 		
 	}
 	
+//	private String getInfo(Tower t) {
+//		return Integer.toString(t.getPrice());
+//	}
+	
 	private void drawUpgradeOrSell(Tower tower){
+		
+		updateUorS(tower);
 		
 		upgrade.setPosition(tower.getX()+40, tower.getY()+70);
 		sell.setPosition(tower.getX()+40, tower.getY()+45);
