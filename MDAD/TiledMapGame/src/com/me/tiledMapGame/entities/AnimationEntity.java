@@ -54,8 +54,8 @@ public class AnimationEntity extends Entity {
 		// Set a random rotation
 		a.rotate(MathUtils.random(360));
 		
-		System.out.println("[AnimationEntity] Explosion X:" + x + " Y:" + y + " R:" + w);
-		System.out.println("[AnimationEntity]  Offset-- X:" + trX + " Y:" + trW + " R:" + scale*w);
+//		System.out.println("[AnimationEntity] Explosion X:" + x + " Y:" + y + " R:" + w);
+//		System.out.println("[AnimationEntity]  Offset-- X:" + trX + " Y:" + trW + " R:" + scale*w);
 		return a;
 	}
 

@@ -191,9 +191,13 @@ public class GameScreen implements Screen, InputProcessor {
 			sr.rect(r.x, r.y, r.width/4, r.height/3); //TODO set bounds on units! Important for collision
 		}
 		sr.setColor(Color.RED);
-		for (Projectile p : ObjectGrid.projectileList()) {
-			r = p.getBoundingRectangle();
-			sr.rect(r.x, r.y, r.width, r.height);
+//		for (Projectile p : ObjectGrid.projectileList()) {
+//			r = p.getBoundingRectangle();
+//			sr.rect(r.x, r.y, r.width, r.height);
+//		}
+		for (Enemy e : ObjectGrid.enemyList()) {
+			r = e.getBoundingRectangle();
+			sr.rect(e.getMidpointX(), e.getMidpointY(), r.width, r.height);
 		}
 		sr.setColor(Color.CYAN);
 		for (AnimationEntity ae : ObjectGrid.animations) {
@@ -241,17 +245,11 @@ public class GameScreen implements Screen, InputProcessor {
 
 		}
 		
-		// Draw towers
 		for (Structure s: ObjectGrid.structureList()) { // FOR TESTING
 			s.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
 			renderer.getSpriteBatch().setColor(1,1,1,s.getAlpha()); // FOR TESTING
 			
 			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY()); // FOR TESTING
-		}
-		
-		for (Structure s : ObjectGrid.structureList()) {
-			s.update(Gdx.graphics.getDeltaTime());
-			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY());
 		}
 		
 		for (Unit u : ObjectGrid.unitList()) {
@@ -1105,7 +1103,7 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		screenY = TiledMapGame.screenHeight - screenY;
-//		System.out.println("[GameScreen] Clicked " + screenX + " " + screenY);
+		System.out.println("[GameScreen] Clicked " + screenX + " " + screenY);
 		
 		
 		// Move
@@ -1144,8 +1142,6 @@ public class GameScreen implements Screen, InputProcessor {
 			
 			
 		}
-		// Following Aaron's idea
-		level.generateEnemy("Skeleton"); // TODO take this out for final design
 		return false;
 	}
 	
