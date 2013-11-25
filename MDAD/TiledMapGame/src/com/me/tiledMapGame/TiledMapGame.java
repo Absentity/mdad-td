@@ -18,6 +18,7 @@ import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
+import com.me.tiledMapGame.screens.LoseScreen;
 import com.me.tiledMapGame.screens.MainMenuScreen;
 import com.me.tiledMapGame.screens.Splash;
 
@@ -42,6 +43,7 @@ public class TiledMapGame extends Game {
 	public static ObjectMap<String, Texture> textureLibrary;
 	public static ObjectMap<String, Music> musicLibrary;
 	public static ObjectMap<String, Sound> soundLibrary;
+	public LoseScreen lose;
 	
 	public ClickListener listener = new ClickListener();
 	
@@ -157,6 +159,8 @@ public class TiledMapGame extends Game {
 	@Override
 	public void render() {		
 		super.render();
+		if(M == null)
+			M = new MainMenuScreen();
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
 			M.dispose();
@@ -179,53 +183,62 @@ public class TiledMapGame extends Game {
 			musicLibrary.get("worldOne").play();
 			this.setScreen(P);
 		}
+		if(lose != null && lose.listener.isPressed()){
+			lose.dispose();
+			M = new MainMenuScreen();
+			this.setScreen(M);
+		}
 		if(L != null && L.goBackListener.isPressed()){
 			L.dispose();
 			M = new MainMenuScreen();
 			this.setScreen(M);
 		}
-	
-	if(L != null && L.level1Listener.isPressed()){
-		Level Levels;
-		L.dispose();
-		Levels= new Level("MDADMap1v1");
-		P = new GameScreen(Levels);
-		this.setScreen(P);
-		
+		if(P != null && P.lost){
+			P.dispose();
+			lose = new LoseScreen();
+			this.setScreen(lose);
+		}
+		if(L != null && L.level1Listener.isPressed()){
+			Level Levels;
+			L.dispose();
+			Levels= new Level("MDADMap1v1");
+			P = new GameScreen(Levels);
+			this.setScreen(P);
+			
+		}
+		if(L != null && L.level2Listener.isPressed()){
+			Level Levels;
+			L.dispose();
+			Levels= new Level("MDADMap1v2");
+			P = new GameScreen(Levels);
+			this.setScreen(P);
+			
+		}
+		if(L != null && L.level3Listener.isPressed()){
+			Level Levels;
+			L.dispose();
+			Levels= new Level("MDADMap1v3");
+			P = new GameScreen(Levels);
+			this.setScreen(P);
+			
+		}
+		if(L != null && L.level4Listener.isPressed()){
+			Level Levels;
+			L.dispose();
+			Levels= new Level("MDADMap1v4");
+			P = new GameScreen(Levels);
+			this.setScreen(P);
+			
+		}
+		if(L != null && L.level5Listener.isPressed()){
+			Level Levels;
+			L.dispose();
+			Levels= new Level("MDADMap1v5");
+			P = new GameScreen(Levels);
+			this.setScreen(P);
+			
+		}
 	}
-	if(L != null && L.level2Listener.isPressed()){
-		Level Levels;
-		L.dispose();
-		Levels= new Level("MDADMap1v2");
-		P = new GameScreen(Levels);
-		this.setScreen(P);
-		
-	}
-	if(L != null && L.level3Listener.isPressed()){
-		Level Levels;
-		L.dispose();
-		Levels= new Level("MDADMap1v3");
-		P = new GameScreen(Levels);
-		this.setScreen(P);
-		
-	}
-	if(L != null && L.level4Listener.isPressed()){
-		Level Levels;
-		L.dispose();
-		Levels= new Level("MDADMap1v4");
-		P = new GameScreen(Levels);
-		this.setScreen(P);
-		
-	}
-	if(L != null && L.level5Listener.isPressed()){
-		Level Levels;
-		L.dispose();
-		Levels= new Level("MDADMap1v5");
-		P = new GameScreen(Levels);
-		this.setScreen(P);
-		
-	}
-}
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);

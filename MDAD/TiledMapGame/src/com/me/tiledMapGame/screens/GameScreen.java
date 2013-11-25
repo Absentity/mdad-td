@@ -43,7 +43,7 @@ import com.me.tiledMapGame.pathing.PathFinder;
 public class GameScreen implements Screen, InputProcessor {
 	
 	protected Level level;
-	
+	public boolean lost = false;
 	public static OrthographicCamera camera;
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
@@ -136,6 +136,7 @@ public class GameScreen implements Screen, InputProcessor {
 		ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		ObjectGrid.towerList().get(0).setPlaced(true);
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
+		stage = new Stage();
 	}
 	
 	/**
@@ -414,8 +415,9 @@ public class GameScreen implements Screen, InputProcessor {
 		ObjectGrid.disposeList.clear();
 		
 		/*Check if the Player Lost*/
-		if(ObjectGrid.towers.get(0).getTowerType() != 0){
+		if(ObjectGrid.towers.isEmpty() || ObjectGrid.towers.get(0).getTowerType() != 0){
 			System.out.println("You are not doing so good!");
+			this.lost = true;
 		}
 	}
 
@@ -445,7 +447,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		i = new Input(level);
 		
-		stage = new Stage();
+		//stage = new Stage();
 		
 		im = new InputMultiplexer(stage, this);
 //		Gdx.input.setInputProcessor(this);
@@ -479,7 +481,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		dispose();
+		//dispose();
 	}
 
 	@Override
@@ -497,14 +499,16 @@ public class GameScreen implements Screen, InputProcessor {
 		//TEST SAVE
 		LevelSaver save = new LevelSaver("testSaveFile.txt");
 		save.saveLevel(level);
-		renderer.getSpriteBatch().dispose();
+		//renderer.getSpriteBatch().dispose();
 //		renderer.dispose(); Leave out until there is another screen to switch to
 		for(Tower t: ObjectGrid.towers){
 			t.getTexture().dispose();
 			t.dispose();
 		}
+		im.removeProcessor(stage);
 		sr.dispose();
 		stage.getSpriteBatch().dispose();
+		stage.dispose();
 		skin.dispose();
 		font.dispose();
 		
