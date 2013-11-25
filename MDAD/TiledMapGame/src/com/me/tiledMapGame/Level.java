@@ -73,7 +73,7 @@ public class Level {
 		// TODO start off with a set amount of money
 		
 		try {
-			Scanner sc = new Scanner(new File("levelOneInfo.txt"));
+			Scanner sc = new Scanner(new File("blankLevel.txt"));
 			
 			totalWaves = sc.nextInt();
 			enemyTypes = new int[totalWaves];
@@ -93,12 +93,14 @@ public class Level {
 		
 		resources = new ObjectIntMap<String>();
 		setResource("Gold", 9999);
-	
+		
+		
+		// Reggie: all y's that were 450 were changed to 400 to keep tower of life on the screen
 		
 		 if(name.contains("2")){
 				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 				int x= ((int)(475/32));
-				int y=((int)(450/32));
+				int y=((int)(400/32));
 				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
 				leveln=2;
 		}
@@ -112,14 +114,14 @@ public class Level {
 		else if(name.contains("4")){
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 			int x= ((int)(2));
-			int y=((int)(450/32));
+			int y=((int)(400/32));
 			ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
 			leveln=4;
 		}
 		else if(name.contains("5")){
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 			int x= ((int)(475/32));
-			int y=((int)(450/32));
+			int y=((int)(400/32));
 			ObjectGrid.towerList().get(0).setPosition(x*32,y*32);
 			leveln=5;
 		}
@@ -127,7 +129,7 @@ public class Level {
 		else if(name.contains("1")){
 				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 				int x= ((int)(475/32));
-				int y=((int)(450/32));
+				int y=((int)(400/32));
 				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
 				leveln=1;
 		}

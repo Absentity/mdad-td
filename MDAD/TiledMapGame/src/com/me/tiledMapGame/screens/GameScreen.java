@@ -133,7 +133,7 @@ public class GameScreen implements Screen, InputProcessor {
 		int hold=level.leveln;
 		if(hold==1){
 			x=((int)(475/32));
-			y=((int)(450/32));
+			y=((int)(400/32));
 		}
 		if(hold==2){
 			x=((int)(475/32));
