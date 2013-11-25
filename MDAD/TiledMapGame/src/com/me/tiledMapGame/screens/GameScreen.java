@@ -95,7 +95,7 @@ public class GameScreen implements Screen, InputProcessor {
 	TextButton upgrade;
 	TextButton sell;
 	MenuNinePatch box;
-
+	
 	Button displayButton;
 	boolean showHealth = false;
 	BitmapFont font;
@@ -297,7 +297,7 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 			
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-			towerNinePatch.draw(stage.getSpriteBatch(), 0, 3*Gdx.graphics.getHeight()/4, 120, Gdx.graphics.getHeight()/4); 
+			towerNinePatch.draw(stage.getSpriteBatch(), 0, (3*Gdx.graphics.getHeight()/4)-20, 120, (Gdx.graphics.getHeight()/4)+20); 
 			
 			stage.getSpriteBatch().end();
 			
@@ -518,7 +518,7 @@ public class GameScreen implements Screen, InputProcessor {
 			t.dispose();
 		}
 		for(Enemy E: ObjectGrid.enemyList()){
-			//E.getTexture().dispose();
+//			E.getTexture().dispose();
 			E.dispose();
 		}
 		for(AnimationEntity A: ObjectGrid.animations){
@@ -913,7 +913,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        		
 	        }
 	    });
-	    closeMenu.setPosition(75, 5+384); // 3/4 of 512 + offset of 5
+	    closeMenu.setPosition(75, 384-15); // 3/4 of 512
 	    closeMenu.setVisible(false);
 	    
 	    confirmSelection = new TextButton("Confirm", style);
@@ -962,7 +962,7 @@ public class GameScreen implements Screen, InputProcessor {
 	        	
 	        }
 	    });
-	    confirmSelection.setPosition(10, 5+384);
+	    confirmSelection.setPosition(10, 384-15);
 	    confirmSelection.setVisible(false);
 	}
 	
@@ -981,7 +981,7 @@ public class GameScreen implements Screen, InputProcessor {
 		towerTable.add(fireballButton).spaceBottom(5);
 		towerTable.row();
 		
-		 towerTable.add(farmButton).spaceRight(24).spaceBottom(5);
+		 towerTable.add(farmButton).spaceRight(24).spaceBottom(5).spaceTop(5);
 //		 towerTable.add(NEXT NEW TOWER).spaceBottom(5);
 		 towerTable.row();
 		
@@ -1143,6 +1143,15 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        		System.out.println("Bye. D:");
+	        		for(Tower t: ObjectGrid.towerList()) {
+	        			if(t.isSelected()) {
+	        				ObjectGrid.towerList().remove(t);
+	        				upgrade.setVisible(false);
+	        				sell.setVisible(false);
+	        				Level.gainResource("Gold", t.getPrice()/2);
+	        				break;
+	        			}
+	        		}
 	        }
 	    });
 		

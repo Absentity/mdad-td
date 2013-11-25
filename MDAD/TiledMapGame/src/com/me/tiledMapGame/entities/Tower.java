@@ -63,7 +63,7 @@ public class Tower extends Entity {
 				Enemy enemyInRange = Targeting.detectFirstEnemyFrom(this);
 				
 				// Fire!!
-				if (enemyInRange != null) {
+				if (enemyInRange != null && isPlaced()) {
 					createProjectiles(enemyInRange);
 					cooldown = tower.fireRate;
 				}
