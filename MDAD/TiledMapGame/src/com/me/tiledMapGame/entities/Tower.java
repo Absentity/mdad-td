@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package com.me.tiledMapGame.entities;
@@ -26,44 +26,21 @@ public class Tower extends Entity {
 	// DEFAULT
 	public int towerType = 1;
 	
-	private boolean moved = false;
-	
 	private TowerType tower;
 	private float cooldown;
-	private boolean placed = false;
-	private float alpha = .65f; // For drawing towers transparent before being placed. (.65 for transparent, 1 for opaque)
-	private boolean selected = false;
 	
-	private int price;
 	private Circle range;
 	
 	public Tower(TowerType tower) {
-		super(tower.texture, tower.health);
+		super(tower.name, tower.texture, tower.health, tower.price);
 		this.tower = tower;
 		towerType = tower.towerType;
-		
-		switch(towerType){
-			case CRESCENT:
-				price = 70;
-				break;
-			case BOMB:
-				price = 80;
-				break;
-			case AMPLIFIER:
-				price = 60;
-				break;
-			case FIREBALL:
-				price = 30;
-				break;
-			default:
-				break;
-		}
 		
 		/* Since a tower is created before it's set in the ground,
 		   we have to pretend it has no range at first and edit it
 		   later. */
 		range = new Circle(-1000, -1000, tower.sightRange);
-		if(tower.towerType == 0){
+		if (tower.towerType == 0) {
 			alpha = 1;
 		}
 		cooldown = tower.fireRate;
@@ -114,54 +91,25 @@ public class Tower extends Entity {
 		ObjectGrid.projectiles.add(p);
 	}
 	
-	public boolean isPlaced(){
-		return placed;
-	}
-	
-	public void setPlaced(boolean placed){
-		this.placed = placed;
-		if (placed) {
-			range = new Circle(getX(), getY(), tower.sightRange);
-		}
-	}
-	
-	public float getAlpha(){
-		return alpha;
-	}
-	
-	public void setAlpha(float alpha){
-		this.alpha = alpha;
-	}
-	
-	public boolean getMoved(){
-		return moved;
-	}
-	
-	public void setMoved(boolean moved){
-		this.moved = moved;
-	}
-	
 	public int getTowerType(){
 		return this.tower.towerType;
 	}
 
 	/**
-	 * 
 	 * @return
 	 */
 	public float getRange() {
 		return range.radius;
 	}
-
-	public boolean isSelected() {
-		return this.selected;
-	}
-	
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
 	
 	public int getPrice() {
 		return this.price;
+	}
+	
+	public void setPlaced(boolean placed) {
+		super.setPlaced(placed);
+		if (placed) {
+			range = new Circle(getX(), getY(), tower.sightRange);
+		}
 	}
 }

@@ -11,7 +11,7 @@ public class AnimationEntity extends Entity {
 
 	public AnimationEntity(Texture texture) {
 		// Setting health to 1 instead of 0 in case rendering would stop for sub-1 health
-		super(texture, 1);
+		super("", texture, 1, 0);
 		animation = createAnimation(texture, 5, 4, 20);
 	}
 	

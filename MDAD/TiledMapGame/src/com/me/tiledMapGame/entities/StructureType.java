@@ -4,11 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class StructureType implements EntityDefinition {
 	
-	Texture texture;
-	int health;
-	float earnRate;
-	int earnAmount;
-	String resourceType;
+	final String name;
+	final Texture texture;
+	final int health;
+	final int price;
+	final float earnRate;
+	final int earnAmount;
+	final String resourceType;
 	
 	/**
 	 * Structures have an earn cycle. Each cycle lasts for a set time and grants
@@ -18,9 +20,17 @@ public class StructureType implements EntityDefinition {
 	 * @param earnRate   Seconds-long for a cycle
 	 * @param earnAmount Integer value. Narrow minded?
 	 */
-	public StructureType(Texture texture, int health, float earnRate, int earnAmount, String resourceType) {
+	public StructureType(final String name,
+			final Texture texture,
+			final int health,
+			final int price,
+			final float earnRate,
+			final int earnAmount,
+			final String resourceType) {
+		this.name = name;
 		this.texture = texture;
 		this.health = health;
+		this.price = price;
 		this.earnRate = earnRate;
 		this.earnAmount = earnAmount;
 		this.resourceType = resourceType;

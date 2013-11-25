@@ -20,13 +20,9 @@ public class Unit extends MobileEntity {
 	private float waitTime;
 	
 	public Unit(UnitType unit) {
-		super(unit.texture, unit.health, unit.maxSpeed);
+		super(unit.name, unit.texture, unit.health, unit.price, unit.maxSpeed);
 		this.unit = unit;
 		this.setBounds(getX(), getY(), 16, 16);
-		
-		if (this.unit.getId() == 1) {
-			price = 10;
-		}
 		
 		range = new Circle(this.getMidpointX(), this.getMidpointY(), unit.sightRange);
 		
@@ -37,8 +33,8 @@ public class Unit extends MobileEntity {
 		super.update(delta);
 		
 		// Handle movement first
-		float toMoveX = getTile().dir.x * maxVelocity;
-		float toMoveY = getTile().dir.y * maxVelocity;
+		float toMoveX = getTile().dir.x * maxSpeed;
+		float toMoveY = getTile().dir.y * maxSpeed;
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 		

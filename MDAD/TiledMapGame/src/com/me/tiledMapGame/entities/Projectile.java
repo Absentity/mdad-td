@@ -58,7 +58,7 @@ public class Projectile extends MobileEntity {
 	 * @param projection  Initial velocity
 	 */
 	public Projectile(ProjectileType projectile, Vector2 projection, float maxDistance, int damage) {
-		super(projectile.texture, 1, projectile.maxSpeed);
+		super(projectile.name, projectile.texture, projectile.health, projectile.price, projectile.maxSpeed);
 		this.projectile = projectile;
 		this.projection = projection;
 		this.maxDistance = maxDistance;

@@ -7,20 +7,28 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class EnemyType implements EntityDefinition {
 	
-	private static final int DEFAULT_ATTACK_STRENGTH = 10;
-	private static final int DEFAULT_GOLD_REWARD = 10;
-	private static final int DEFAULT_XP_REWARD = 10;
+	final String name;
+	final Texture texture;
+	final int health;
+	final int price;
+	final int attackStrength;
+	final float attackRate;
+	final int goldReward;
+	final int xpReward;
+	final float maxVelocity;
 	
-	Texture texture;
-	int health;
-	int attackStrength;
-	float attackRate;
-	int goldReward, xpReward;
-	float maxVelocity;
-	
-	public EnemyType(Texture texture, int health, float maxVelocity, int attackStrength, float attackRate, int goldReward, int xpReward) {
+	public EnemyType(final String name,
+			final Texture texture,
+			final int health,
+			final float maxVelocity,
+			final int attackStrength,
+			final float attackRate,
+			final int goldReward,
+			final int xpReward) {
+		this.name = name;
 		this.texture = texture;
 		this.health = health;
+		this.price = 0;
 		this.maxVelocity = maxVelocity;
 		this.attackStrength = attackStrength;
 		this.attackRate = attackRate;

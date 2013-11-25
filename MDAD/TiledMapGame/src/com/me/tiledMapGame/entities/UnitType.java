@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class UnitType implements EntityDefinition {
 	
+	final String name;
 	final Texture texture;
 	final ProjectileType projectileType;
 	final float maxSpeed;
@@ -11,18 +12,23 @@ public class UnitType implements EntityDefinition {
 	final float attackRate;
 	final int attackStrength;
 	final int health;
+	final int price;
 	final int id;
 	
-	public UnitType(final Texture texture,
+	public UnitType(final String name,
+			final Texture texture,
 			final int health,
+			final int price,
 			final float maxSpeed,
 			final float sightRange,
 			final ProjectileType projectileType,
 			final float attackRate,
 			final int attackStrength,
 			final int unit) {
+		this.name = name;
 		this.texture = texture;
 		this.health = health;
+		this.price = price;
 		this.maxSpeed = maxSpeed;
 		this.sightRange = sightRange;
 		this.projectileType = projectileType;

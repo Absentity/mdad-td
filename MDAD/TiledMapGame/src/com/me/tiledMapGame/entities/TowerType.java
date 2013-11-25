@@ -7,19 +7,28 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class TowerType implements EntityDefinition {
 	
-	private static final float DEFAULT_COOLDOWN = 0.6f;
-	private static final int DEFAULT_DAMAGE = 50;
+	final String name;
+	final Texture texture;
+	final int towerType;
 	
-	Texture texture;
-	int towerType;
+	final ProjectileType projectileType;
+	final float sightRange;
+	final float fireRate;
+	final int projectileDamage;	
+	final int health;
 	
-	ProjectileType projectileType;
-	float sightRange, fireRate;
-	int projectileDamage;	
-	int health;
+	final int price;
 	
-	public TowerType(Texture texture, int health, float sightRange, ProjectileType projectileType,
-			float fireRate, int projectileDamage, int tower) {
+	public TowerType(final String name,
+			final Texture texture,
+			final int health,
+			final int price,
+			final float sightRange,
+			final ProjectileType projectileType,
+			final float fireRate,
+			final int projectileDamage,
+			final int tower) {
+		this.name = name;
 		this.texture = texture;
 		this.health = health;
 		this.sightRange = sightRange;
@@ -27,6 +36,7 @@ public class TowerType implements EntityDefinition {
 		this.towerType = tower;
 		this.fireRate = fireRate;
 		this.projectileDamage = projectileDamage;
+		this.price = price;
 	}
 	
 	public Tower createInstance() {

@@ -15,13 +15,13 @@ public class Enemy extends MobileEntity {
 	public boolean flying;
 	
 	public Enemy(EnemyType enemy) {
-		super(enemy.texture, enemy.health, enemy.maxVelocity);
+		super(enemy.name, enemy.texture, enemy.health, enemy.price, enemy.maxVelocity);
 		this.enemy = enemy;
 		flying = false;
 	}
 	
 	public Enemy(EnemyType enemy, boolean flying) {
-		super(enemy.texture, enemy.health, enemy.maxVelocity);
+		super(enemy.name, enemy.texture, enemy.health, enemy.price, enemy.maxVelocity);
 		this.enemy = enemy;
 		this.flying = flying;
 	}
@@ -51,11 +51,11 @@ public class Enemy extends MobileEntity {
 		float toMoveY;
 		if(this.flying){
 			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getX(), getY())).limit(1);
-			toMoveX = dest.x * maxVelocity;
-			toMoveY = dest.y * maxVelocity;
+			toMoveX = dest.x * maxSpeed;
+			toMoveY = dest.y * maxSpeed;
 		} else {
-			toMoveX = getTile().dir.x * maxVelocity;
-			toMoveY = getTile().dir.y * maxVelocity;
+			toMoveX = getTile().dir.x * maxSpeed;
+			toMoveY = getTile().dir.y * maxSpeed;
 		}
 		
 		setPosition(getX() + toMoveX, getY() + toMoveY);

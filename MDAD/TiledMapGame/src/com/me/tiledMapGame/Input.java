@@ -35,29 +35,15 @@ public class Input implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
-		if((int) (((int)(screenX/32)) * 32) > TiledMapGame.screenWidth) {
-			x = TiledMapGame.screenWidth-32;
-		} else if((int) (((int)(screenX/32)) * 32) < 0) {
-			x = 0;
-		} else {
-			x = (int) (((int)(screenX/32)) * 32);
-		}
-		
-		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
-			y = TiledMapGame.screenHeight-32;
-		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
-			y = 0;
-		} else {
-			y = (int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32);
-		}
+
+		x = normX(screenX);
+		y = normY(screenY);
 
 		MainMenuScreen.done = true; // FOR TESTING
 		
-		List<Tower> towers = ObjectGrid.towers;
-		towers.get(towers.size()-1).setPosition(x, y); // FOR TESTING
-		towers.get(towers.size()-1).setAlpha(.65f); // FOR TESTING
-		towers.get(towers.size()-1).setMoved(true);
+		level.lastBuilt.setPosition(x, y);
+		level.lastBuilt.setAlpha(.65f);
+		level.lastBuilt.setMoved(true);
 		
 		return true;
 	}
@@ -65,14 +51,12 @@ public class Input implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		
-		List<Tower> towers = ObjectGrid.towers;
-		
-		if(MainMenuScreen.done){ // FOR TESTING
+		if (MainMenuScreen.done) { // FOR TESTING
 			//make sure that the tower can be placed
-			if(level.getNode(screenX/32, 15-(screenY)/32).is_buildable){
-				if(ObjectGrid.towerList().size()-1 >= 0) {
-					towers.get(towers.size()-1).setAlpha(1);
-					towers.get(towers.size()-1).setPlaced(true);
+			if (level.getNode(screenX/32, 15-(screenY)/32).is_buildable) {
+				if (level.lastBuilt != null) {
+					level.lastBuilt.setAlpha(1);
+					level.lastBuilt.setPlaced(true);
 					//mark the spot as unbuildable for now TODO
 					level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
 					System.out.println(screenX/32 + " " + (16-(screenY/32)));
@@ -86,10 +70,9 @@ public class Input implements InputProcessor {
 //				}
 				
 			}
-			else{
-				if(ObjectGrid.towerList().size()-1 >= 0) {
-					towers.get(towers.size()-1).dispose();
-					towers.remove(towers.size()-1);
+			else {
+				if (level.lastBuilt != null) {
+					level.lastBuilt.dispose();
 					System.out.println("Can't build here!");//testing
 				}
 			}
@@ -100,37 +83,18 @@ public class Input implements InputProcessor {
 			Gdx.input.setInputProcessor(GameScreen.im);
 		}
 		
-		
-		
 		return true;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 
-		if((int) (((int)(screenX/32)) * 32) > TiledMapGame.screenWidth) {
-			x = TiledMapGame.screenWidth-32;
-		} else if((int) (((int)(screenX/32)) * 32) < 0) {
-			x = 0;
-		} else {
-			x = (int) (((int)(screenX/32)) * 32);
+		x = normX(screenX);
+		y = normY(screenY);
+		
+		if (MainMenuScreen.done && level.lastBuilt != null) {
+			level.lastBuilt.setPosition(x, y);
 		}
-		
-		if((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
-			y = TiledMapGame.screenHeight-32;
-		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
-			y = 0;
-		} else {
-			y = (int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32);
-		}
-		
-		
-		if(MainMenuScreen.done) {
-			if(ObjectGrid.towerList().size()-1 >= 0) {
-				ObjectGrid.towerList().get(ObjectGrid.towerList().size()-1).setPosition(x, y);
-			}
-		}
-		
 		
 		return true;
 	}
@@ -143,6 +107,26 @@ public class Input implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+	
+	private int normX(final int screenX) {
+		if ((int) (((int)(screenX/32)) * 32) > TiledMapGame.screenWidth) {
+			return TiledMapGame.screenWidth-32;
+		} else if((int) (((int)(screenX/32)) * 32) < 0) {
+			return 0;
+		} else {
+			return (int) (((int)(screenX/32)) * 32);
+		}
+	}
+	
+	private int normY(final int screenY) {
+		if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
+			return TiledMapGame.screenHeight-32;
+		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
+			return 0;
+		} else {
+			return (int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32);
+		}
 	}
 	
 	public int getX(){

@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.me.tiledMapGame.entities.Enemy;
+import com.me.tiledMapGame.entities.Entity;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
@@ -24,6 +25,7 @@ public class Level {
 	public int levelId = 1;			// For levelSaver
 	public int castleX = 10;
 	public int castleY = 10;
+	public Entity lastBuilt;
 	private TiledMap map;
 	private ObjectGrid objectGrid;
 	private int wave = 1;				// Indicates what wave of enemies is attacking
