@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
+import com.me.tiledMapGame.LevelSaver;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.Enemy;
@@ -341,7 +342,7 @@ public class GameScreen implements Screen, InputProcessor {
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-100, 110, 100);
 			}
-			unitNinePatch.draw(stage.getSpriteBatch(), 0, 3*Gdx.graphics.getHeight()/4, 120, Gdx.graphics.getHeight()/4);
+			unitNinePatch.draw(stage.getSpriteBatch(), 0, (3*Gdx.graphics.getHeight()/4)-20, 120, (Gdx.graphics.getHeight()/4)+20);
 			
 			stage.getSpriteBatch().end();
 			

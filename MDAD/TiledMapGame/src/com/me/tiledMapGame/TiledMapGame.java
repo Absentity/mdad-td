@@ -92,14 +92,35 @@ public class TiledMapGame extends Game {
 
 		Music titleSong = Gdx.audio.newMusic(Gdx.files.internal("sounds/towersLoop.mp3"));
 		titleSong.setLooping(true);
-		titleSong.setVolume(.8f);
+		titleSong.setVolume(.6f);
 		titleSong.play();
 		musicLibrary.put("titleSong", titleSong);
 		
 		Music worldOne = Gdx.audio.newMusic(Gdx.files.internal("sounds/World 1.mp3"));
 		worldOne.setLooping(true);
-		worldOne.setVolume(.8f);
+		worldOne.setVolume(.6f);
 		musicLibrary.put("worldOne", worldOne);
+		
+		Music worldTwo = Gdx.audio.newMusic(Gdx.files.internal("sounds/World 2(Temptation).mp3"));
+		worldOne.setLooping(true);
+		worldOne.setVolume(.6f);
+		musicLibrary.put("worldTwo", worldTwo);
+		
+		Music worldThree = Gdx.audio.newMusic(Gdx.files.internal("sounds/World 3(Air).mp3"));
+		worldOne.setLooping(true);
+		worldOne.setVolume(.6f);
+		musicLibrary.put("worldThree", worldThree);
+		
+		Music worldFour = Gdx.audio.newMusic(Gdx.files.internal("sounds/World 4(Uno).mp3"));
+		worldOne.setLooping(true);
+		worldOne.setVolume(.6f);
+		musicLibrary.put("worldFour", worldFour);
+		
+		Music worldFive = Gdx.audio.newMusic(Gdx.files.internal("sounds/World 5(Glitch Sessions).mp3"));
+		worldOne.setLooping(true);
+		worldOne.setVolume(.6f);
+		musicLibrary.put("worldFive", worldFive);
+		
 
 	}
 
@@ -170,8 +191,6 @@ public class TiledMapGame extends Game {
 			M.dispose();
 			L = new LevelSelectScreen();
 			this.setScreen(L);
-			musicLibrary.get("titleSong").stop();
-			musicLibrary.get("worldOne").play();
 			//P = new GameScreen(null);
 			//this.setScreen(P);
 		}
@@ -190,6 +209,7 @@ public class TiledMapGame extends Game {
 	if(lose != null && lose.listener.isPressed()){
 			lose.dispose();
 			M = new MainMenuScreen();
+			musicLibrary.get("titleSong").play();
 			this.setScreen(M);
 		}
 		if(L != null && L.goBackListener.isPressed()){
@@ -200,6 +220,12 @@ public class TiledMapGame extends Game {
 		if(P != null && P.lost){
 			System.out.print("You Have Lost");
 			P.lost=false;
+			musicLibrary.get("worldOne").stop();
+			musicLibrary.get("worldTwo").stop();
+			musicLibrary.get("worldThree").stop();
+			musicLibrary.get("worldFour").stop();
+			musicLibrary.get("worldFive").stop();
+//			musicLibrary.get("titleSong").play();
 			//P.dispose();
 			lose = new LoseScreen();
 			this.setScreen(lose);
@@ -212,6 +238,8 @@ public class TiledMapGame extends Game {
 			Level Levels;
 			L.dispose();
 			Levels= new Level("MDADMap1v1");
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldOne").play();
 			P = new GameScreen(Levels);
 			this.setScreen(P);
 			
@@ -220,6 +248,8 @@ public class TiledMapGame extends Game {
 			Level Levels;
 			L.dispose();
 			Levels= new Level("MDADMap1v2");
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldTwo").play();
 			P = new GameScreen(Levels);
 			this.setScreen(P);
 			
@@ -228,6 +258,8 @@ public class TiledMapGame extends Game {
 			Level Levels;
 			L.dispose();
 			Levels= new Level("MDADMap1v3");
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldThree").play();
 			P = new GameScreen(Levels);
 			this.setScreen(P);
 			
@@ -236,6 +268,8 @@ public class TiledMapGame extends Game {
 			Level Levels;
 			L.dispose();
 			Levels= new Level("MDADMap1v4");
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldFour").play();
 			P = new GameScreen(Levels);
 			this.setScreen(P);
 			
@@ -244,6 +278,8 @@ public class TiledMapGame extends Game {
 			Level Levels;
 			L.dispose();
 			Levels= new Level("MDADMap1v5");
+			musicLibrary.get("titleSong").stop();
+			musicLibrary.get("worldFive").play();
 			P = new GameScreen(Levels);
 			this.setScreen(P);
 			
