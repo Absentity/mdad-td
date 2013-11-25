@@ -40,14 +40,15 @@ import com.me.tiledMapGame.pathing.PathFinder;
 
 public class GameScreen implements Screen, InputProcessor {
 	
-	protected Level level;
+	public Level level;
 	public boolean lost = false;
 	public static OrthographicCamera camera;
 	public static boolean selectionConfirmed = false;
 	public static boolean thinking = false;
 	public static boolean openTowerMenu = false;
 	public static boolean openUnitMenu = false;
-	
+	public int x;
+	public int y;
 	private String entityChoice;
 	private int unitChoice = 1;
 	
@@ -123,7 +124,29 @@ public class GameScreen implements Screen, InputProcessor {
 	 * @param level
 	 */
 	public GameScreen(Level l) {
+		
 		this.level = l;
+		int hold=level.leveln;
+		if(hold==1){
+			x=((int)(475/32));
+			y=((int)(450/32));
+		}
+		if(hold==2){
+			x=((int)(475/32));
+			y=((int)(450/32));
+		}
+		if(hold==3){
+			x=((int)(450/32));
+			y=((int)(150/32));
+		}
+		if(hold==4){
+			x=((int)(1));
+			y=((int)(450/32));
+		}
+		if(hold==5){
+			x=((int)(475/32));
+			y=((int)(450/32));
+		}
 		if(level == null){
 			this.level = new Level("MDADMap1v1");
 			
@@ -131,9 +154,8 @@ public class GameScreen implements Screen, InputProcessor {
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
-		ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
-		ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
-		ObjectGrid.towerList().get(0).setPlaced(true);
+		
+		
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 		stage = new Stage();
 	}
@@ -337,7 +359,14 @@ public class GameScreen implements Screen, InputProcessor {
 		// Timer Stuff
 		
 			peaceTimer.setVisible(false);
-			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),10, 10);
+			
+			
+			
+			
+			
+			
+			
+			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),x, y);
 			
 		// Spawn enemies based on the text file(it is read in Level.java)
 		if(wave <= level.getTotalWaves()){
@@ -509,8 +538,8 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		//TEST SAVE
-	    //LevelSaver save = new LevelSaver("testSaveFile.txt");
-		//save.saveLevel(level);
+	    LevelSaver save = new LevelSaver("testSaveFile.txt");
+		save.saveLevel(level);
 		//renderer.getSpriteBatch().dispose();
 		//renderer.dispose(); Leave out until there is another screen to switch to
 		for(Tower t: ObjectGrid.towers){
@@ -1195,4 +1224,6 @@ public class GameScreen implements Screen, InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
+
+
 }

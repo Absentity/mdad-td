@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.me.tiledMapGame.entities.Enemy;
 import com.me.tiledMapGame.entities.Entity;
+import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.pathing.Node;
 import com.me.tiledMapGame.pathing.ObjectGrid;
 
@@ -33,7 +34,7 @@ public class Level {
 	private float timeBetweenWaves, timeBetweenSpawns;
 	private boolean won;
 	int enemyTypes[];
-	
+	public int leveln;
 	private static ObjectIntMap<String> resources;
 	
 	Vector2 spawnPoint = new Vector2();
@@ -92,6 +93,45 @@ public class Level {
 		
 		resources = new ObjectIntMap<String>();
 		setResource("Gold", 9999);
+	
+		
+		 if(name.contains("2")){
+				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+				int x= ((int)(475/32));
+				int y=((int)(450/32));
+				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+				leveln=2;
+		}
+		else if(name.contains("3")){
+				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+				int x= ((int)(450/32));
+				int y=((int)(150/32));
+				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+				leveln=3;
+		}
+		else if(name.contains("4")){
+			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+			int x= ((int)(2));
+			int y=((int)(450/32));
+			ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+			leveln=4;
+		}
+		else if(name.contains("5")){
+			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+			int x= ((int)(475/32));
+			int y=((int)(450/32));
+			ObjectGrid.towerList().get(0).setPosition(x*32,y*32);
+			leveln=5;
+		}
+
+		else if(name.contains("1")){
+				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
+				int x= ((int)(475/32));
+				int y=((int)(450/32));
+				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+				leveln=1;
+		}
+	
 	}
 	
 	/**
@@ -220,4 +260,23 @@ public class Level {
 	public void setWon(){
 		won = true;
 	}
+
+public int normX(final int screenX) {
+	if ((int) (((int)(screenX/32))) > TiledMapGame.screenWidth) {
+		return TiledMapGame.screenWidth-32;
+	} else if((int) (((int)(screenX/32))*32) < 0) {
+		return 0;
+	} else {
+		return (int) (((int)(screenX/32)) * 32);
+	}
+}public int normY(final int screenY) {
+	if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
+		return TiledMapGame.screenHeight-32;
+	} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
+		return 0;
+	} else {
+		return (int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32);
+	}
+}
+
 }

@@ -12,8 +12,10 @@ import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.EnemyType;
 import com.me.tiledMapGame.entities.ProjectileType;
 import com.me.tiledMapGame.entities.StructureType;
+import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.UnitType;
+import com.me.tiledMapGame.pathing.ObjectGrid;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.LoseScreen;
@@ -148,7 +150,11 @@ public class TiledMapGame extends Game {
 
 	@Override
 	public void dispose() {
+		
 		super.dispose();
+		//LevelSaver save = new LevelSaver("testSaveFile.txt");
+		
+		//save.saveLevel(GameScreen.);
 	}
 
 	/**

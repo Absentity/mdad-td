@@ -57,6 +57,11 @@
     <property name="blocked" value=""/>
    </properties>
   </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="26" name="spawnPoint" tilewidth="32" tileheight="32">
   <image source="../img/spawnPoint.png" width="32" height="32"/>
@@ -91,7 +96,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJylkcENgzAMRZ0buaAKqh7oueoaGY1RGMWjdJQ6rV2cEJsKDk8o8f+2fwgAGADA4laeU1WfPS/7P5pY+os+cWd+T4xtHUrN2C/7U9ZciEFpOv726725f6VJ5MVO9XAyIL/f742v1I/uXoLsUOXTetR6Oi/xOxs4B0i+seHXiFZnCco/ON6gZtY4b7j5Hwb/6s74m5pprSUrn8eTeBwke+8n4fl4hOx9A++bJ2M=
+   eJylkcENwjAMRZ1bc6lQizjAGbFGRmMURvEojIINNnXS2KD28FTF/t/OTxMAJgDwONXn0vTvkVf8b02u/dWc/GP/SMx9HWrPuR/7C2sOxGQ0g3zHpe7ev9EU8uJgZgQZUN7v+8ZHmke1J6O1Tj6rR9UzdH7kz26QHKD55o7folqbJRn/FHiT2dkSvOHqfzj8q9vj72rOS694+SJuxHUj7L3sRPbjFtj7AonJJm4=
   </data>
  </layer>
 </map>

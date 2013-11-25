@@ -61,7 +61,7 @@ public class Input implements InputProcessor {
 					level.getNode(screenX/32, 15-(screenY)/32).markTower();//getNode(screenX/32,16-(screenY/32)).markTower();
 					System.out.println(screenX/32 + " " + (16-(screenY/32)));
 					level.getObjectGrid().clearAllVisited();
-					PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(), 10, 10);
+					//PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(), 10, 10);
 				}
 				//Reset enemy grids
 				
@@ -109,7 +109,7 @@ public class Input implements InputProcessor {
 		return false;
 	}
 	
-	private int normX(final int screenX) {
+	public int normX(final int screenX) {
 		if ((int) (((int)(screenX/32)) * 32) > TiledMapGame.screenWidth) {
 			return TiledMapGame.screenWidth-32;
 		} else if((int) (((int)(screenX/32)) * 32) < 0) {
@@ -119,7 +119,7 @@ public class Input implements InputProcessor {
 		}
 	}
 	
-	private int normY(final int screenY) {
+	public int normY(final int screenY) {
 		if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32)+16 > TiledMapGame.screenHeight) {
 			return TiledMapGame.screenHeight-32;
 		} else if ((int)((TiledMapGame.screenHeight) - ((screenY/32) * 32) - 32) < 0) {
