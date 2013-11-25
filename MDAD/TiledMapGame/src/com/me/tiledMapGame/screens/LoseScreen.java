@@ -25,7 +25,7 @@ public class LoseScreen implements Screen {
     
     public LoseScreen() {
 		style.font = new BitmapFont();
-		style.overFontColor = new Color(0f,.1f,.1f,1f);
+		style.overFontColor = new Color(1f,0f,0f,.9f);
 		style.fontColor = new Color(1,1,1,1);
 		stage = new Stage();
 		backToMain = new TextButton("Continue", style); 
