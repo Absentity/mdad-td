@@ -28,7 +28,7 @@ public class TiledMapGame extends Game {
 	
 	public final static int screenWidth = 32*16;
 	public final static int screenHeight = 32*16;
-	
+
 	public static MainMenuScreen M;
 	public static Splash S;
 	public static LevelSelectScreen L;
@@ -181,7 +181,7 @@ public class TiledMapGame extends Game {
 			musicLibrary.get("worldOne").play();
 			this.setScreen(P);
 		}
-		if(lose != null && lose.listener.isPressed()){
+	if(lose != null && lose.listener.isPressed()){
 			lose.dispose();
 			M = new MainMenuScreen();
 			this.setScreen(M);
@@ -192,9 +192,15 @@ public class TiledMapGame extends Game {
 			this.setScreen(M);
 		}
 		if(P != null && P.lost){
-			P.dispose();
+			System.out.print("You Have Lost");
+			P.lost=false;
+			//P.dispose();
 			lose = new LoseScreen();
 			this.setScreen(lose);
+		//	M = new MainMenuScreen();
+			//this.setScreen(M);
+			
+			P.dispose();
 		}
 		if(L != null && L.level1Listener.isPressed()){
 			Level Levels;

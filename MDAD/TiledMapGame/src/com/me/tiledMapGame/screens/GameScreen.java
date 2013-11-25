@@ -509,20 +509,27 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		//TEST SAVE
-		LevelSaver save = new LevelSaver("testSaveFile.txt");
-		save.saveLevel(level);
+	    //LevelSaver save = new LevelSaver("testSaveFile.txt");
+		//save.saveLevel(level);
 		//renderer.getSpriteBatch().dispose();
-//		renderer.dispose(); Leave out until there is another screen to switch to
+		//renderer.dispose(); Leave out until there is another screen to switch to
 		for(Tower t: ObjectGrid.towers){
-			t.getTexture().dispose();
+		    t.getTexture().dispose();
 			t.dispose();
 		}
-		im.removeProcessor(stage);
-		sr.dispose();
-		stage.getSpriteBatch().dispose();
-		stage.dispose();
-		skin.dispose();
-		font.dispose();
+		for(Enemy E: ObjectGrid.enemyList()){
+			//E.getTexture().dispose();
+			E.dispose();
+		}
+		for(AnimationEntity A: ObjectGrid.animations){
+			A.dispose();
+		}
+		//im.removeProcessor(stage);
+		//sr.dispose();
+		//stage.getSpriteBatch().dispose();
+		//stage.dispose();
+		//skin.dispose();
+		//font.dispose();
 		
 	}
 	
