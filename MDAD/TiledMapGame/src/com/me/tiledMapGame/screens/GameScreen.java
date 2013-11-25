@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -26,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
-import com.me.tiledMapGame.LevelSaver;
 import com.me.tiledMapGame.TiledMapGame;
 import com.me.tiledMapGame.entities.AnimationEntity;
 import com.me.tiledMapGame.entities.Enemy;
@@ -58,6 +58,8 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	boolean usingTower = false;
 	boolean usingUnit = false;
+	
+	private boolean isPaused = false;
 
 	
 	ShapeRenderer sr = new ShapeRenderer(); // FOR TESTING
@@ -98,6 +100,7 @@ public class GameScreen implements Screen, InputProcessor {
 	MenuNinePatch box;
 	
 	Button displayButton;
+	private Button pauseButton; 
 	boolean showHealth = false;
 	BitmapFont font;
 	
@@ -594,6 +597,8 @@ public class GameScreen implements Screen, InputProcessor {
 		skin.add("down", new Sprite(new Texture("img/buttonDown.png")));
 		skin.add("uUp", new Sprite(new Texture("img/uButtonUp.png")));
 		skin.add("uDown", new Sprite(new Texture("img/uButtonDown.png")));
+		skin.add("pauseUp", new Sprite(new Texture("img/uButtonUp.png")));
+		skin.add("pauseDown", new Sprite(new Texture("img/uButtonDown.png")));
 		// Towers
 		skin.add("cresUp", new Sprite(new Texture("img/CresTow1.png")));
 		skin.add("cresDown", new Sprite(new Texture("img/CresTow8.png")));
@@ -670,10 +675,27 @@ public class GameScreen implements Screen, InputProcessor {
 	     	}
 	     
 	     	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-	     	
 	     	}
-
-	    	
+	    });
+	    
+	    TextButtonStyle pauseButtonStyle = new TextButtonStyle();
+	    pauseButtonStyle.up = skin.getDrawable("pauseUp");
+	    pauseButtonStyle.down = skin.getDrawable("pauseDown");
+	    
+	    pauseButton = new Button(pauseButtonStyle);
+	    pauseButton.addListener(new InputListener() {
+	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		return true;
+	    	}
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//	    		isPaused = true;
+	    		Music m = TiledMapGame.musicLibrary.get("worldOne");
+	    		if (m.getVolume() == 0f) {
+	    			m.setVolume(.8f);
+	    		} else {
+	    			m.setVolume(0f);
+	    		}
+	    	}
 	    });
 	    
 	}
@@ -1044,6 +1066,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		buttonTable.setPosition(TiledMapGame.screenWidth-150, 50);
 		
+		buttonTable.add(pauseButton).pad(15);
 	    buttonTable.add(displayButton).pad(15);
 	    buttonTable.add(unitsButton).pad(15);
 	    buttonTable.add(twrsButton).pad(15);   
