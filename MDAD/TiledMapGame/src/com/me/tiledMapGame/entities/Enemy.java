@@ -28,29 +28,34 @@ public class Enemy extends MobileEntity {
 	
 	public void update(float delta) {
 		super.update(delta);
+
+		float toMoveX;
+		float toMoveY;
 		
 		attackRate += delta;
 		// If enemy has reached destination, attack.
-		if (attackRate >= enemy.attackRate) {
-			for (Tower t : ObjectGrid.towerList()) {
-				if (this.getBoundingRectangle().overlaps(t.getBoundingRectangle()) && (t.isPlaced() || t.towerType == 0)) {
+		for (Tower t : ObjectGrid.towerList()) {
+			if (this.getBoundingRectangle().overlaps(t.getBoundingRectangle()) && (t.isPlaced() || t.towerType == 0)) {
+				if (attackRate >= enemy.attackRate) {
 					t.hurt(enemy.attackStrength);
 					attackRate = 0;
 				}
+				return;
 			}
-			for (Unit u : ObjectGrid.unitList()) {
-				if (this.getBoundingRectangle().overlaps(u.getBoundingRectangle())){
-					u.hurt(enemy.attackStrength);
-					attackRate = 0;
-				}
+		}
+		for (Unit u : ObjectGrid.unitList()) {
+			if (this.getBoundingRectangle().overlaps(u.getBoundingRectangle())) {
+				if (attackRate >= enemy.attackRate) {
+				u.hurt(enemy.attackStrength);
+				attackRate = 0;
+			}
+				return;
 			}
 		}
 		
 		// Requires Enemy.java's getTile() method to work!
-		float toMoveX;
-		float toMoveY;
 		if(this.flying){
-			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getX(), getY())).limit(1);
+			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getMidpointX(), getMidpointY())).limit(1);
 			toMoveX = dest.x * maxSpeed;
 			toMoveY = dest.y * maxSpeed;
 		} else {
@@ -58,11 +63,11 @@ public class Enemy extends MobileEntity {
 			toMoveY = getTile().dir.y * maxSpeed;
 		}
 		
-		setPosition(getX() + toMoveX, getY() + toMoveY);
+		setPosition(getMidpointX() + toMoveX, getMidpointY() + toMoveY);
 	}
 	
 	public Node getTile() {
-		int[] tile = ObjectGrid.worldToTileCoordinates(getX(), getY());
+		int[] tile = ObjectGrid.worldToTileCoordinates(getMidpointX(), getMidpointY());
 		int x = tile[0];
 		int y = tile[1];
 		

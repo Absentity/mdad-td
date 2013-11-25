@@ -85,7 +85,7 @@ public abstract class Entity extends Sprite {
             	frames[index++] = tempTexReg[i][j];
             }
 		}
-		Animation animation = new Animation(.05f, frames);
+		Animation animation = new Animation(.1f, frames);
 		return animation;
 	}
 
@@ -177,12 +177,14 @@ public abstract class Entity extends Sprite {
 	}
 
 	public float getMidpointX() {
-		// TODO Return actual midpoint x...
+//		return this.getX() + this.getBoundingRectangle().width/2;
+//		return this.getX() + 1;
 		return this.getX();
 	}
 
 	public float getMidpointY() {
-		// TODO Return actual midpoint y...
+//		return this.getY() + this.getBoundingRectangle().height/2;
+//		return this.getY() + 1;
 		return this.getY();
 	}
 
