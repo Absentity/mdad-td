@@ -38,19 +38,22 @@ public class Enemy extends MobileEntity {
 		// If enemy has reached destination, attack.
 		for (Tower t : ObjectGrid.towerList()) {
 			if (this.getBoundingRectangle().overlaps(t.getBoundingRectangle()) && (t.isPlaced() || t.towerType == 0)) {
-				if (attackRate >= enemy.attackRate) {
-					t.hurt(enemy.attackStrength);
-					attackRate = 0;
+				// Wyverns only attack the Pillar of Life
+				if (!this.flying || t.towerType == 0) {
+					if (attackRate >= enemy.attackRate) {
+						t.hurt(enemy.attackStrength);
+						attackRate = 0;
+					}
+					return;
 				}
-				return;
 			}
 		}
 		for (Unit u : ObjectGrid.unitList()) {
-			if (this.getBoundingRectangle().overlaps(u.getBoundingRectangle())) {
+			if (!this.flying && this.getBoundingRectangle().overlaps(u.getBoundingRectangle())) {
 				if (attackRate >= enemy.attackRate) {
-				u.hurt(enemy.attackStrength);
-				attackRate = 0;
-			}
+					u.hurt(enemy.attackStrength);
+					attackRate = 0;
+				}
 				return;
 			}
 		}
