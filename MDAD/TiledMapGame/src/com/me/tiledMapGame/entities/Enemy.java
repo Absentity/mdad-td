@@ -18,12 +18,14 @@ public class Enemy extends MobileEntity {
 		super(enemy.name, enemy.texture, enemy.health, enemy.price, enemy.maxVelocity);
 		this.enemy = enemy;
 		flying = false;
+		this.setBounds(getBoundingRectangle().x, getBoundingRectangle().y, 16, 16);
 	}
 	
 	public Enemy(EnemyType enemy, boolean flying) {
 		super(enemy.name, enemy.texture, enemy.health, enemy.price, enemy.maxVelocity);
 		this.enemy = enemy;
 		this.flying = flying;
+		this.setBounds(getBoundingRectangle().x, getBoundingRectangle().y, 64, 64);
 	}
 	
 	public void update(float delta) {
@@ -55,7 +57,7 @@ public class Enemy extends MobileEntity {
 		
 		// Requires Enemy.java's getTile() method to work!
 		if(this.flying){
-			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getMidpointX(), getMidpointY())).limit(1);
+			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getMidpointX(), getMidpointY())).limit(5);
 			toMoveX = dest.x * maxSpeed;
 			toMoveY = dest.y * maxSpeed;
 		} else {

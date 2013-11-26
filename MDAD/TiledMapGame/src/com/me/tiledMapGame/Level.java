@@ -99,38 +99,38 @@ public class Level {
 		
 		 if(name.contains("2")){
 				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
-				int x= ((int)(475/32));
-				int y=((int)(400/32));
-				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+				castleX = ((int)(475/32));
+				castleY = ((int)(400/32));
+				ObjectGrid.towerList().get(0).setPosition(castleX*32, castleY*32);
 				leveln=2;
 		}
 		else if(name.contains("3")){
 				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
-				int x= ((int)(450/32));
-				int y=((int)(150/32));
-				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+				castleX = ((int)(450/32));
+				castleY = ((int)(150/32));
+				ObjectGrid.towerList().get(0).setPosition(castleX*32, castleY*32);
 				leveln=3;
 		}
 		else if(name.contains("4")){
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
-			int x= ((int)(2));
-			int y=((int)(400/32));
-			ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+			castleX = ((int)(2));
+			castleY = ((int)(400/32));
+			ObjectGrid.towerList().get(0).setPosition(castleX*32, castleY*32);
 			leveln=4;
 		}
 		else if(name.contains("5")){
 			ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
-			int x= ((int)(475/32));
-			int y=((int)(400/32));
-			ObjectGrid.towerList().get(0).setPosition(x*32,y*32);
+			castleX = ((int)(475/32));
+			castleY = ((int)(400/32));
+			ObjectGrid.towerList().get(0).setPosition(castleX*32, castleY*32);
 			leveln=5;
 		}
 
 		else if(name.contains("1")){
 				ObjectGrid.towerList().add(new Tower(TiledMapGame.towerTypeLibrary.get("Portal"))); //TODO Change to Kingdom
-				int x= ((int)(475/32));
-				int y=((int)(400/32));
-				ObjectGrid.towerList().get(0).setPosition(x*32, y*32);
+				castleX = ((int)(475/32));
+				castleY = ((int)(400/32));
+				ObjectGrid.towerList().get(0).setPosition(castleX*32, castleY*32);
 				leveln=1;
 		}
 	
