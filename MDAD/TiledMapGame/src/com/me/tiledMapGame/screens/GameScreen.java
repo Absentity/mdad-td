@@ -181,33 +181,33 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.setView(camera);
 		renderer.render();
 		
-		// I WILL FIND YOU
-		sr.begin(ShapeType.Line);
-		sr.setColor(Color.YELLOW);
-		Rectangle r;
-		for (Tower t : ObjectGrid.towerList()) {
-			r = t.getBoundingRectangle();
-			sr.rect(r.x, r.y, r.width, r.height);
-		}
-		for (Unit u : ObjectGrid.unitList()) {
-			r = u.getBoundingRectangle();
-			sr.rect(r.x, r.y, r.width/4, r.height/3); //TODO set bounds on units! Important for collision
-		}
-		sr.setColor(Color.RED);
-//		for (Projectile p : ObjectGrid.projectileList()) {
-//			r = p.getBoundingRectangle();
+//		// I WILL FIND YOU
+//		sr.begin(ShapeType.Line);
+//		sr.setColor(Color.YELLOW);
+//		Rectangle r;
+//		for (Tower t : ObjectGrid.towerList()) {
+//			r = t.getBoundingRectangle();
 //			sr.rect(r.x, r.y, r.width, r.height);
 //		}
-		for (Enemy e : ObjectGrid.enemyList()) {
-			r = e.getBoundingRectangle();
-			sr.rect(e.getMidpointX(), e.getMidpointY(), r.width, r.height);
-		}
-		sr.setColor(Color.CYAN);
-		for (AnimationEntity ae : ObjectGrid.animations) {
-			r = ae.getBoundingRectangle();
-			sr.rect(r.x, r.y, r.width/5, r.height/4);
-		}
-		sr.end();
+//		for (Unit u : ObjectGrid.unitList()) {
+//			r = u.getBoundingRectangle();
+//			sr.rect(r.x, r.y, r.width/4, r.height/3); //TODO set bounds on units! Important for collision
+//		}
+//		sr.setColor(Color.RED);
+////		for (Projectile p : ObjectGrid.projectileList()) {
+////			r = p.getBoundingRectangle();
+////			sr.rect(r.x, r.y, r.width, r.height);
+////		}
+//		for (Enemy e : ObjectGrid.enemyList()) {
+//			r = e.getBoundingRectangle();
+//			sr.rect(e.getMidpointX(), e.getMidpointY(), r.width, r.height);
+//		}
+//		sr.setColor(Color.CYAN);
+//		for (AnimationEntity ae : ObjectGrid.animations) {
+//			r = ae.getBoundingRectangle();
+//			sr.rect(r.x, r.y, r.width/5, r.height/4);
+//		}
+//		sr.end();
 		
 		// Draw
 		renderer.getSpriteBatch().begin(); // FOR TESTING
@@ -1000,7 +1000,7 @@ public class GameScreen implements Screen, InputProcessor {
         		}
         		
         		// Kinda hacky, doesn't account for cost type.....
-        		final int price = entityToBuild.getStat("Cost");
+        		final int price = entityToBuild.getStat("Price");
         		if (Level.getResource("Gold") >= price) {
         			Level.gainResource("Gold", -price);
         			
