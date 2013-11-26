@@ -73,7 +73,8 @@ public class Level {
 		// TODO start off with a set amount of money
 		
 		try {
-			Scanner sc = new Scanner(new File("blankLevel.txt"));
+//			Scanner sc = new Scanner(new File("blankLevel.txt"));
+			Scanner sc = new Scanner(new File("levelOneInfo.txt"));
 			
 			totalWaves = sc.nextInt();
 			enemyTypes = new int[totalWaves];
@@ -92,7 +93,7 @@ public class Level {
 		}
 		
 		resources = new ObjectIntMap<String>();
-		setResource("Gold", 9999);
+		setResource("Gold", 1000);
 		
 		
 		// Reggie: all y's that were 450 were changed to 400 to keep tower of life on the screen

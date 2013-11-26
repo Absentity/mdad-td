@@ -274,7 +274,10 @@ public class GameScreen implements Screen, InputProcessor {
 				e.update(Gdx.graphics.getDeltaTime());
 			}
 			if (e.getHealth() >= 0) {
-				renderer.getSpriteBatch().draw(e.getCurrentFrame(), e.getX(), e.getY());
+				if (e.flying)
+					renderer.getSpriteBatch().draw(e.getCurrentFrame(), e.getX(), e.getY());
+				else
+					e.draw(renderer.getSpriteBatch());
 			}
 		}
 		
