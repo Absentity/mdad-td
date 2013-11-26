@@ -57,7 +57,7 @@ public class Enemy extends MobileEntity {
 		
 		// Requires Enemy.java's getTile() method to work!
 		if(this.flying){
-			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getMidpointX(), getMidpointY())).limit(1);
+			Vector2 dest = (new Vector2(destX*32, destY*32)).sub(new Vector2(getMidpointX(), getMidpointY())).limit(5);
 			toMoveX = dest.x * maxSpeed;
 			toMoveY = dest.y * maxSpeed;
 		} else {
