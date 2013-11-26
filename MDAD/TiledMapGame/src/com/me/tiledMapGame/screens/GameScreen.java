@@ -236,27 +236,27 @@ public class GameScreen implements Screen, InputProcessor {
 		
 
 		// Draw towers
-		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
+		for (Tower t: ObjectGrid.towerList()) {
 			if (!isPaused) {
-				t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+				t.update(Gdx.graphics.getDeltaTime());
 			}
-			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
+			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha());
 			
 			if (t.towerType == 0) {
-				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY());
 			} else if (t.getMoved()){
-				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY()); // FOR TESTING
+				renderer.getSpriteBatch().draw(t.getCurrentFrame(), t.getX(), t.getY());
 			}
 
 		}
 		
-		for (Structure s: ObjectGrid.structureList()) { // FOR TESTING
+		for (Structure s: ObjectGrid.structureList()) {
 			if (!isPaused) {
-				s.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+				s.update(Gdx.graphics.getDeltaTime());
 			}
-			renderer.getSpriteBatch().setColor(1,1,1,s.getAlpha()); // FOR TESTING
+			renderer.getSpriteBatch().setColor(1,1,1,s.getAlpha());
 			
-			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY()); // FOR TESTING
+			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY());
 		}
 		
 		for (Unit u : ObjectGrid.unitList()) {
@@ -285,7 +285,7 @@ public class GameScreen implements Screen, InputProcessor {
 			p.draw(renderer.getSpriteBatch());
 		}
 		
-		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
+		for (Tower t: ObjectGrid.towerList()) {
 			if(t.isSelected() && t.getTowerType() != 0) {
 				drawUpgradeOrSell(t);
 				upgrade.setVisible(true);
@@ -377,12 +377,6 @@ public class GameScreen implements Screen, InputProcessor {
 		// Timer Stuff
 		
 			peaceTimer.setVisible(false);
-			
-			
-			
-			
-			
-			
 			
 			PathFinder.find_path(ObjectGrid.gridLayer(0).getGrid(),x, y);
 			

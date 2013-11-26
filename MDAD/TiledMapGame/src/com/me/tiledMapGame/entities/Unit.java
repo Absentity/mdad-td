@@ -36,6 +36,12 @@ public class Unit extends MobileEntity {
 		float toMoveX = getTile().dir.x * maxSpeed;
 		float toMoveY = getTile().dir.y * maxSpeed;
 		
+		if(toMoveX < 0 && !this.getCurrentFrame().isFlipX()) {
+			this.getCurrentFrame().flip(true,false);
+		} else if(toMoveX > 0 && this.getCurrentFrame().isFlipX()) {
+			this.getCurrentFrame().flip(true,false);
+		}
+		
 		setPosition(getX() + toMoveX, getY() + toMoveY);
 		
 		if (unit.attackRate != 0f) {
