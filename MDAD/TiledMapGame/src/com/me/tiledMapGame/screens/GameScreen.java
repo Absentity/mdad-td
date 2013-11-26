@@ -120,7 +120,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	private Input i;
 	
-	float tx, ty; // FOR TESTING CAMERA PANNING BOUNDS
+	float tx, ty;
 
 	private TextButton goldCounter;
 
@@ -162,6 +162,30 @@ public class GameScreen implements Screen, InputProcessor {
 			ObjectGrid.towerList().get(0).setPosition(level.castleX*32, level.castleY*32);
 		}
 		
+		if(confirmSelection != null) {
+			confirmSelection.setVisible(false);
+		}
+		if(nameLabel != null) {
+			nameLabel.setVisible(false);
+		}
+		if(damageLabel != null) {
+			damageLabel.setVisible(false);
+		}
+		if(rangeLabel != null) {
+			rangeLabel.setVisible(false);
+		}
+		if(priceLabel != null) {
+			priceLabel.setVisible(false);
+		}
+		if(towerTable != null) {
+			towerTable.setVisible(false);
+		}
+		if(unitTable != null) {
+			unitTable.setVisible(false);
+		}
+		if(closeMenu != null) {
+			closeMenu.setVisible(false);
+		}
 		
 		renderer = new OrthogonalTiledMapRenderer(level.getMap());
 		stage = new Stage();
@@ -559,8 +583,8 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		//TEST SAVE
-	    LevelSaver save = new LevelSaver("testSaveFile.txt");
-		save.saveLevel(level);
+//	    LevelSaver save = new LevelSaver("testSaveFile.txt");
+//		save.saveLevel(level);
 		//renderer.getSpriteBatch().dispose();
 		//renderer.dispose(); Leave out until there is another screen to switch to
 		for (Tower t : ObjectGrid.towers) {
@@ -1197,6 +1221,15 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        		System.out.println("Powering up!");
+	        		for(Tower t: ObjectGrid.towerList()) {
+	        			if(t.isSelected()) {
+	        				t.setFireRate((float) (t.getFireRate()*.75));
+	        				upgrade.setVisible(false);
+	        				sell.setVisible(false);
+	        				Level.gainResource("Gold", -t.getPrice()/2);
+	        				break;
+	        			}
+	        		}
 	        }
 	    });
 		

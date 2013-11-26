@@ -28,6 +28,7 @@ public class Tower extends Entity {
 	
 	private TowerType tower;
 	private float cooldown;
+	float fireRate;
 	
 	private Circle range;
 	
@@ -44,6 +45,7 @@ public class Tower extends Entity {
 			alpha = 1;
 		}
 		cooldown = tower.fireRate;
+		fireRate = cooldown;
 		this.setBounds(getBoundingRectangle().x, getBoundingRectangle().y, 32, 32);
 	}
 	
@@ -65,7 +67,7 @@ public class Tower extends Entity {
 				// Fire!!
 				if (enemyInRange != null && isPlaced()) {
 					createProjectiles(enemyInRange);
-					cooldown = tower.fireRate;
+					cooldown = /*tower.*/fireRate;
 				}
 			}
 		}
@@ -111,5 +113,15 @@ public class Tower extends Entity {
 		if (placed) {
 			range = new Circle(getX(), getY(), tower.sightRange);
 		}
+	}
+
+	public float getFireRate() {
+		return fireRate;
+		
+	}
+
+	public void setFireRate(float fireRate) {
+		this.fireRate = fireRate;
+		
 	}
 }

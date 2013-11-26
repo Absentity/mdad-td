@@ -13,7 +13,7 @@ public class TowerType implements EntityDefinition {
 	
 	final ProjectileType projectileType;
 	final float sightRange;
-	final float fireRate;
+	float fireRate;
 	final int projectileDamage;	
 	final int health;
 	
@@ -41,5 +41,13 @@ public class TowerType implements EntityDefinition {
 	
 	public Tower createInstance() {
 		return new Tower(this);
+	}
+	
+	public float getFireRate() {
+		return fireRate;
+	}
+	
+	public void setFireRate(float fireRate) {
+		this.fireRate = fireRate;
 	}
 }

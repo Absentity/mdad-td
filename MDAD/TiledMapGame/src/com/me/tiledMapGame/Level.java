@@ -46,6 +46,12 @@ public class Level {
 	public Level(String name) {
 		map = new TmxMapLoader().load("maps/" + name + ".tmx");
 		
+		ObjectGrid.towerList().clear();
+		ObjectGrid.unitList().clear();
+		ObjectGrid.projectiles.clear();
+		ObjectGrid.disposeList.clear();
+		ObjectGrid.enemyList().clear();
+		
 		objectGrid = new ObjectGrid(16,16);
 		TiledMapTileLayer groundLayer = (TiledMapTileLayer)map.getLayers().get(0);
 		
@@ -93,7 +99,7 @@ public class Level {
 		}
 		
 		resources = new ObjectIntMap<String>();
-		setResource("Gold", 1000);
+		setResource("Gold", 300);
 		
 		
 		// Reggie: all y's that were 450 were changed to 400 to keep tower of life on the screen
