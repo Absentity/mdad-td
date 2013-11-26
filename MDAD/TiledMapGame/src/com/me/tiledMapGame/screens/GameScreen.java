@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.me.tiledMapGame.Input;
 import com.me.tiledMapGame.Level;
 import com.me.tiledMapGame.LevelSaver;
@@ -41,9 +43,7 @@ import com.me.tiledMapGame.pathing.PathFinder;
 
 public class GameScreen implements Screen, InputProcessor {
 	
-	public static final int GAME_RUNNING = 1;
-    public static final int GAME_PAUSED = 0;
-    private int gameStatus;
+	public boolean won = false;
 	
 	public Level level;
 	public boolean lost = false;
@@ -421,6 +421,10 @@ public class GameScreen implements Screen, InputProcessor {
 			if(level.getObjectGrid().enemies.size() == 0) {
 //				level.won = true;
 				System.out.println("You Won!");
+				peaceTimer.setVisible(true);
+				peaceTimer.setPosition(256, 256);
+				peaceTimer.setText("YOU WIN!\nPress ESC to return to the main menu.");
+				won = true;
 			}
 		}
 

@@ -188,9 +188,16 @@ public class TiledMapGame extends Game {
 	public void render() {		
 		super.render();
 		
+		if(this.getScreen() == P && P.won) {
+			if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+				M = new MainMenuScreen();
+				this.setScreen(M);
+				P.dispose();
+			}
+		}
+		
 		if(this.getScreen() == C) {
 			if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-				System.out.println("here");
 				M = new MainMenuScreen();
 				this.setScreen(M);
 				C.dispose();
