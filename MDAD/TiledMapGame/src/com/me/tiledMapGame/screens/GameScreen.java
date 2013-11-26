@@ -588,7 +588,7 @@ public class GameScreen implements Screen, InputProcessor {
 		//renderer.getSpriteBatch().dispose();
 		//renderer.dispose(); Leave out until there is another screen to switch to
 		for (Tower t : ObjectGrid.towers) {
-		    t.getTexture().dispose();
+//		    t.getTexture().dispose();
 			t.dispose();
 		}
 		for (Enemy e : ObjectGrid.enemyList()) {
