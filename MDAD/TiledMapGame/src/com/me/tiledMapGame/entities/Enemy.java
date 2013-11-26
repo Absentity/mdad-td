@@ -18,12 +18,14 @@ public class Enemy extends MobileEntity {
 		super(enemy.name, enemy.texture, enemy.health, enemy.price, enemy.maxVelocity);
 		this.enemy = enemy;
 		flying = false;
+		this.setBounds(getBoundingRectangle().x, getBoundingRectangle().y, 16, 16);
 	}
 	
 	public Enemy(EnemyType enemy, boolean flying) {
 		super(enemy.name, enemy.texture, enemy.health, enemy.price, enemy.maxVelocity);
 		this.enemy = enemy;
 		this.flying = flying;
+		this.setBounds(getBoundingRectangle().x, getBoundingRectangle().y, 64, 64);
 	}
 	
 	public void update(float delta) {
