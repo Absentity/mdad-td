@@ -148,8 +148,8 @@ public class TiledMapGame extends Game {
 				projectileTypeLibrary.get("Crescent"), 0.2f, 10, 1));
 		towerTypeLibrary.put("Bomb", new TowerType("Bomb", new Texture("img/bombTower.png"), 100, 80, 70f,
 				projectileTypeLibrary.get("Canon"), 1.2f, 60, 2));
-		towerTypeLibrary.put("Amplify", new TowerType("Amplify", new Texture("img/amplifyTower.png"), 100, 60, 70f,
-				projectileTypeLibrary.get("Crescent"), 0f, 0, 3));
+//		towerTypeLibrary.put("Amplify", new TowerType("Amplify", new Texture("img/amplifyTower.png"), 100, 60, 70f,
+//				projectileTypeLibrary.get("Crescent"), 0f, 0, 3));
 		towerTypeLibrary.put("Fireball", new TowerType("Fireball", new Texture("img/fireballTower.png"), 100, 30, 70f,
 				projectileTypeLibrary.get("Fireball"), 0.6f, 6, 4));
 		towerTypeLibrary.put("Portal", new TowerType("Portal", new Texture("img/portalTower.png"), 100, 999999, 70f,
@@ -158,7 +158,9 @@ public class TiledMapGame extends Game {
 		// Structures
 //		structureTypeLibrary.put("Kingdom", new StructureType(new Texture("img/Kingdom.png"),
 //				1000, 0f, 0, "Gold"));
-		structureTypeLibrary.put("Farm", new StructureType("Farm", new Texture("img/sheetStructureFarm.png"),
+//		structureTypeLibrary.put("Farm", new StructureType("Farm", new Texture("img/sheetStructureFarm.png"),
+//				100, 50, 3f, 20, "Gold"));
+		structureTypeLibrary.put("Transmuter", new StructureType("Transmuter", new Texture("img/amplifyTower.png"),
 				100, 50, 3f, 20, "Gold"));
 		
 		// Enemies
