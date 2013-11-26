@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
 		style.fontColor = new Color(1,1,1,1);
 		startGameButton = new TextButton("Start", style);    
 		loadGameButton = new TextButton("Load", style);
-		optionsButton = new TextButton("Options", style);
+		optionsButton = new TextButton("Credits", style);
 				
 		startGameButton.setWidth(32f);
 		startGameButton.setHeight(12f);
