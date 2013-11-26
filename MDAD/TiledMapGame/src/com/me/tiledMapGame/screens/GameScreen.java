@@ -705,13 +705,14 @@ public class GameScreen implements Screen, InputProcessor {
 	    		return true;
 	    	}
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-//	    		isPaused = true;
-	    		Music m = TiledMapGame.musicLibrary.get("worldOne");
-	    		if (m.getVolume() == 0f) {
-	    			m.setVolume(.8f);
-	    		} else {
-	    			m.setVolume(0f);
-	    		}
+	    		isPaused = !isPaused;
+	    		System.out.println("[GameScreen] Game " + ((isPaused)?"Paused":"Unpaused"));
+//	    		Music m = TiledMapGame.musicLibrary.get("worldOne");
+//	    		if (m.getVolume() == 0f) {
+//	    			m.setVolume(.8f);
+//	    		} else {
+//	    			m.setVolume(0f);
+//	    		}
 	    	}
 	    });
 	    
