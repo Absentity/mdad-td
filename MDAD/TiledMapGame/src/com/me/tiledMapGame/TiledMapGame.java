@@ -16,6 +16,7 @@ import com.me.tiledMapGame.entities.Tower;
 import com.me.tiledMapGame.entities.TowerType;
 import com.me.tiledMapGame.entities.UnitType;
 import com.me.tiledMapGame.pathing.ObjectGrid;
+import com.me.tiledMapGame.screens.CreditsScreen;
 import com.me.tiledMapGame.screens.GameScreen;
 import com.me.tiledMapGame.screens.LevelSelectScreen;
 import com.me.tiledMapGame.screens.LoseScreen;
@@ -34,6 +35,7 @@ public class TiledMapGame extends Game {
 	public static MainMenuScreen M;
 	public static Splash S;
 	public static LevelSelectScreen L;
+	public static CreditsScreen C;
 	public static ObjectMap<String, AnimationEntity> animationLibrary;
 	public static ObjectMap<String, EnemyType> enemyTypeLibrary;
 	public static ObjectMap<String, TowerType> towerTypeLibrary;
@@ -161,7 +163,7 @@ public class TiledMapGame extends Game {
 		// Enemies
 		enemyTypeLibrary.put("Skeleton", new EnemyType("Skeleton", new Texture("img/Skeleton.png"), 100, .5f, 1, 1f, 10, 10));
 		enemyTypeLibrary.put("Wight", new EnemyType("Wight", new Texture("img/wight.png"), 100, 1f, 1, .6f, 10, 10));
-		enemyTypeLibrary.put("Wyvern", new EnemyType("Wyvern", new Texture("img/WyvernSheet.png"), 250, .3f, 15, 1f, 10, 10));
+		enemyTypeLibrary.put("Wyvern", new EnemyType("Wyvern", new Texture("img/WyvernOther.png"), 250, .3f, 15, 1f, 10, 10));
 		
 		// Units
 		unitTypeLibrary.put("Mage", new UnitType("Mage", new Texture("img/mage.png"), 100, 10, .6f, 70f,
@@ -186,6 +188,12 @@ public class TiledMapGame extends Game {
 		super.render();
 		if(M == null)
 			M = new MainMenuScreen();
+		
+		if(M.creditsMenuListener.isPressed()) {
+			M.dispose();
+			C = new CreditsScreen();
+		}
+		
 		//Set the screen to the level select screen
 		if(M.levelSelectListener.isPressed()){
 			M.dispose();

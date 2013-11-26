@@ -46,8 +46,8 @@ public abstract class Entity extends Sprite {
 			animation = createAnimation(texture, 9, 3, 27);
 		} else if (texture.getHeight() == 48) {
 			animation = createAnimation(texture, 4, 3, 12);
-		} else if (texture.getHeight() == 64) {
-			animation = createAnimation(texture, 2, 1, 2);
+		} else if (texture.getHeight() == 128) {
+			animation = createAnimation(texture, 2, 2, 4);
 		} else {
 //			animation = createAnimation(texture, numTilesWide, numTilesTall, numFramesTotal);
 			TextureRegion[] frames = new TextureRegion[1];

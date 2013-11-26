@@ -21,12 +21,12 @@ public class MainMenuScreen implements Screen {
 	// TODO: Extend this to launch Play screen instead of setting it every time in TiledMapGame.java 
 	public ClickListener levelSelectListener = new ClickListener();
 	public ClickListener levelLoadListener = new ClickListener();
-	public ClickListener optionsMenuListener = new ClickListener();
+	public ClickListener creditsMenuListener = new ClickListener();
 	
 	private Stage stage = new Stage();
 	private TextButton startGameButton;
 	private TextButton loadGameButton;
-	private TextButton optionsButton;
+	private TextButton creditsButton;
 	private TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 	// TODO: unify assets, get from central location
 	private Texture background = new Texture("img/title512x512.png");
@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
 		style.fontColor = new Color(1,1,1,1);
 		startGameButton = new TextButton("Start", style);    
 		loadGameButton = new TextButton("Load", style);
-		optionsButton = new TextButton("Credits", style);
+		creditsButton = new TextButton("Credits", style);
 				
 		startGameButton.setWidth(32f);
 		startGameButton.setHeight(12f);
@@ -56,15 +56,15 @@ public class MainMenuScreen implements Screen {
 		loadGameButton.setX((stage.getWidth()- loadGameButton.getWidth() - 48)/2);
 		loadGameButton.setY(200);
 		
-		optionsButton.setWidth(32f);
-		optionsButton.setHeight(12f);
-		optionsButton.addListener(optionsMenuListener);
-		optionsButton.setX((stage.getWidth()- optionsButton.getWidth() - 48)/2);
-		optionsButton.setY(160);
+		creditsButton.setWidth(32f);
+		creditsButton.setHeight(12f);
+		creditsButton.addListener(creditsMenuListener);
+		creditsButton.setX((stage.getWidth()- creditsButton.getWidth() - 48)/2);
+		creditsButton.setY(160);
 		
 		stage.addActor( startGameButton );  
 		stage.addActor( loadGameButton );
-		stage.addActor( optionsButton );
+		stage.addActor( creditsButton );
 		b.setSize(TiledMapGame.screenWidth, TiledMapGame.screenHeight);
 		Gdx.input.setInputProcessor(stage);
 	}
