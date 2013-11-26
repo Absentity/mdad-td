@@ -41,6 +41,10 @@ import com.me.tiledMapGame.pathing.PathFinder;
 
 public class GameScreen implements Screen, InputProcessor {
 	
+	public static final int GAME_RUNNING = 1;
+    public static final int GAME_PAUSED = 0;
+    private int gameStatus;
+	
 	public Level level;
 	public boolean lost = false;
 	public static OrthographicCamera camera;
@@ -476,6 +480,8 @@ public class GameScreen implements Screen, InputProcessor {
 			System.out.println("You are not doing so good!");
 			this.lost = true;
 		}
+		
+		// here
 	}
 
 	@Override
@@ -1094,7 +1100,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
-		level.generateEnemy("Wight"); // TODO take this out for final design
+		level.generateEnemy("Wyvern"); // TODO take this out for final design
 		return false;
 	}
 
