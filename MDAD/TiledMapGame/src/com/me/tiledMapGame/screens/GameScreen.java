@@ -1126,7 +1126,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
-		level.generateEnemy("Wyvern"); // TODO take this out for final design
+//		level.generateEnemy("Wyvern"); // TODO take this out for final design
 		return false;
 	}
 
