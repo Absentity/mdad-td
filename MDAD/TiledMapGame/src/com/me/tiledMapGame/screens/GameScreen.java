@@ -274,7 +274,10 @@ public class GameScreen implements Screen, InputProcessor {
 				e.update(Gdx.graphics.getDeltaTime());
 			}
 			if (e.getHealth() >= 0) {
-				renderer.getSpriteBatch().draw(e.getCurrentFrame(), e.getX(), e.getY());
+				if (e.flying)
+					renderer.getSpriteBatch().draw(e.getCurrentFrame(), e.getX(), e.getY());
+				else
+					e.draw(renderer.getSpriteBatch());
 			}
 		}
 		
@@ -624,8 +627,8 @@ public class GameScreen implements Screen, InputProcessor {
 		skin.add("fireballUp", new Sprite(new Texture("img/fireballTowerUp.png")));
 		skin.add("fireballDown", new Sprite(new Texture("img/fireballTowerDown.png")));
 		// Structures
-		skin.add("farmUp", new Sprite(new Texture("img/buttonStructureFarmUpDown.png")));
-		skin.add("farmDown", new Sprite(new Texture("img/buttonStructureFarmUpDown.png")));
+//		skin.add("farmUp", new Sprite(new Texture("img/buttonStructureFarmUpDown.png")));
+//		skin.add("farmDown", new Sprite(new Texture("img/buttonStructureFarmUpDown.png")));
 		// Units
 		skin.add("mageUp", new Sprite(new Texture("img/mageUp.png")));
 		skin.add("mageDown", new Sprite(new Texture("img/mageDown.png")));
@@ -848,7 +851,7 @@ public class GameScreen implements Screen, InputProcessor {
 	    ampButton.addListener(new InputListener() {
 	        public boolean touchDown(InputEvent event, float x, float y,
 	                int pointer, int button) {
-	        		System.out.println("Amplifier Tower selected");
+	        		System.out.println("Transmutation Tower selected");
 	        		thinking = true;
 	        		confirmSelection.setVisible(true);
 	            return true;
@@ -857,12 +860,12 @@ public class GameScreen implements Screen, InputProcessor {
 	        public void touchUp(InputEvent event, float x, float y,
 	                int pointer, int button) {
 	        	usingUnit = false;
-	        	entityChoice = "Amplify";
+	        	entityChoice = "Transmuter";
 	        	usingTower = true;
 	        	nameLabel.setText("Transmutation\nTower");
-	        	damageLabel.setText("Damage: 0");
-	        	rangeLabel.setText("Range: 0");
-	        	priceLabel.setText("Cost: 60G");
+	        	damageLabel.setText("Earning: 20");
+	        	rangeLabel.setText("Freq: 3s");
+	        	priceLabel.setText("Cost: 20G");
 	        }
 	    });
 	    
@@ -892,31 +895,31 @@ public class GameScreen implements Screen, InputProcessor {
 	        }
 	    });
 	    
-	    TextButtonStyle farmButtonStyle = new TextButtonStyle();
-	    farmButtonStyle.up = skin.getDrawable("farmUp");
-	    farmButtonStyle.down = skin.getDrawable("farmDown");
-	    
-	    farmButton = new Button(farmButtonStyle);
-	    farmButton.addListener(new InputListener() {
-	        public boolean touchDown(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        		System.out.println("Farm Resource selected");
-	        		thinking = true;
-	        		confirmSelection.setVisible(true);
-	            return true;
-	        }
-
-	        public void touchUp(InputEvent event, float x, float y,
-	                int pointer, int button) {
-	        	usingUnit = false;
-	        	entityChoice = "Farm";
-	        	usingTower = true;
-	        	nameLabel.setText("Farm Resource");
-	        	damageLabel.setText("Earning: 20");
-	        	rangeLabel.setText("Freq: 3s");
-	        	priceLabel.setText("Cost: 20G");
-	        }
-	    });
+//	    TextButtonStyle farmButtonStyle = new TextButtonStyle();
+//	    farmButtonStyle.up = skin.getDrawable("farmUp");
+//	    farmButtonStyle.down = skin.getDrawable("farmDown");
+//	    
+//	    farmButton = new Button(farmButtonStyle);
+//	    farmButton.addListener(new InputListener() {
+//	        public boolean touchDown(InputEvent event, float x, float y,
+//	                int pointer, int button) {
+//	        		System.out.println("Farm Resource selected");
+//	        		thinking = true;
+//	        		confirmSelection.setVisible(true);
+//	            return true;
+//	        }
+//
+//	        public void touchUp(InputEvent event, float x, float y,
+//	                int pointer, int button) {
+//	        	usingUnit = false;
+//	        	entityChoice = "Farm";
+//	        	usingTower = true;
+//	        	nameLabel.setText("Farm Resource");
+//	        	damageLabel.setText("Earning: 20");
+//	        	rangeLabel.setText("Freq: 3s");
+//	        	priceLabel.setText("Cost: 20G");
+//	        }
+//	    });
 	}
 	
 	private void setupUnitOptions() {
@@ -995,8 +998,8 @@ public class GameScreen implements Screen, InputProcessor {
 	        	selectionConfirmed = true;
 	        	
         		Entity entityToBuild;
-        		if ("Farm".equals(entityChoice)) {
-        			entityToBuild = TiledMapGame.structureTypeLibrary.get("Farm").createInstance();
+        		if ("Transmuter".equals(entityChoice)) {
+        			entityToBuild = TiledMapGame.structureTypeLibrary.get("Transmuter").createInstance();
         		} else if ("Mage".equals(entityChoice)) {
         			entityToBuild = TiledMapGame.unitTypeLibrary.get("Mage").createInstance();
         		} else {

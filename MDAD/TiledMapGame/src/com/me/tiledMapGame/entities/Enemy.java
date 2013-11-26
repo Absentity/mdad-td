@@ -68,10 +68,12 @@ public class Enemy extends MobileEntity {
 			toMoveY = getTile().dir.y * maxSpeed;
 		}
 		
-		if(toMoveX < 0 && !this.getCurrentFrame().isFlipX()) {
-			this.getCurrentFrame().flip(true,false);
-		} else if(toMoveX > 0 && this.getCurrentFrame().isFlipX()) {
-			this.getCurrentFrame().flip(true,false);
+		if (this.flying) {
+			if(toMoveX < 0 && !this.getCurrentFrame().isFlipX()) {
+				this.getCurrentFrame().flip(true,false);
+			} else if(toMoveX > 0 && this.getCurrentFrame().isFlipX()) {
+				this.getCurrentFrame().flip(true,false);
+			}
 		}
 		
 		setPosition(getMidpointX() + toMoveX, getMidpointY() + toMoveY);
