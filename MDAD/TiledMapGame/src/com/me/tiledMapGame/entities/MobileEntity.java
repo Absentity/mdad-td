@@ -30,11 +30,11 @@ public abstract class MobileEntity extends Entity {
 		this.maxSpeed = maxVelocity;
 	}
 	
-	// TODO Should this method be in Entity?
-	public void draw(SpriteBatch spriteBatch) {
-		update(Gdx.graphics.getDeltaTime());
-		super.draw(spriteBatch);
-	}
+//	// TODO Should this method be in Entity?
+//	public void draw(SpriteBatch spriteBatch) {
+//		update(Gdx.graphics.getDeltaTime());
+//		super.draw(spriteBatch);
+//	}
 	
 	/**
 	 * Update the position of the mobile entity, letting them curve

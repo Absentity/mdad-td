@@ -55,7 +55,6 @@ public class GameScreen implements Screen, InputProcessor {
 	public int x;
 	public int y;
 	private String entityChoice;
-	private int unitChoice = 1;
 	
 	public static InputMultiplexer im;
 	private OrthogonalTiledMapRenderer renderer;
@@ -106,7 +105,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	Button displayButton;
 	private Button pauseButton; 
-	boolean showHealth = false;
+	boolean showHealth = true;
 	BitmapFont font;
 	
 	// Wave Information
@@ -217,7 +216,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		if (showHealth) {
 			for(Enemy e: ObjectGrid.enemyList()) {
-				if(e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
+				if (e.getX()-10 >= 0 && e.getY()+35 <= 512) { // bound upper left
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()-10, e.getY()+30);
 				} else if(e.getX()+10 <= 512 && e.getY()-35 >= 0) { // bound lower right
 					font.draw(renderer.getSpriteBatch(), e.showHealth(), e.getX()+10, e.getY()-30);
@@ -238,7 +237,9 @@ public class GameScreen implements Screen, InputProcessor {
 
 		// Draw towers
 		for (Tower t: ObjectGrid.towerList()) { // FOR TESTING
-			t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+			if (!isPaused) {
+				t.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+			}
 			renderer.getSpriteBatch().setColor(1,1,1,t.getAlpha()); // FOR TESTING
 			
 			if (t.towerType == 0) {
@@ -250,14 +251,18 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		for (Structure s: ObjectGrid.structureList()) { // FOR TESTING
-			s.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+			if (!isPaused) {
+				s.update(Gdx.graphics.getDeltaTime()); // FOR TESTING
+			}
 			renderer.getSpriteBatch().setColor(1,1,1,s.getAlpha()); // FOR TESTING
 			
 			renderer.getSpriteBatch().draw(s.getCurrentFrame(), s.getX(), s.getY()); // FOR TESTING
 		}
 		
 		for (Unit u : ObjectGrid.unitList()) {
-			u.update(Gdx.graphics.getDeltaTime()); // Might not need this, as Unit is MobileEntity
+			if (!isPaused) {
+				u.update(Gdx.graphics.getDeltaTime());
+			}
 			renderer.getSpriteBatch().setColor(1,1,1,1);
 			renderer.getSpriteBatch().draw(u.getCurrentFrame(), u.getX(), u.getY());
 		}
@@ -265,13 +270,18 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.getSpriteBatch().setColor(1, 1, 1, 1);
 		
 		for (Enemy e : ObjectGrid.enemyList()) {
-			e.update(Gdx.graphics.getDeltaTime());
+			if (!isPaused) {
+				e.update(Gdx.graphics.getDeltaTime());
+			}
 			if (e.getHealth() >= 0) {
 				e.draw(renderer.getSpriteBatch());
 			}
 		}
 		
 		for (Projectile p : ObjectGrid.projectileList()) {
+			if (!isPaused) {
+				p.update(Gdx.graphics.getDeltaTime());
+			}
 			p.draw(renderer.getSpriteBatch());
 		}
 		
@@ -284,7 +294,9 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		for (AnimationEntity ae : ObjectGrid.animations) {
-			ae.update(Gdx.graphics.getDeltaTime());
+			if (!isPaused) {
+				ae.update(Gdx.graphics.getDeltaTime());
+			}
 			// Use this to test epicenter alignment
 //			renderer.getSpriteBatch().setColor(Color.GREEN);
 //			renderer.getSpriteBatch().draw(ae.getCurrentFrame(), ae.getX(), ae.getY());
@@ -297,12 +309,12 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.getSpriteBatch().end();
 		
 		// Determine whether or not to draw menu and draw/don't
-		if(openTowerMenu){
+		if (openTowerMenu) {
 			towerTable.setVisible(true);
 			closeMenu.setVisible(true);
 			
 			stage.getSpriteBatch().begin();
-			if(thinking) {
+			if (thinking) {
 				nameLabel.setVisible(true);
 				damageLabel.setVisible(true);
 				rangeLabel.setVisible(true);
@@ -310,7 +322,7 @@ public class GameScreen implements Screen, InputProcessor {
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-120, 110, 120);
 			}
-			if(selectionConfirmed){
+			if (selectionConfirmed) {
 				selectionConfirmed = false;
 				
 //				if (usingTower) {
@@ -329,14 +341,14 @@ public class GameScreen implements Screen, InputProcessor {
 			
 			stage.getSpriteBatch().end();
 			
-		} else if(openUnitMenu){
+		} else if(openUnitMenu) {
 			unitTable.setVisible(true);
 			closeMenu.setVisible(true);
 			
 			stage.getSpriteBatch().begin();
 			stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
 			
-			if(thinking){
+			if (thinking) {
 				nameLabel.setVisible(true);
 				damageLabel.setVisible(true);
 				rangeLabel.setVisible(true);
@@ -550,16 +562,16 @@ public class GameScreen implements Screen, InputProcessor {
 		save.saveLevel(level);
 		//renderer.getSpriteBatch().dispose();
 		//renderer.dispose(); Leave out until there is another screen to switch to
-		for(Tower t: ObjectGrid.towers){
+		for (Tower t : ObjectGrid.towers) {
 		    t.getTexture().dispose();
 			t.dispose();
 		}
-		for(Enemy E: ObjectGrid.enemyList()){
+		for (Enemy e : ObjectGrid.enemyList()) {
 //			E.getTexture().dispose();
-			E.dispose();
+			e.dispose();
 		}
-		for(AnimationEntity A: ObjectGrid.animations){
-			A.dispose();
+		for (AnimationEntity a : ObjectGrid.animations) {
+			a.dispose();
 		}
 		//im.removeProcessor(stage);
 		//sr.dispose();
@@ -693,13 +705,14 @@ public class GameScreen implements Screen, InputProcessor {
 	    		return true;
 	    	}
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-//	    		isPaused = true;
-	    		Music m = TiledMapGame.musicLibrary.get("worldOne");
-	    		if (m.getVolume() == 0f) {
-	    			m.setVolume(.8f);
-	    		} else {
-	    			m.setVolume(0f);
-	    		}
+	    		isPaused = !isPaused;
+	    		System.out.println("[GameScreen] Game " + ((isPaused)?"Paused":"Unpaused"));
+//	    		Music m = TiledMapGame.musicLibrary.get("worldOne");
+//	    		if (m.getVolume() == 0f) {
+//	    			m.setVolume(.8f);
+//	    		} else {
+//	    			m.setVolume(0f);
+//	    		}
 	    	}
 	    });
 	    
@@ -931,7 +944,6 @@ public class GameScreen implements Screen, InputProcessor {
 	        	usingTower = false;
 	        	openTowerMenu = false;
 	        	usingUnit = true;
-	        	unitChoice = 1;
 	        	entityChoice = "Mage";
 	        	nameLabel.setText("Mage");
 	        	damageLabel.setText("Damage: 20");

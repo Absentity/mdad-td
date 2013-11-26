@@ -19,7 +19,7 @@ public abstract class Entity extends Sprite {
 	protected int health;
 	protected float stateTime;
 	
-	protected static TextureRegion currentFrame;
+	protected TextureRegion currentFrame;
 	protected Animation animation;
 	protected Texture texture;
 	

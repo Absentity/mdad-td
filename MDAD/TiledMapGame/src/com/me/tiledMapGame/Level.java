@@ -78,7 +78,7 @@ public class Level {
 			totalWaves = sc.nextInt();
 			enemyTypes = new int[totalWaves];
 			
-			for(int i=0 ; i<totalWaves ; i++) {
+			for (int i=0 ; i<totalWaves ; i++) {
 				enemyTypes[i] = sc.nextInt();
 			}
 			

@@ -106,10 +106,6 @@ public class Unit extends MobileEntity {
 		PathFinder.find_path(personalLayer.getGrid(), (x/32), (y/32));
 	}
 	
-	public int getPrice() {
-		return this.price;
-	}
-	
 	public float getRange() {
 		return range.radius;
 	}
