@@ -308,7 +308,7 @@ public class GameScreen implements Screen, InputProcessor {
 				rangeLabel.setVisible(true);
 				priceLabel.setVisible(true);
 				stage.getSpriteBatch().setColor(stage.getSpriteBatch().getColor().r, stage.getSpriteBatch().getColor().g, stage.getSpriteBatch().getColor().b, .5f);
-				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-100, 110, 100);
+				infoNinePatch.draw(stage.getSpriteBatch(), TiledMapGame.screenWidth-110, TiledMapGame.screenHeight-120, 110, 120);
 			}
 			if(selectionConfirmed){
 				selectionConfirmed = false;
@@ -602,8 +602,8 @@ public class GameScreen implements Screen, InputProcessor {
 		skin.add("down", new Sprite(new Texture("img/buttonDown.png")));
 		skin.add("uUp", new Sprite(new Texture("img/uButtonUp.png")));
 		skin.add("uDown", new Sprite(new Texture("img/uButtonDown.png")));
-		skin.add("pauseUp", new Sprite(new Texture("img/uButtonUp.png")));
-		skin.add("pauseDown", new Sprite(new Texture("img/uButtonDown.png")));
+		skin.add("pauseUp", new Sprite(new Texture("img/PauseButtonDown.png")));
+		skin.add("pauseDown", new Sprite(new Texture("img/PauseButtonUp.png")));
 		// Towers
 		skin.add("cresUp", new Sprite(new Texture("img/CresTow1.png")));
 		skin.add("cresDown", new Sprite(new Texture("img/CresTow8.png")));
@@ -848,9 +848,9 @@ public class GameScreen implements Screen, InputProcessor {
 	        	usingUnit = false;
 	        	entityChoice = "Amplify";
 	        	usingTower = true;
-	        	nameLabel.setText("Amplifier Tower");
+	        	nameLabel.setText("Transmutation\nTower");
 	        	damageLabel.setText("Damage: 0");
-	        	rangeLabel.setText("Range: 100");
+	        	rangeLabel.setText("Range: 0");
 	        	priceLabel.setText("Cost: 60G");
 	        }
 	    });
@@ -1037,7 +1037,7 @@ public class GameScreen implements Screen, InputProcessor {
 		towerTable.add(fireballButton).spaceBottom(5);
 		towerTable.row();
 		
-		 towerTable.add(farmButton).spaceRight(24).spaceBottom(5).spaceTop(5);
+//		 towerTable.add(farmButton).spaceRight(24).spaceBottom(5).spaceTop(5);
 //		 towerTable.add(NEXT NEW TOWER).spaceBottom(5);
 		 towerTable.row();
 		
